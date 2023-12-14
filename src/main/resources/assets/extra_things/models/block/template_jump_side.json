@@ -1,0 +1,28 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#wall"
+	},
+	"elements": [
+		{
+			"from": [7, 4, 0],
+			"to": [9, 6, 8],
+			"faces": {
+				"east": {"uv": [8, 7, 16, 9], "texture": "#bottomrung"},
+				"west": {"uv": [0, 7, 8, 9], "texture": "#bottomrung"},
+				"up": {"uv": [7, 0, 9, 8], "texture": "#bottomrung"},
+				"down": {"uv": [7, 8, 9, 16], "texture": "#bottomrung"}
+			}
+		},
+		{
+			"from": [7, 11, 0],
+			"to": [9, 13, 8],
+			"faces": {
+				"east": {"uv": [8, 7, 16, 9], "texture": "#toprung"},
+				"west": {"uv": [0, 7, 8, 9], "texture": "#toprung"},
+				"up": {"uv": [7, 0, 9, 8], "texture": "#toprung"},
+				"down": {"uv": [7, 8, 9, 16], "texture": "#toprung"}
+			}
+		}
+	]
+}

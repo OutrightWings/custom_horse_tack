@@ -1,0 +1,92 @@
+plugins {
+    id 'idea'
+    //id 'net.neoforged.gradle' version '[6.0.18,6.2)'
+    id 'net.minecraftforge.gradle' version '6+'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+version = "${minecraft_version}-${mod_version}"
+group = "${mod_group_id}${mod_id}"
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+minecraft {
+    mappings channel: mapping_channel, version: mapping_version
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    copyIdeResources = true
+    runs {
+        configureEach {
+            workingDirectory project.file("run/${it.name}")
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', mod_id
+        }
+    }
+}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
+}
+repositories {
+    maven {
+        url 'https://cursemaven.com'
+    }
+}
+
+dependencies {
+    minecraft "${loader}:${minecraft_version}-${loader_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation fg.deobf("curse.maven:horseGenes-339184:${horse_colors_version}")
+    //implementation fg.deobf("curse.maven:ldlib-626676:4886978")
+//    runtimeOnly fg.deobf("curse.maven:woodgood-628539:4844153")
+//    runtimeOnly fg.deobf("curse.maven:quark-243121:4812006")
+//    runtimeOnly fg.deobf("curse.maven:moonlight-499980:4843863")
+//    runtimeOnly fg.deobf("curse.maven:autoreglib-250363:4100299")
+    runtimeOnly fg.deobf("curse.maven:jei-238222:4712866")
+    //runtimeOnly fg.deobf("curse.maven:dyed-577468:4524244")
+}
+
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
+            loader_version         : loader_version, loader_version_range: loader_version_range,
+            mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors         : mod_authors, mod_description: mod_description, pack_format_number: pack_format_number,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1', // We are version 1 of ourselves
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+    finalizedBy 'reobfJar'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}

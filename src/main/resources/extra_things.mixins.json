@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.outrightwings.extra_things.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "extra_things.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "HorseArmorRendererMixin"
+  ],
+  "minVersion": "0.8"
+}
