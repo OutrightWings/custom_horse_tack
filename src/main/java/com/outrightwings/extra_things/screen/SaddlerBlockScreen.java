@@ -16,15 +16,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import sekelsta.horse_colors.entity.AbstractHorseGenetic;
 import sekelsta.horse_colors.entity.HorseGeneticEntity;
 import sekelsta.horse_colors.entity.ModEntities;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
@@ -52,7 +59,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
     private float scrollOffs;
     private boolean scrolling;
     private int startRow;
-    public HorseGeneticEntity horse;
+    public HorseGeneticEntity horsePreview;
     public SaddlerBlockScreen(SaddlerBlockMenu menu, Inventory inventory, Component name) {
         super(menu, inventory, name);
         menu.registerUpdateListener(this::containerChanged);
@@ -63,8 +70,11 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
 
     protected void init() {
         super.init();
-        horse = new HorseGeneticEntity(ModEntities.HORSE_GENETIC.get(), this.minecraft.level);
-        baseHorseSetup();
+        if (Minecraft.getInstance().level != null){
+            //horsePreview = new Horse(EntityType.HORSE,Minecraft.getInstance().level);
+            horsePreview = new HorseGeneticEntity(ModEntities.HORSE_GENETIC.get(), Minecraft.getInstance().level);
+            baseHorseSetup();
+        }
     }
 
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -75,7 +85,12 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
     private int totalRowCount() {
         return Mth.positiveCeilDiv(this.menu.getSelectablePatterns().size(), PATTERN_COLUMNS);
     }
-
+    public void onClose(){
+        super.onClose();
+        if (this.horsePreview != null) {
+            this.horsePreview.remove(Entity.RemovalReason.DISCARDED);
+        }
+    }
     protected void renderBg(PoseStack poseStack, float tick, int mouseX, int mouseY) {
         this.renderBackground(poseStack);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -137,21 +152,30 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                 }
             }
         }
-
-        InventoryScreen.renderEntityInInventory(i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY,horse);
+        //baseHorseSetup();
+        InventoryScreen.renderEntityInInventory(i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY, horsePreview);
 
     }
-
+    static int count = 0;
     private void baseHorseSetup(){
-        horse.setTamed(true);
+
         ItemStack horsesTack = createBaseTack();
         ItemStack horsesSaddle = new ItemStack(Items.SADDLE);
         /*
-         * This hangs?? But like how else do I set the horse's items??
+         * No hanging, just does nothing
          */
         System.out.println("Before trying to set Items");
-        horse.getSlot(400).set(horsesSaddle);
-        horse.getSlot(401).set(horsesTack);
+        horsePreview.inventory.setItem(0,horsesSaddle);//Made public through accesstransformer
+        horsePreview.inventory.setItem(1,horsesTack);
+        try {
+            var method = AbstractHorseGenetic.class.getDeclaredMethod("updateContainerEquipment");
+            method.setAccessible(true);
+            method.invoke(horsePreview);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(horsePreview.serializeNBT());
+        System.out.println(horsePreview.isSaddled());
         System.out.println("After trying to set Items");
     }
     private ItemStack createBaseTack(){

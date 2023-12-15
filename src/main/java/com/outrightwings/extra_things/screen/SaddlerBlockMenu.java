@@ -285,6 +285,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
             newData.putString("Pattern", tackPattern.getSerializedName());
             newData.putInt("Color", dyecolor.getId());
             listtag.add(newData);
+            System.out.println(tagData);
             outputSlotItem.setTag(tagData);
         }
 
