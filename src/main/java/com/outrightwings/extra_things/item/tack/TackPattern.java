@@ -29,15 +29,6 @@ public enum TackPattern implements StringRepresentable {
     PAD_SQUARE_QUILT("pad_square_quilt","none",false),
     REINS("reins","none",true),
     SADDLE("saddle","none",true),
-    //Trash
-    SADDLE1("saddle","none",true),
-    SADDLE2("saddle","none",true),
-    SADDLE3("saddle","none",true),
-    SADDLE4("saddle","none",true),
-    SADDLE5("saddle","none",true),
-    SADDLE6("saddle","none",true),
-    SADDLE7("saddle","none",true),
-    SADDLE8("saddle","none",true),
     //"Winter" Pattern Needed
     //"Racing" Pattern Needed
     //"Impossible"

@@ -1,5 +1,7 @@
 package com.outrightwings.extra_things.screen;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.outrightwings.extra_things.Main;
@@ -20,9 +22,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,10 +53,8 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
     private static final int PATTERNS_Y = 13;
     private static final int SCROLL_X = 113;
     private static final int SCROLL_Y = 13;
-    private static final int HORSE_X = 142;
-    private static final int HORSE_Y = 60;
-//    @Nullable
-//    private List<Pair<TackPattern, DyeColor>> resultTackPattern;
+    private static final int HORSE_X = 143;
+    private static final int HORSE_Y = 65;
     private ItemStack saddleStack = ItemStack.EMPTY;
     private ItemStack dyeStack = ItemStack.EMPTY;
     private ItemStack patternStack = ItemStack.EMPTY;
@@ -66,7 +68,6 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         super(menu, inventory, name);
         menu.registerUpdateListener(this::containerChanged);
         this.titleLabelY -= 2;
-        //this.minecraft.getEntityModels().bakeLayer(HorseGeneticRenderer.EQUINE_LAYER).getChild("head");
 
     }
 
@@ -162,6 +163,11 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         horsePreview.equipSaddle(null);
         horsePreview.setFlag(4, !horsePreview.inventory.getItem(0).isEmpty());
         horsePreview.setItemSlot(EquipmentSlot.CHEST,horsesTack);
+        saddleUpPartner();
+    }
+    private void saddleUpPartner(){
+        var passenger = new Allay(EntityType.ALLAY, this.minecraft.level);
+        passenger.startRiding(horsePreview);
     }
     private ItemStack createBaseTack(){
         ItemStack horsesTack = new ItemStack(ModItems.CUSTOM_TACK_ITEM.get());
@@ -178,8 +184,51 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         horsesTack.setTag(armorTag);
         return horsesTack;
     }
+    private ItemStack addWoodToTack(ItemStack outputSlotItem){
+        ItemStack baseTack = createBaseTack();
+        CompoundTag baseTackTag = baseTack.getTag();
+        CompoundTag outputSlotItemTag = outputSlotItem.getTag();
+        if(outputSlotItemTag != null){
+            ListTag listtag;
+            listtag = outputSlotItemTag.getList("Patterns", 10);
+            ListTag existing = baseTackTag.getList("Patterns",10);
+            existing.addAll(listtag);
+            baseTackTag.put("Patterns",existing);
+            baseTack.setTag(baseTackTag);
+        }
+        return baseTack;
+    }
     private void updateHorsePreview(ItemStack outputSlotItem){
-        //Put cool code here to update the display horse's tack item
+        var woodToTack = addWoodToTack(outputSlotItem);
+        horsePreview.setItemSlot(EquipmentSlot.CHEST,woodToTack);
+    }
+    private void containerChanged() {
+        ItemStack saddleItem = this.menu.getSaddleSlot().getItem();
+        ItemStack dyeItem = this.menu.getDyeSlot().getItem();
+        ItemStack patternItem = this.menu.getPatternSlot().getItem();
+        ItemStack outputItem = this.menu.getResultSlot().getItem();
+
+        if (!ItemStack.matches(saddleItem, this.saddleStack) || !ItemStack.matches(dyeItem, this.dyeStack) || !ItemStack.matches(patternItem, this.patternStack)) {
+            this.displayPatterns = !saddleItem.isEmpty() && !dyeItem.isEmpty() && !this.hasMaxPatterns && !this.menu.getSelectablePatterns().isEmpty();
+        }
+
+        if (this.startRow >= this.totalRowCount()) {
+            this.startRow = 0;
+            this.scrollOffs = 0.0F;
+        }
+
+        if(!ItemStack.matches(outputItem, Items.AIR.getDefaultInstance())){
+            updateHorsePreview(outputItem);
+        } else if(!ItemStack.matches(saddleItem, Items.AIR.getDefaultInstance())){
+            updateHorsePreview(saddleItem);
+        } else{
+            updateHorsePreview(createBaseTack());
+        }
+
+        this.saddleStack = saddleItem.copy();
+        this.dyeStack = dyeItem.copy();
+        this.patternStack = patternItem.copy();
+
     }
     public boolean mouseClicked(double mouseX, double mouseY, int p_99085_) {
         this.scrolling = false;
@@ -234,28 +283,6 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         }
 
         return true;
-    }
-
-
-    private void containerChanged() {
-        ItemStack saddleItem = this.menu.getSaddleSlot().getItem();
-        ItemStack dyeItem = this.menu.getDyeSlot().getItem();
-        ItemStack outputItem = this.menu.getPatternSlot().getItem();
-
-        if (!ItemStack.matches(saddleItem, this.saddleStack) || !ItemStack.matches(dyeItem, this.dyeStack) || !ItemStack.matches(outputItem, this.patternStack)) {
-            this.displayPatterns = !saddleItem.isEmpty() && !dyeItem.isEmpty() && !this.hasMaxPatterns && !this.menu.getSelectablePatterns().isEmpty();
-        }
-
-        if (this.startRow >= this.totalRowCount()) {
-            this.startRow = 0;
-            this.scrollOffs = 0.0F;
-        }
-
-        updateHorsePreview(outputItem);
-
-        this.saddleStack = saddleItem.copy();
-        this.dyeStack = dyeItem.copy();
-        this.patternStack = outputItem.copy();
     }
 
 }
