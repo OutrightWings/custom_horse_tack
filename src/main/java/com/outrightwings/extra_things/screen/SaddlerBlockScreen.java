@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -31,6 +32,7 @@ import sekelsta.horse_colors.entity.HorseGeneticEntity;
 import sekelsta.horse_colors.entity.ModEntities;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,7 +73,6 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
     protected void init() {
         super.init();
         if (Minecraft.getInstance().level != null){
-            //horsePreview = new Horse(EntityType.HORSE,Minecraft.getInstance().level);
             horsePreview = new HorseGeneticEntity(ModEntities.HORSE_GENETIC.get(), Minecraft.getInstance().level);
             baseHorseSetup();
         }
@@ -156,39 +157,25 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         InventoryScreen.renderEntityInInventory(i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY, horsePreview);
 
     }
-    static int count = 0;
     private void baseHorseSetup(){
-
         ItemStack horsesTack = createBaseTack();
-        ItemStack horsesSaddle = new ItemStack(Items.SADDLE);
-        /*
-         * No hanging, just does nothing
-         */
-        System.out.println("Before trying to set Items");
-        horsePreview.inventory.setItem(0,horsesSaddle);//Made public through accesstransformer
-        horsePreview.inventory.setItem(1,horsesTack);
-        try {
-            var method = AbstractHorseGenetic.class.getDeclaredMethod("updateContainerEquipment");
-            method.setAccessible(true);
-            method.invoke(horsePreview);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(horsePreview.serializeNBT());
-        System.out.println(horsePreview.isSaddled());
-        System.out.println("After trying to set Items");
+        horsePreview.equipSaddle(null);
+        horsePreview.setFlag(4, !horsePreview.inventory.getItem(0).isEmpty());
+        horsePreview.setItemSlot(EquipmentSlot.CHEST,horsesTack);
     }
     private ItemStack createBaseTack(){
         ItemStack horsesTack = new ItemStack(ModItems.CUSTOM_TACK_ITEM.get());
 
-        CompoundTag tagData = new CompoundTag();
-        tagData.putString("Pattern","wood");
-        tagData.putInt("Color",1);
+        CompoundTag armorTag = new CompoundTag();
+        CompoundTag patternTag = new CompoundTag();
+        patternTag.putString("Pattern","wood");
+        patternTag.putInt("Color",1);
 
         ListTag listtag = new ListTag();
-        tagData.put("Patterns", listtag);
+        listtag.add(patternTag);
+        armorTag.put("Patterns", listtag);
 
-        horsesTack.setTag(tagData);
+        horsesTack.setTag(armorTag);
         return horsesTack;
     }
     private void updateHorsePreview(ItemStack outputSlotItem){
