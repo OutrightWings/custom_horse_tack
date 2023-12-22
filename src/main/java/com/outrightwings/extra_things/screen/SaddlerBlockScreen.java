@@ -147,7 +147,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                     RenderSystem.setShaderTexture(0, BG_LOCATION);
                     this.blit(poseStack, cornerX, cornerY, 0, startingCorner, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
                     RenderSystem.setShaderTexture(0,list.get(currentSlot).getPatternIconLocation());
-                    blit(poseStack, cornerX, cornerY, 0, 0, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE,16,16);
+                    blit(poseStack, cornerX, cornerY, 0, 0, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE);
                     if(isHovered){
                         renderTooltip(poseStack, Component.translatable(list.get(currentSlot).getTranslationKey()),cornerX,cornerY);
                     }
