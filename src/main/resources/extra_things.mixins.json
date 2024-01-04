@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "HorseArmorRendererMixin"
+    "HorseArmorRendererMixin",
+    "SaddleMixin"
   ],
   "minVersion": "0.8"
 }

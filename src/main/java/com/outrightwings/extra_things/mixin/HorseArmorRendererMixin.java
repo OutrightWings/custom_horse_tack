@@ -11,10 +11,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeableHorseArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.CarpetBlock;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,21 +35,22 @@ public class HorseArmorRendererMixin {
         if(armor instanceof DyeableHorseArmorItem){
             renderTextureOnHorse(renderTypeBuffer,matrixStack,light,r,g,b,textureLocation,false);
             renderTextureOnHorse(renderTypeBuffer,matrixStack,light,1,1,1,textureLocation,true);
-        } else{
+        }else if(armor instanceof BlockItem){
+            renderTextureOnHorse(renderTypeBuffer,matrixStack,light,r,g,b,textureLocation,false);
+        }else{
             renderTextureOnHorse(renderTypeBuffer,matrixStack,light,1,1,1,textureLocation,false);
         }
-
         CompoundTag tagData =  itemstack.getTag();
-        for(int i = 0; i < TackPattern.getPatternListSize(tagData);i++){
-            Tuple<Integer,String> colorPattern = TackPattern.getColorAndPatternByIndex(tagData,i);
+        for(int i = 0; i < TackPattern.getPatternListSize(tagData);i++) {
+            Tuple<Integer, String> colorPattern = TackPattern.getColorAndPatternByIndex(tagData, i);
 
             int color = TackPattern.getColorFromColorTag(colorPattern.getA());
-            r = (float)(color >> 16 & 255) / 255.0F;
-            g = (float)(color >> 8 & 255) / 255.0F;
-            b = (float)(color & 255) / 255.0F;
+            r = (float) (color >> 16 & 255) / 255.0F;
+            g = (float) (color >> 8 & 255) / 255.0F;
+            b = (float) (color & 255) / 255.0F;
 
             TackPattern tackPattern = TackPattern.getTackPattern(colorPattern.getB());
-            if(tackPattern != null) {
+            if (tackPattern != null) {
                 renderTextureOnHorse(renderTypeBuffer, matrixStack, light, r, g, b, tackPattern.getArmorTextureLocation(), false);
                 ResourceLocation overlayLocation = tackPattern.getOverlayTextureLocation();
                 if (overlayLocation != null) {
@@ -59,16 +58,18 @@ public class HorseArmorRendererMixin {
                 }
             }
         }
+
         ci.cancel();
     }
     public void renderTextureOnHorse(MultiBufferSource renderTypeBuffer, PoseStack stack, int light, float r, float g, float b, ResourceLocation texture, boolean calculateOverlayPath){
         VertexConsumer vertexconsumer;
         if(calculateOverlayPath){
             String path = texture.getPath();
-            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.armorCutoutNoCull(new ResourceLocation(texture.getNamespace(),path.substring(0, path.lastIndexOf('.'))+"_overlay.png")));
+            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.entityCutout(new ResourceLocation(texture.getNamespace(),path.substring(0, path.lastIndexOf('.'))+"_overlay.png")));
         } else{
-            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.armorCutoutNoCull(texture));
+            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.entityCutout(texture));
         }
+
         horseModel.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);
     }
 }
