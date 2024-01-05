@@ -38,7 +38,7 @@ public class Main
         ModMenus.MENUS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(ModBlocks.class);
         MinecraftForge.EVENT_BUS.register(ModItems.class);
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
     private void commonSetup(final FMLCommonSetupEvent event){
     }
@@ -49,10 +49,6 @@ public class Main
     }
     /*
         Todo:
-        * Remove saddle from horse by default
-        * Make reins visable in 3rd person
-        * Rearrange the Saddler GUI
-        * Make horse dummy in Saddler GUI
 
      */
 }

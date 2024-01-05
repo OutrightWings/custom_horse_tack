@@ -1,0 +1,6 @@
+{
+	"parent": "extra_things:block/template_jump_post",
+	"textures": {
+		"wall": "extra_things:block/jump_orange"
+	}
+}

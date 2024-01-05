@@ -1,0 +1,7 @@
+{
+	"parent": "extra_things:block/template_jump_side_tall",
+	"textures": {
+		"wall": "extra_things:block/jump_brown",
+		"toprung": "extra_things:block/jump_brown_top_rung"
+	}
+}

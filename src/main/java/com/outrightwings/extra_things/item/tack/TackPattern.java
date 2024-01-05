@@ -67,7 +67,8 @@ public enum TackPattern implements StringRepresentable {
     CIRCLE("circle","cute",false),
     SIMPLE_SHOULDER("shoulder_simple","cute",false),
     //"Impossible"
-    WOODEN("wood","impossible",true),
+    WOODEN("wood0","impossible",true),
+    WOODEN_DARK("wood1","impossible",true),
     ;
     private final String name;
     private final boolean overlay;

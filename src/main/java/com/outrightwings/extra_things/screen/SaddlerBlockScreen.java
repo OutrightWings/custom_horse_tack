@@ -55,6 +55,13 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
     private static final int SCROLL_Y = 13;
     private static final int HORSE_X = 143;
     private static final int HORSE_Y = 65;
+    private static final int PREVIEW_X = 163 ;
+    private static final int PREVIEW_Y = 65;
+    private static final int PREVIEW_WIDTH = 4;
+    private static final int PREVIEW_HEIGHT = 4;
+    private static final int PREVIEW_BUTTON = 208;
+    private static final int MAX_HORSE_PREVIEWS = 2;
+    private int currentPreview = 0;
     private ItemStack saddleStack = ItemStack.EMPTY;
     private ItemStack dyeStack = ItemStack.EMPTY;
     private ItemStack patternStack = ItemStack.EMPTY;
@@ -119,6 +126,15 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         int k = (int)(41.0F * this.scrollOffs);
         this.blit(poseStack, i + SCROLL_X, j + SCROLL_Y + k, 232 + (this.displayPatterns ? 0 : SCROLLER_WIDTH ), 0, SCROLLER_WIDTH, SCROLLER_HEIGHT);
 
+        boolean isHoveredPrev = mouseX >= i+ PREVIEW_X && mouseY >= j+PREVIEW_Y && mouseX < i+PREVIEW_X + PREVIEW_WIDTH && mouseY < j+PREVIEW_Y + PREVIEW_HEIGHT;
+        int cornerButton;
+        if(isHoveredPrev){
+            cornerButton = PREVIEW_BUTTON + PREVIEW_HEIGHT;
+        }else{
+            cornerButton = PREVIEW_BUTTON;
+        }
+        blit(poseStack, i + PREVIEW_X, j+ PREVIEW_Y, 0, cornerButton, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+
         if (this.displayPatterns) {
             int startingX = i + PATTERNS_X;
             int startingY = j + PATTERNS_Y;
@@ -154,7 +170,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                 }
             }
         }
-        //baseHorseSetup();
+
         InventoryScreen.renderEntityInInventory(i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY, horsePreview);
 
     }
@@ -174,7 +190,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
 
         CompoundTag armorTag = new CompoundTag();
         CompoundTag patternTag = new CompoundTag();
-        patternTag.putString("Pattern","wood");
+        patternTag.putString("Pattern","wood"+currentPreview);
         patternTag.putInt("Color",1);
 
         ListTag listtag = new ListTag();
@@ -256,7 +272,10 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                 this.scrolling = true;
             }
         }
-
+        if(mouseX >= this.leftPos + PREVIEW_X && mouseY >= this.topPos + PREVIEW_Y && mouseX < this.leftPos + PREVIEW_X + PREVIEW_WIDTH && mouseY < this.topPos + PREVIEW_Y + PREVIEW_HEIGHT){
+            currentPreview = currentPreview < MAX_HORSE_PREVIEWS-1 ? ++currentPreview : 0;
+            containerChanged();
+        }
         return super.mouseClicked(mouseX, mouseY, p_99085_);
     }
 

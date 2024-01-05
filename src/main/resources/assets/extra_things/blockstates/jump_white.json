@@ -49,7 +49,7 @@
     },
     {
       "apply": {
-        "model": "extra_things:block/jump_white_side_tall",
+        "model": "extra_things:block/jump_white_tall",
         "uvlock": true
       },
       "when": {
@@ -58,7 +58,7 @@
     },
     {
       "apply": {
-        "model": "extra_things:block/jump_white_side_tall",
+        "model": "extra_things:block/jump_white_tall",
         "uvlock": true,
         "y": 90
       },
@@ -68,7 +68,7 @@
     },
     {
       "apply": {
-        "model": "extra_things:block/jump_white_side_tall",
+        "model": "extra_things:block/jump_white_tall",
         "uvlock": true,
         "y": 180
       },
@@ -78,7 +78,7 @@
     },
     {
       "apply": {
-        "model": "extra_things:block/jump_white_side_tall",
+        "model": "extra_things:block/jump_white_tall",
         "uvlock": true,
         "y": 270
       },

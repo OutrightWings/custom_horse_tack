@@ -1,7 +1,9 @@
 package com.outrightwings.extra_things.screen;
 
 import com.google.common.collect.ImmutableList;
+import com.outrightwings.extra_things.Config;
 import com.outrightwings.extra_things.block.ModBlocks;
+import com.outrightwings.extra_things.item.CustomTackItem;
 import com.outrightwings.extra_things.item.ModItems;
 import com.outrightwings.extra_things.item.TackPatternItem;
 import com.outrightwings.extra_things.item.tack.TackPattern;
@@ -60,7 +62,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
         super(ModMenus.SADDLER_BLOCK_MENU.get(), id);
         this.access = access;
         this.saddleSlot = this.addSlot(new Slot(this.inputContainer, 0, 9, 15) {
-            public boolean mayPlace(ItemStack item) { return item.getItem() instanceof HorseArmorItem; }
+            public boolean mayPlace(ItemStack item) { return item.getItem() instanceof CustomTackItem; }
         });
         this.dyeSlot = this.addSlot(new Slot(this.inputContainer, 1, 9, 33) {
             public boolean mayPlace(ItemStack item) {
@@ -79,7 +81,9 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
 
             public void onTake(Player player, ItemStack item) {
                 SaddlerBlockMenu.this.saddleSlot.remove(1);
-                SaddlerBlockMenu.this.dyeSlot.remove(1);
+                if(Config.consume_dye){
+                    SaddlerBlockMenu.this.dyeSlot.remove(1);
+                }
                 if (!SaddlerBlockMenu.this.saddleSlot.hasItem() || !SaddlerBlockMenu.this.dyeSlot.hasItem()) {
                     SaddlerBlockMenu.this.selectedSlotIndex.set(-1);
                 }
@@ -87,7 +91,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
                 access.execute((level, pos) -> {
                     long l = level.getGameTime();
                     if (SaddlerBlockMenu.this.lastSoundTime != l) {
-                        level.playSound((Player)null, pos, SoundEvents.UI_LOOM_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.playSound(null, pos, SoundEvents.UI_LOOM_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
                         SaddlerBlockMenu.this.lastSoundTime = l;
                     }
 
@@ -251,9 +255,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
     //Wipe inventory clear when player exits
     public void removed(Player player) {
         super.removed(player);
-        this.access.execute((level, pos) -> {
-            this.clearContainer(player, this.inputContainer);
-        });
+        this.clearContainer(player, this.inputContainer);
     }
 
     //Create output item

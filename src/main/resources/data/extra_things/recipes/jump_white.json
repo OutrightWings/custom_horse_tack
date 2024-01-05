@@ -1,13 +1,13 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "iRi",
-        "iii",
-        "i i"
+        "# #",
+        "#R#",
+        "# #"
     ],
     "key": {
-        "i": {
-            "item": "minecraft:iron_ingot"
+        "#": {
+            "item": "minecraft:white_concrete"
         },
         "R": {
             "item": "minecraft:red_dye"
@@ -15,6 +15,7 @@
     },
     "result": {
         "item": "extra_things:jump_white",
-        "count": 4
-    }
+        "count": 12
+    },
+    "group": "simple_jumps"
 }
