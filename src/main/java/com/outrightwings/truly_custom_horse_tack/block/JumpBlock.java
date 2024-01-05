@@ -21,21 +21,4 @@ public class JumpBlock extends WallBlock {
     public boolean connectsTo(BlockState state, boolean bool, Direction direction) {
         return state.is(connectables);
     }
-//    public WallSide makeWallState(boolean state, VoxelShape aboveShape, VoxelShape testShape) {
-//        if (state) {
-//            return WallSide.LOW;
-//        } else {
-//            return WallSide.NONE;
-//        }
-//    }
-//    public boolean shouldRaisePost(BlockState jump, BlockState above, VoxelShape shape) {
-//        boolean post = false;
-//        boolean south = jump.getValue(SOUTH_WALL) == WallSide.NONE;
-//        boolean west = jump.getValue(WEST_WALL) == WallSide.NONE;
-//        boolean east = jump.getValue(EAST_WALL) == WallSide.NONE;
-//        boolean north = jump.getValue(NORTH_WALL) == WallSide.NONE;
-//        //Is above a wall block, or do the sides turn, or is it a torch esk block on it
-//        post = (above.getBlock() instanceof WallBlock && above.getValue(UP)) || south && west && east && north || north != south || east != west || above.is(BlockTags.WALL_POST_OVERRIDE);
-//        return post;
-//    }
 }
