@@ -1,0 +1,22 @@
+{
+  "replace":false,
+  "values": [
+    "truly_custom_horse_tack:jump_white",
+    "truly_custom_horse_tack:jump_orange",
+    "truly_custom_horse_tack:jump_magenta",
+    "truly_custom_horse_tack:jump_light_blue",
+    "truly_custom_horse_tack:jump_yellow",
+    "truly_custom_horse_tack:jump_lime",
+    "truly_custom_horse_tack:jump_pink",
+    "truly_custom_horse_tack:jump_gray",
+    "truly_custom_horse_tack:jump_light_gray",
+    "truly_custom_horse_tack:jump_cyan",
+    "truly_custom_horse_tack:jump_purple",
+    "truly_custom_horse_tack:jump_blue",
+    "truly_custom_horse_tack:jump_brown",
+    "truly_custom_horse_tack:jump_green",
+    "truly_custom_horse_tack:jump_red",
+    "truly_custom_horse_tack:jump_black"
+
+  ]
+}

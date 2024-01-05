@@ -1,0 +1,8 @@
+{
+	"parent": "truly_custom_horse_tack:block/template_jump_side",
+	"textures": {
+		"wall": "truly_custom_horse_tack:block/jump_red",
+		"toprung": "truly_custom_horse_tack:block/jump_red_top_rung",
+		"bottomrung": "truly_custom_horse_tack:block/jump_red_top_rung"
+	}
+}

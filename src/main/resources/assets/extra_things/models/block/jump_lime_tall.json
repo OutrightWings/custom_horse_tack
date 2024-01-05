@@ -1,7 +1,0 @@
-{
-	"parent": "extra_things:block/template_jump_side_tall",
-	"textures": {
-		"wall": "extra_things:block/jump_lime",
-		"toprung": "extra_things:block/jump_lime_top_rung"
-	}
-}

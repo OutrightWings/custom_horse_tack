@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.outrightwings.truly_custom_horse_tack.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "truly_custom_horse_tack.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "HorseArmorRendererMixin",
+    "SaddleMixin"
+  ],
+  "minVersion": "0.8"
+}

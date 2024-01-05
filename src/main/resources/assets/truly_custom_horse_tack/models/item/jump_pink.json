@@ -1,0 +1,6 @@
+{
+	"parent": "truly_custom_horse_tack:item/template_jump_item",
+	"textures": {
+		"wall": "truly_custom_horse_tack:item/jump_pink"
+	}
+}

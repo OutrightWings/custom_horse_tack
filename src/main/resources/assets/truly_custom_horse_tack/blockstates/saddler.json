@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "truly_custom_horse_tack:block/saddler",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "truly_custom_horse_tack:block/saddler"
+    },
+    "facing=south": {
+      "model": "truly_custom_horse_tack:block/saddler",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "truly_custom_horse_tack:block/saddler",
+      "y": 270
+    }
+  }
+}

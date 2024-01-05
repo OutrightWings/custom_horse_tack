@@ -1,6 +1,0 @@
-{
-	"parent": "extra_things:item/template_jump_item",
-	"textures": {
-		"wall": "extra_things:item/jump_lime"
-	}
-}
