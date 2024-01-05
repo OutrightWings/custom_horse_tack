@@ -14,7 +14,7 @@ import java.util.List;
 
 public enum TackPattern implements StringRepresentable {
     //No Pattern Needed
-    REINS("reins","none",false),
+    REINS("reins","none",true),
     SADDLE("saddle","none",true),
     BRIDLE("bridle","none",true),
     HALTER("halter","none",true),
