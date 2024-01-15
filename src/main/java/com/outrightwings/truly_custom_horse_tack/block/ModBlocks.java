@@ -7,11 +7,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
@@ -37,16 +38,15 @@ public class ModBlocks {
     public static final RegistryObject<WallBlock> JUMP_BLACK = BLOCKS.register("jump_black",() -> new JumpBlock("simple_jumps",jumpProperties()));
     public static final RegistryObject<Block> SADDLER = BLOCKS.register("saddler",()->new SaddlerBlock(BlockBehaviour.Properties.copy(Blocks.LOOM)));
  @SubscribeEvent
-    public static void onRegisterItems(final RegisterEvent event) {
-        if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
-            BLOCKS.getEntries().forEach( (blockRegistryObject) -> {
-                Block block = blockRegistryObject.get();
-                Item.Properties properties = new Item.Properties().tab(ModCreativeTab.instance);
-                Supplier<Item> blockItemFactory = () -> new BlockItem(block, properties);
-                event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
-            });
-        }
-    }
+    public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
+        final IForgeRegistry<Item> registry = event.getRegistry();
+        BLOCKS.getEntries().stream().map(RegistryObject::get).forEach( (block) -> {
+            final Item.Properties properties = new Item.Properties().tab(ModCreativeTab.instance);
+            final BlockItem blockItem = new BlockItem(block, properties);
+            blockItem.setRegistryName(block.getRegistryName());
+            registry.register(blockItem);
+        });
+ }
     private static BlockBehaviour.Properties jumpProperties(){
         return BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F);
     }

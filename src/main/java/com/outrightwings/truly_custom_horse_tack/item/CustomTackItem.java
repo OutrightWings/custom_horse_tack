@@ -5,6 +5,7 @@ import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.DyeColor;
@@ -27,7 +28,7 @@ public class CustomTackItem extends HorseArmorItem {
             var pattern = TackPattern.getTackPattern(colorPattern.getB());
             var patternName = pattern != null ? pattern.getSerializedName() : "unknown";
 
-            list.add(Component.translatable(  String.format("tooltip.%s.%s.%s", Main.MODID,colorName,patternName)).withStyle(ChatFormatting.GRAY));
+            list.add(new TranslatableComponent(String.format("tooltip.%s.%s.%s", Main.MODID,colorName,patternName)).withStyle(ChatFormatting.GRAY));
         }
     }
 }

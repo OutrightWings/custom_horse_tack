@@ -53,8 +53,8 @@ dependencies {
     minecraft "${loader}:${minecraft_version}-${loader_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf("curse.maven:horseGenes-339184:${horse_colors_version}")
-    runtimeOnly fg.deobf("curse.maven:jei-238222:4712866")
-    runtimeOnly fg.deobf("curse.maven:ride-along-517147:4943436")
+    runtimeOnly fg.deobf("curse.maven:jei-238222:4593548")
+    runtimeOnly fg.deobf("curse.maven:ride-along-517147:3609751")
 }
 
 tasks.withType(ProcessResources).configureEach {

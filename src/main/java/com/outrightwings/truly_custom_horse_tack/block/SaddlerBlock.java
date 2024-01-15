@@ -4,6 +4,7 @@ import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.screen.SaddlerBlockMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -33,14 +34,14 @@ public class SaddlerBlock extends HorizontalDirectionalBlock{
     //You say deprecated, but the other didn't trigger? Perhaps am dumb
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            NetworkHooks.openScreen(serverPlayer, getMenuProvider(level, pos));
+            NetworkHooks.openGui(serverPlayer, getMenuProvider(level, pos));
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
     public MenuProvider getMenuProvider(Level level, BlockPos pos) {
         return new SimpleMenuProvider(
                 (containerId, playerInventory, splayer) -> new SaddlerBlockMenu(containerId, playerInventory),
-                Component.translatable("menu.title."+ Main.MODID +".saddler_block_menu")
+                new TranslatableComponent("menu.title."+ Main.MODID +".saddler_block_menu")
         );
     }
 }

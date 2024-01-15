@@ -13,13 +13,14 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.animal.allay.Allay;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.*;
@@ -155,7 +156,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                     RenderSystem.setShaderTexture(0,list.get(currentSlot).getPatternIconLocation());
                     blit(poseStack, cornerX, cornerY, 0, 0, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE);
                     if(isHovered){
-                        renderTooltip(poseStack, Component.translatable(list.get(currentSlot).getTranslationKey()),cornerX,cornerY);
+                        renderTooltip(poseStack, new TranslatableComponent(list.get(currentSlot).getTranslationKey()),cornerX,cornerY);
                     }
                 }
             }
@@ -172,7 +173,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         saddleUpPartner();
     }
     private void saddleUpPartner(){
-        var passenger = new Allay(EntityType.ALLAY, this.minecraft.level);
+        var passenger = new Villager(EntityType.VILLAGER, this.minecraft.level);
         passenger.startRiding(horsePreview);
     }
     private ItemStack createBaseTack(){
