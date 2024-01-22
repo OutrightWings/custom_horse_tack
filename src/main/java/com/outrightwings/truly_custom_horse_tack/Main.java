@@ -2,6 +2,7 @@ package com.outrightwings.truly_custom_horse_tack;
 
 import com.mojang.logging.LogUtils;
 import com.outrightwings.truly_custom_horse_tack.block.ModBlocks;
+import com.outrightwings.truly_custom_horse_tack.client.event.ClientEvents;
 import com.outrightwings.truly_custom_horse_tack.item.ModItems;
 import com.outrightwings.truly_custom_horse_tack.screen.ModMenus;
 import com.outrightwings.truly_custom_horse_tack.screen.SaddlerBlockScreen;
@@ -30,9 +31,11 @@ public class Main
         modEventBus.addListener(this::clientSetup);
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
+        ModBlocks.BLOCK_ENTITIES.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(ModBlocks.class);
         MinecraftForge.EVENT_BUS.register(ModItems.class);
+        MinecraftForge.EVENT_BUS.register(ClientEvents.class);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
     private void commonSetup(final FMLCommonSetupEvent event){
