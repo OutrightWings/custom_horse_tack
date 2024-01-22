@@ -15,7 +15,7 @@ public class SaddleRack extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return null;
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return ModBlocks.SADDLE_RACK_BE.get().create(pos,state);
     }
 }

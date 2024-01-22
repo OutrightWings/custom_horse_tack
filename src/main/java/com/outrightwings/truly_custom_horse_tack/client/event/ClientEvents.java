@@ -15,5 +15,6 @@ public class ClientEvents {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
         event.registerBlockEntityRenderer(ModBlocks.HEAD_STAND_BE.get(),HeadStandBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.SADDLE_RACK_BE.get(), SaddleRackBlockEntityRenderer::new);
+        System.out.println("Renderers Registered BITCH\n\n\n\n\n\n");
     }
 }
