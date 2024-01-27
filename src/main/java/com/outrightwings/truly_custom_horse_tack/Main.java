@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.outrightwings.truly_custom_horse_tack.block.ModBlocks;
 import com.outrightwings.truly_custom_horse_tack.client.event.ClientEvents;
 import com.outrightwings.truly_custom_horse_tack.item.ModItems;
+import com.outrightwings.truly_custom_horse_tack.networking.ModPacketHandler;
 import com.outrightwings.truly_custom_horse_tack.screen.ModMenus;
 import com.outrightwings.truly_custom_horse_tack.screen.SaddlerBlockScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -39,6 +40,9 @@ public class Main
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
     private void commonSetup(final FMLCommonSetupEvent event){
+        event.enqueueWork(() -> {
+            ModPacketHandler.register();
+        });
     }
     private void clientSetup(final FMLClientSetupEvent event){
         event.enqueueWork(

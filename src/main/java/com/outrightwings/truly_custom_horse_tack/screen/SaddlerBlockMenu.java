@@ -194,19 +194,19 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
     }
 
     //Where should stuff go when you shift click it?
-    public ItemStack quickMoveStack(Player p_39883_, int p_39884_) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(p_39884_);
+        Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            if (p_39884_ == this.resultSlot.index) {
+            if (index == this.resultSlot.index) {
                 if (!this.moveItemStackTo(itemstack1, 4, 40, true)) {
                     return ItemStack.EMPTY;
                 }
 
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (p_39884_ != this.dyeSlot.index && p_39884_ != this.saddleSlot.index && p_39884_ != this.patternSlot.index) {
+            } else if (index != this.dyeSlot.index && index != this.saddleSlot.index && index != this.patternSlot.index) {
                 if (itemstack1.getItem() instanceof HorseArmorItem) {
                     if (!this.moveItemStackTo(itemstack1, this.saddleSlot.index, this.saddleSlot.index + 1, false)) {
                         return ItemStack.EMPTY;
@@ -219,11 +219,11 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(itemstack1, this.patternSlot.index, this.patternSlot.index + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (p_39884_ >= 4 && p_39884_ < 31) {
+                } else if (index >= 4 && index < 31) {
                     if (!this.moveItemStackTo(itemstack1, 31, 40, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (p_39884_ >= 31 && p_39884_ < 40 && !this.moveItemStackTo(itemstack1, 4, 31, false)) {
+                } else if (index >= 31 && index < 40 && !this.moveItemStackTo(itemstack1, 4, 31, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemstack1, 4, 40, false)) {
@@ -240,7 +240,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            slot.onTake(p_39883_, itemstack1);
+            slot.onTake(player, itemstack1);
         }
         return itemstack;
     }
