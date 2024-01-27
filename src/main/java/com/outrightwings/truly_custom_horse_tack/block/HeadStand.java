@@ -1,6 +1,7 @@
 package com.outrightwings.truly_custom_horse_tack.block;
 
 import com.outrightwings.truly_custom_horse_tack.block.entity.HeadStandBlockEntity;
+import com.outrightwings.truly_custom_horse_tack.block.entity.SaddlerRackBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -37,17 +38,18 @@ public class HeadStand extends BaseEntityBlock {
             BlockEntity entity = level.getBlockEntity(pos);
             if(entity instanceof HeadStandBlockEntity stand){
                 ItemStack stack = player.getItemInHand(hand);
-                if(stack.getItem() == Blocks.AIR.asItem()){
-                    //System.out.println("Nothing in hand\n");
+                if(stack.isEmpty()){
                     player.addItem(stand.itemHandler.extractItem(0,1,false));
-                } else {
-                    //System.out.println("Item in hand\n");
-                    stand.itemHandler.insertItem(0,stack,false);
+                } else if(stand.itemHandler.isItemValid(0,stack)){
+                    ItemStack remaining = stand.itemHandler.insertItem(0,stack.copy(),false);
+                    if(remaining.isEmpty())
+                        stack.shrink(1);
                 }
-                //System.out.println(stand.itemHandler.serializeNBT()+"\n\n");
+                return InteractionResult.CONSUME;
             }
+            return InteractionResult.PASS;
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
