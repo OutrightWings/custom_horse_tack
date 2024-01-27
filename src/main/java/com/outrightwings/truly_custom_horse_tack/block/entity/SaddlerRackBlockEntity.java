@@ -2,6 +2,8 @@ package com.outrightwings.truly_custom_horse_tack.block.entity;
 
 import com.outrightwings.truly_custom_horse_tack.block.ModBlocks;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
+import com.outrightwings.truly_custom_horse_tack.networking.ModPacketHandler;
+import com.outrightwings.truly_custom_horse_tack.networking.SyncItemsPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +26,7 @@ public class SaddlerRackBlockEntity extends BlockEntity {
             setChanged();
             if(!level.isClientSide()) {
                 System.out.println("Should Send Bitch/n/n/n");
+                ModPacketHandler.sendToClients(new SyncItemsPacket(this,worldPosition));
             }
         }
 
@@ -60,6 +63,11 @@ public class SaddlerRackBlockEntity extends BlockEntity {
     public void load(CompoundTag nbt) {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+    }
+    public void setHandler(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
+        }
     }
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
