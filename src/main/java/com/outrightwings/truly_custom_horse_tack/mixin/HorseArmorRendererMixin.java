@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
-import net.minecraft.client.Minecraft;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.TextureCache;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -18,10 +18,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import sekelsta.horse_colors.client.renderer.CustomLayeredTexture;
 import sekelsta.horse_colors.client.renderer.HorseArmorLayer;
 import sekelsta.horse_colors.client.renderer.HorseGeneticModel;
-import sekelsta.horse_colors.client.renderer.TextureLayer;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
 
 import java.util.Map;
@@ -42,7 +40,7 @@ public class HorseArmorRendererMixin {
         }else if(armor instanceof BlockItem){
             renderTextureOnHorse(renderTypeBuffer,matrixStack,light,r,g,b,textureLocation,false);
         }else if(armor instanceof CustomTackItem){
-            ResourceLocation customTackCached = getTexture(entityIn);
+            ResourceLocation customTackCached = TextureCache.getTexture(entityIn.getArmor());
             if(customTackCached != null){
                 renderTextureOnHorse(renderTypeBuffer, matrixStack, light, 1, 1, 1, customTackCached, false);
             }
@@ -61,19 +59,5 @@ public class HorseArmorRendererMixin {
         }
 
         horseModel.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);
-    }
-    public ResourceLocation getTexture(AbstractHorseGenetic entity) {
-            ItemStack armor = entity.getArmor();
-            if(armor.getItem() instanceof CustomTackItem custom){
-                ResourceLocation resourcelocation = LAYER_CACHE.get(armor.getTag());
-                if (resourcelocation == null) {
-                    TextureLayer l = custom.getTextureLayers(armor);
-                    resourcelocation = new ResourceLocation(l.getUniqueName());
-                    Minecraft.getInstance().getTextureManager().register(resourcelocation, new CustomLayeredTexture(custom.getTextureLayers(armor)));
-                    LAYER_CACHE.put(armor.getTag(), resourcelocation);
-                }
-                return resourcelocation;
-            }
-            return null;
     }
 }
