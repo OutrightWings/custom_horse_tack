@@ -11,13 +11,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class RackWallModel extends Model {
-    private final ModelPart stand;
-    private final ModelPart body;
+public class RackWallModel extends DisplayModel {
     public RackWallModel(ModelPart root) {
-        super(RenderType::entityCutoutNoCull);
-        this.stand = root.getChild("stand");
-        this.body = root.getChild("body");
+        super(root, RenderType::entityCutoutNoCull);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -46,11 +42,5 @@ public class RackWallModel extends Model {
         PartDefinition horseRightSaddleMetal = horseRightSaddleRope.addOrReplaceChild("horseRightSaddleMetal", CubeListBuilder.create().texOffs(74, 4).addBox(-0.5F, 12.0F, -1.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        stand.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

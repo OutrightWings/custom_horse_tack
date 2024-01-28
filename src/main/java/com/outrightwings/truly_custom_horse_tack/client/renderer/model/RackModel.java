@@ -11,14 +11,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class RackModel extends Model {
-    private final ModelPart stand;
-    public final ModelPart body;
+public class RackModel extends DisplayModel {
 
     public RackModel(ModelPart root) {
-        super(RenderType::entityCutoutNoCull);
-        this.stand = root.getChild("stand");
-        this.body = root.getChild("body");
+        super(root, RenderType::entityCutoutNoCull);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -50,9 +46,5 @@ public class RackModel extends Model {
 
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        stand.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-    }
+
 }

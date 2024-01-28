@@ -1,11 +1,5 @@
 package com.outrightwings.truly_custom_horse_tack.client.renderer.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.outrightwings.truly_custom_horse_tack.Main;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -14,18 +8,19 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class HeadStandModel extends DisplayModel {
-
-    public HeadStandModel(ModelPart root) {
+public class HeadStandWallModel extends DisplayModel{
+    public HeadStandWallModel(ModelPart root) {
         super(root, RenderType::entityCutoutNoCull);
     }
-
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition stand = partdefinition.addOrReplaceChild("stand", CubeListBuilder.create().texOffs(25, 73).addBox(-1.5F, -7.0F, 0.0F, 3.0F, 6.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(44, 80).addBox(-6.0F, -1.0F, -6.0F, 12.0F, 1.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition stand = partdefinition.addOrReplaceChild("stand", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+
+        PartDefinition cube_r1 = stand.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(44, 80).addBox(-6.0F, 7.0F, 2.0F, 12.0F, 1.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 1.5708F, 0.0F, 0.0F));
+
+        PartDefinition cube_r2 = stand.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(25, 73).addBox(-1.5F, -7.0F, -7.0F, 3.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
 
         PartDefinition body = stand.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 1.0F, 2.0F));
 
