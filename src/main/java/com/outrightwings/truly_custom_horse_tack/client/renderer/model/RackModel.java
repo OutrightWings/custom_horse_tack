@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class RackModel extends Model {
     private final ModelPart stand;
-    private final ModelPart body;
+    public final ModelPart body;
 
     public RackModel(ModelPart root) {
         super(RenderType::entityCutoutNoCull);
@@ -32,7 +32,7 @@ public class RackModel extends Model {
                 .texOffs(8, 5).addBox(-1.0F, -11.0F, -7.0F, 2.0F, 9.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 0).addBox(-4.5F, -15.0F, -8.0F, 9.0F, 4.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 34).addBox(-5.0F, -8.1F, -19.0F, 10.0F, 10.0F, 24.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 17.0F, 6.0F));
+        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 34).addBox(-5.0F, -8.01F, -19.0F, 10.0F, 10.0F, 24.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 17.0F, 6.0F));
 
         PartDefinition horseSaddleBottom = body.addOrReplaceChild("horseSaddleBottom", CubeListBuilder.create().texOffs(80, 0).addBox(-5.0F, 0.0F, -3.0F, 10.0F, 1.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -9.0F, -7.0F));
 

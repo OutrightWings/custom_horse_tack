@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class HeadStandModel extends Model {
     private final ModelPart horse;
-    public final ModelPart stand;
+    private final ModelPart stand;
 
     public HeadStandModel(ModelPart root) {
         super(RenderType::entityCutoutNoCull);
@@ -34,7 +34,7 @@ public class HeadStandModel extends Model {
 
         PartDefinition head = horse.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -10.0F, -1.5F, 5.0F, 5.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -7.0F, -7.0F, 0.2618F, 0.0F, 0.0F));
 
-        PartDefinition upperMouth = head.addOrReplaceChild("upperMouth", CubeListBuilder.create().texOffs(24, 18).addBox(-2.0F, -10.0F, -7.0F, 4.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition upperMouth = head.addOrReplaceChild("upperMouth", CubeListBuilder.create().texOffs(24, 18).addBox(-2.0F, -9.99F, -7.0F, 4.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition lowerMouth = head.addOrReplaceChild("lowerMouth", CubeListBuilder.create().texOffs(24, 27).addBox(-2.0F, -7.0F, -6.5F, 4.0F, 2.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -56,7 +56,7 @@ public class HeadStandModel extends Model {
 
         PartDefinition mane = neck.addOrReplaceChild("mane", CubeListBuilder.create().texOffs(58, 0).addBox(-1.0F, -11.5F, 6.0F, 2.0F, 16.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, -1.0F));
 
-        PartDefinition base = partdefinition.addOrReplaceChild("base", CubeListBuilder.create().texOffs(44, 80).addBox(-6.0F, -1.0F, -6.0F, 12.0F, 1.0F, 12.0F, new CubeDeformation(0.0F))
+        PartDefinition stand = partdefinition.addOrReplaceChild("base", CubeListBuilder.create().texOffs(44, 80).addBox(-6.0F, -1.0F, -6.0F, 12.0F, 1.0F, 12.0F, new CubeDeformation(0.0F))
                 .texOffs(25, 73).addBox(-1.5F, -7.0F, 0.0F, 3.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
