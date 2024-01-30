@@ -25,7 +25,7 @@ public class RackWallModel extends DisplayModel {
 
         PartDefinition cube_r1 = stand.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(1, 21).addBox(-1.0F, -3.0F, -6.5F, 2.0F, 2.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -2.0F, 3.5F, -0.7854F, 0.0F, 0.0F));
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 34).addBox(-5.0F, -2.1F, -19.0F, 10.0F, 10.0F, 24.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 17.0F, 5.0F));
+        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 34).addBox(-5.0F, -2.01F, -19.0F, 10.0F, 10.0F, 24.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 17.0F, 5.0F));
 
         PartDefinition horseSaddleBottom = body.addOrReplaceChild("horseSaddleBottom", CubeListBuilder.create().texOffs(80, 0).addBox(-5.0F, 6.0F, -3.0F, 10.0F, 1.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -9.0F, -7.0F));
 

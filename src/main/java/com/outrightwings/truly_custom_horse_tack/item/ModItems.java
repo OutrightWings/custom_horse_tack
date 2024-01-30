@@ -1,6 +1,7 @@
 package com.outrightwings.truly_custom_horse_tack.item;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
+import com.outrightwings.truly_custom_horse_tack.block.ModBlocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,20 +28,12 @@ public class ModItems {
     public static final RegistryObject<Item> IMPOSSIBLE_TACK_PATTERN = ITEMS.register("impossible_tack_pattern",() -> new TackPatternItem("impossible",(new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> CUTE_TACK_PATTERN = ITEMS.register("cute_tack_pattern",() -> new TackPatternItem("cute",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
 
+    public static final RegistryObject<Item> SADDLE_RACK = ITEMS.register("saddle_rack",() -> new StandingAndWallBlockItem(ModBlocks.SADDLE_RACK.get(),ModBlocks.SADDLE_RACK_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
+    public static final RegistryObject<Item> HEAD_STAND = ITEMS.register("head_stand",() -> new StandingAndWallBlockItem(ModBlocks.HEAD_STAND.get(),ModBlocks.HEAD_STAND_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
     private static RegistryObject<HorseArmorItem> registerHorseArmor(String name, int protection){
         return ITEMS.register(name, () -> new CustomTackItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     }
     private static RegistryObject<DyeableHorseArmorItem> registerDyeableHorseArmor(String name, int protection){
         return ITEMS.register(name, () -> new DyeableHorseArmorItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
-    }
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public static void registerItemColors(RegisterColorHandlersEvent.Item event){
-//        ItemColors itemColors = event.getItemColors();
-//        event.register((stack, tintIndex) -> {
-//                    return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-//                },
-//                ModItems.HALTER_DYEABLE.get(),ModItems.BLANKET_DYEABLE.get(),ModItems.JUMPING_DYEABLE.get(),ModItems.ENGLISH_DYEABLE.get(),ModItems.SADDLE_PAD_DYEABLE.get());
-
     }
 }
