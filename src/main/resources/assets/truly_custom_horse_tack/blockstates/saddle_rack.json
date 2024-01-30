@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "minecraft:block/air"
+      "model": "truly_custom_horse_tack:block/entity"
     }
   }
 }
