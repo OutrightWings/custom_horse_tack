@@ -4,7 +4,10 @@ import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.RackWallModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SaddleRackWallBlockEntityRenderer extends DisplayModelEntityRenderer{
     public SaddleRackWallBlockEntityRenderer(BlockEntityRendererProvider.Context context){
         this.displayModel = new RackWallModel(RackWallModel.createBodyLayer().bakeRoot());
