@@ -49,6 +49,10 @@ public class Main
     }
     /*
         Todo:
-
+        * Bells
+            * Make noise?
+        * Cauldren removes last option
+        * Crafting to copy onto blank
+        * Better Item texture for custom Tack
      */
 }
