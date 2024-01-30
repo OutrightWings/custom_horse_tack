@@ -32,7 +32,7 @@ public enum TackPattern implements StringRepresentable {
     //"Winter" Pattern Needed
     REINS_LIGHTS("reins_lights","winter",false),
     REINS_STRIPED("reins_striped","winter",false),
-    REINS_LIGHTS_RAINBOW("reins_lights_rainbow","winter",true),
+    REINS_LIGHTS_RAINBOW("reins_lights_rainbow","impossible",true),
     POOFY_HOOD("poofy_hood","winter",true),
     POOFY_HOOD_FUZZ("poofy_hood_fuzz","winter",false),
     POOFY_BLANKET("poofy_blanket","winter",true),
