@@ -1,0 +1,10 @@
+{
+  "replace":false,
+  "values": [
+    "truly_custom_horse_tack:saddler",
+    "truly_custom_horse_tack:saddle_rack",
+    "truly_custom_horse_tack:saddle_rack_wall",
+    "truly_custom_horse_tack:head_stand",
+    "truly_custom_horse_tack:head_stand_wall"
+  ]
+}
