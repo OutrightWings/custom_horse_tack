@@ -47,9 +47,13 @@ public class HeadStandModel extends DisplayModel {
 
         PartDefinition neck = body.addOrReplaceChild("neck", CubeListBuilder.create().texOffs(0, 12).addBox(-2.05F, -9.8F, -2.0F, 4.0F, 14.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -7.0F, -4.0F, 0.5236F, 0.0F, 0.0F));
 
-        PartDefinition horseLeftRein = neck.addOrReplaceChild("horseLeftRein", CubeListBuilder.create().texOffs(44, 10).addBox(2.6F, -6.0F, -6.0F, 0.0F, 3.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.5236F, 0.0F, 0.0F));
+        PartDefinition horseLeftRein = neck.addOrReplaceChild("horseLeftRein", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.5236F, 0.0F, 0.0F));
 
-        PartDefinition horseRightRein = neck.addOrReplaceChild("horseRightRein", CubeListBuilder.create().texOffs(44, 5).addBox(-2.6F, -6.0F, -6.0F, 0.0F, 3.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.5236F, 0.0F, 0.0F));
+        PartDefinition horseLeftRein_r1 = horseLeftRein.addOrReplaceChild("horseLeftRein_r1", CubeListBuilder.create().texOffs(44, 10).addBox(0.0F, -1.5F, -9.0F, 0.0F, 3.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.6F, -4.5F, 2.0F, -0.1309F, 0.0F, 0.0F));
+
+        PartDefinition horseRightRein = neck.addOrReplaceChild("horseRightRein", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.5236F, 0.0F, 0.0F));
+
+        PartDefinition horseRightRein_r1 = horseRightRein.addOrReplaceChild("horseRightRein_r1", CubeListBuilder.create().texOffs(44, 5).addBox(0.0F, -1.5F, -9.0F, 0.0F, 3.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.6F, -4.5F, 2.0F, -0.1309F, 0.0F, 0.0F));
 
         PartDefinition mane = neck.addOrReplaceChild("mane", CubeListBuilder.create().texOffs(58, 0).addBox(-1.0F, -11.5F, 6.0F, 2.0F, 16.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, -1.0F));
 
