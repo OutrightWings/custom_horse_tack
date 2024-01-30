@@ -3,7 +3,6 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.block.SingleInventoryBlock;
 import com.outrightwings.truly_custom_horse_tack.block.entity.SingleInventoryBlockEntity;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.DisplayModel;
@@ -17,8 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class DisplayModelEntityRenderer implements BlockEntityRenderer<SingleInventoryBlockEntity> {
-    protected DisplayModel ground;
-    protected DisplayModel wall;
+    protected DisplayModel displayModel;
     protected ResourceLocation standTexture;
     @Override
     public void render(SingleInventoryBlockEntity blockEntity, float ticks, PoseStack pose, MultiBufferSource bufferSource, int light, int overlay) {
@@ -30,13 +28,13 @@ public abstract class DisplayModelEntityRenderer implements BlockEntityRenderer<
         pose.mulPose(Vector3f.YP.rotationDegrees(deg));
         //Stand
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(standTexture));
-        this.ground.stand.render(pose,vertexConsumer,light,overlay,1,1,1,1);
+        this.displayModel.stand.render(pose,vertexConsumer,light,overlay,1,1,1,1);
         //Tack
         ItemStack tack = blockEntity.getItem(0);
         ResourceLocation texture = TextureCache.getTexture(tack);
         if(texture!=null){
             VertexConsumer vertexConsumer1 = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
-            this.ground.body.render(pose,vertexConsumer1,light,overlay,1,1,1,1);
+            this.displayModel.body.render(pose,vertexConsumer1,light,overlay,1,1,1,1);
         }
         pose.popPose();
     }

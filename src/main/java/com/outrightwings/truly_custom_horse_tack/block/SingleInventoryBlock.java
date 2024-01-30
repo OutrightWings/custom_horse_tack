@@ -41,7 +41,7 @@ public abstract class SingleInventoryBlock extends Block implements EntityBlock 
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof HeadStandBlockEntity be) {
+            if (blockEntity instanceof SingleInventoryBlockEntity be) {
                 be.drops();
             }
         }
