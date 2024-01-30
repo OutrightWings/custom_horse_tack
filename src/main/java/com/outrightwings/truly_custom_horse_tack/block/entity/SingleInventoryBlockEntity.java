@@ -28,17 +28,17 @@ public abstract class SingleInventoryBlockEntity extends BlockEntity implements 
     }
     @Override
     public int[] getSlotsForFace(Direction dir) {
-        return new int[0];
+        return new int[1];
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int p_19235_, ItemStack p_19236_, @Nullable Direction p_19237_) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int p_19239_, ItemStack p_19240_, Direction p_19241_) {
-        return false;
+        return true;
     }
 
     @Override
@@ -86,7 +86,7 @@ public abstract class SingleInventoryBlockEntity extends BlockEntity implements 
     public void clearContent() {
         this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
     }
-    //should only be server side. called when inventory has changed
+
     @Override
     public void setChanged() {
         if (this.level == null) return;
