@@ -29,7 +29,7 @@ public abstract class DisplayModelEntityRenderer implements BlockEntityRenderer<
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(standTexture));
         this.ground.stand.render(pose,vertexConsumer,light,overlay,1,1,1,1);
         //Tack
-        ItemStack tack = blockEntity.itemHandler.getStackInSlot(0);
+        ItemStack tack = blockEntity.getItem(0);
         ResourceLocation texture = TextureCache.getTexture(tack);
         if(texture!=null){
             VertexConsumer vertexConsumer1 = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));

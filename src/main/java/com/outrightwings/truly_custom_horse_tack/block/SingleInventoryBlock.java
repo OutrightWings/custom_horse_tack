@@ -26,11 +26,10 @@ public abstract class SingleInventoryBlock extends Block implements EntityBlock 
             if(entity instanceof SingleInventoryBlockEntity stand){
                 ItemStack stack = player.getItemInHand(hand);
                 if(stack.isEmpty()){
-                    player.addItem(stand.itemHandler.extractItem(0,1,false));
-                } else if(stand.itemHandler.isItemValid(0,stack)){
-                    ItemStack remaining = stand.itemHandler.insertItem(0,stack.copy(),false);
-                    if(remaining.isEmpty())
-                        stack.shrink(1);
+                    player.addItem(stand.removeItem(0,1));
+                } else if(stand.validItem(stack) && stand.isEmpty()){
+                    stand.setItem(0,stack);
+                    stack.shrink(1);
                 }
                 return InteractionResult.CONSUME;
             }
