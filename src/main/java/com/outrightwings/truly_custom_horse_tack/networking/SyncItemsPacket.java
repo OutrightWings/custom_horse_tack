@@ -2,6 +2,7 @@ package com.outrightwings.truly_custom_horse_tack.networking;
 
 import com.outrightwings.truly_custom_horse_tack.block.entity.HeadStandBlockEntity;
 import com.outrightwings.truly_custom_horse_tack.block.entity.SaddlerRackBlockEntity;
+import com.outrightwings.truly_custom_horse_tack.block.entity.SingleInventoryBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -49,9 +50,7 @@ public class SyncItemsPacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             BlockEntity be = Minecraft.getInstance().level.getBlockEntity(pos);
-            if( be instanceof HeadStandBlockEntity blockEntity) {
-                blockEntity.setHandler(this.itemStackHandler);
-            } else if(be instanceof SaddlerRackBlockEntity blockEntity) {
+            if( be instanceof SingleInventoryBlockEntity blockEntity) {
                 blockEntity.setHandler(this.itemStackHandler);
             }
         });

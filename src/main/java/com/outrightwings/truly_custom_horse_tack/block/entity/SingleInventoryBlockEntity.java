@@ -3,21 +3,30 @@ package com.outrightwings.truly_custom_horse_tack.block.entity;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
 import com.outrightwings.truly_custom_horse_tack.networking.ModPacketHandler;
 import com.outrightwings.truly_custom_horse_tack.networking.SyncItemsPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public abstract class SingleInventoryBlockEntity extends BlockEntity {
     public final ItemStackHandler itemHandler = new ItemStackHandler(1){
@@ -28,6 +37,11 @@ public abstract class SingleInventoryBlockEntity extends BlockEntity {
                 ModPacketHandler.sendToClients(new SyncItemsPacket(this,worldPosition));
             }
         }
+        @Override
+        protected void onLoad() {
+            System.out.println("Ran bitch");
+            // ModPacketHandler.sendToClients(new SyncItemsPacket(this,worldPosition));
+        }
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
@@ -35,26 +49,9 @@ public abstract class SingleInventoryBlockEntity extends BlockEntity {
         }
     };
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
-    protected final ContainerData data;
 
     public SingleInventoryBlockEntity(BlockEntityType<?> be, BlockPos pos, BlockState state) {
         super(be, pos, state);
-        this.data = new ContainerData() {
-            @Override
-            public int get(int index) {
-                return 0;
-            }
-
-            @Override
-            public void set(int index, int value) {
-
-            }
-
-            @Override
-            public int getCount() {
-                return 1;
-            }
-        };
     }
 
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -85,6 +82,7 @@ public abstract class SingleInventoryBlockEntity extends BlockEntity {
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
     }
     public void setHandler(ItemStackHandler itemStackHandler) {
+        System.out.println("Updated?");
         for (int i = 0; i < itemStackHandler.getSlots(); i++) {
             itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
         }
@@ -98,4 +96,14 @@ public abstract class SingleInventoryBlockEntity extends BlockEntity {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
+    @Override
+    public CompoundTag getUpdateTag() {
+        return itemHandler.serializeNBT();
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        System.out.println("here");
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
 }
