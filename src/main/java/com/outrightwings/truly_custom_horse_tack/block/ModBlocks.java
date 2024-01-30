@@ -1,10 +1,15 @@
 package com.outrightwings.truly_custom_horse_tack.block;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
+import com.outrightwings.truly_custom_horse_tack.block.entity.HeadStandBlockEntity;
+import com.outrightwings.truly_custom_horse_tack.block.entity.SaddlerRackBlockEntity;
+import com.outrightwings.truly_custom_horse_tack.item.ModCreativeTab;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -34,11 +39,15 @@ public class ModBlocks {
     public static final RegistryObject<WallBlock> JUMP_RED = BLOCKS.register("jump_red",() -> new JumpBlock("simple_jumps",jumpProperties()));
     public static final RegistryObject<WallBlock> JUMP_BLACK = BLOCKS.register("jump_black",() -> new JumpBlock("simple_jumps",jumpProperties()));
     public static final RegistryObject<Block> SADDLER = BLOCKS.register("saddler",()->new SaddlerBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE).noOcclusion()));
-    public static final RegistryObject<Block> SADDLE_RACK = BLOCKS.register("saddle_rack",()->new SaddleRack(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
-    public static final RegistryObject<Block> HEAD_STAND = BLOCKS.register("head_stand",()->new HeadStand(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> SADDLE_RACK = BLOCKS.register("saddle_rack",()->new SaddleRackBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> HEAD_STAND = BLOCKS.register("head_stand",()->new HeadStandBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> SADDLE_RACK_WALL = BLOCKS.register("saddle_rack_wall",()->new SaddleRackWallBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> HEAD_STAND_WALL = BLOCKS.register("head_stand_wall",()->new HeadStandWallBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Main.MODID);
-    public static final RegistryObject<BlockEntityType<SaddlerRackBlockEntity>> SADDLE_RACK_BE = BLOCK_ENTITIES.register("saddle_rack_block_entity", () -> BlockEntityType.Builder.of(SaddlerRackBlockEntity::new, SADDLE_RACK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SaddleRackBlockEntity>> SADDLE_RACK_BE = BLOCK_ENTITIES.register("saddle_rack_block_entity", () -> BlockEntityType.Builder.of(SaddleRackBlockEntity::new, SADDLE_RACK.get()).build(null));
     public static final RegistryObject<BlockEntityType<HeadStandBlockEntity>> HEAD_STAND_BE = BLOCK_ENTITIES.register("head_stand_block_entity", () -> BlockEntityType.Builder.of(HeadStandBlockEntity::new, HEAD_STAND.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SaddleRackWallBlockEntity>> SADDLE_RACK_WALL_BE = BLOCK_ENTITIES.register("saddle_rack_wall_block_entity", () -> BlockEntityType.Builder.of(SaddleRackWallBlockEntity::new, SADDLE_RACK_WALL.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HeadStandWallBlockEntity>> HEAD_STAND_WALL_BE = BLOCK_ENTITIES.register("head_stand_wall_block_entity", () -> BlockEntityType.Builder.of(HeadStandWallBlockEntity::new, HEAD_STAND_WALL.get()).build(null));
 
 
     @SubscribeEvent
@@ -49,6 +58,11 @@ public class ModBlocks {
                 Item.Properties properties = new Item.Properties();
                 Supplier<Item> blockItemFactory = () -> new BlockItem(block, properties);
                 event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
+                if(!(block instanceof SingleInventoryBlock)) {
+                    Item.Properties properties = new Item.Properties().tab(ModCreativeTab.instance);
+                    Supplier<Item> blockItemFactory = () -> new BlockItem(block, properties);
+                    event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
+                }
             });
         }
     }

@@ -6,9 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SaddlerRackBlockEntity extends SingleInventoryBlockEntity {
-    public SaddlerRackBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlocks.SADDLE_RACK_BE.get(), pos, state);
+public class SaddleRackWallBlockEntity extends SingleInventoryBlockEntity {
+    public SaddleRackWallBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlocks.SADDLE_RACK_WALL_BE.get(), pos, state);
     }
 
     @Override

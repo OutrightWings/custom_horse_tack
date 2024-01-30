@@ -36,6 +36,10 @@ public class ModItems {
     public static final RegistryObject<Item> RACE_TACK_PATTERN = ITEMS.register("race_tack_pattern",() -> new TackPatternItem("race",(new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> IMPOSSIBLE_TACK_PATTERN = ITEMS.register("impossible_tack_pattern",() -> new TackPatternItem("impossible",(new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> CUTE_TACK_PATTERN = ITEMS.register("cute_tack_pattern",() -> new TackPatternItem("cute",(new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> CUTE_TACK_PATTERN = ITEMS.register("cute_tack_pattern",() -> new TackPatternItem("cute",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+
+    public static final RegistryObject<Item> SADDLE_RACK = ITEMS.register("saddle_rack",() -> new StandingAndWallBlockItem(ModBlocks.SADDLE_RACK.get(),ModBlocks.SADDLE_RACK_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
+    public static final RegistryObject<Item> HEAD_STAND = ITEMS.register("head_stand",() -> new StandingAndWallBlockItem(ModBlocks.HEAD_STAND.get(),ModBlocks.HEAD_STAND_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
     private static RegistryObject<HorseArmorItem> registerHorseArmor(String name, int protection){
         return ITEMS.register(name, () -> new CustomTackItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1)));
     }

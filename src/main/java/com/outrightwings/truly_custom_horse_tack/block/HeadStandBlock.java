@@ -1,7 +1,6 @@
 package com.outrightwings.truly_custom_horse_tack.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -18,12 +17,12 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class HeadStand extends SingleInventoryBlock {
+public class HeadStandBlock extends SingleInventoryBlock {
     public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
     private static final VoxelShape BASE = Block.box(0,0,0,16,1,16);
     private static final VoxelShape POLE = Block.box(4.5,0,4.5,11.5,12,11.5);
     private static final VoxelShape BOUNDING = Shapes.or(BASE,POLE);
-    public HeadStand(Properties properties) {
+    public HeadStandBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(ROTATION, 0));
 

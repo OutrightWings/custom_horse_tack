@@ -2,7 +2,6 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.RackModel;
-import com.outrightwings.truly_custom_horse_tack.client.renderer.model.RackWallModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -11,8 +10,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SaddleRackBlockEntityRenderer extends DisplayModelEntityRenderer {
     public SaddleRackBlockEntityRenderer(BlockEntityRendererProvider.Context context){
-        this.ground = new RackModel(RackModel.createBodyLayer().bakeRoot());
-        this.wall = new RackWallModel(RackWallModel.createBodyLayer().bakeRoot());
+        this.displayModel = new RackModel(RackModel.createBodyLayer().bakeRoot());
         this.standTexture = new ResourceLocation(Main.MODID,"textures/entity/rack.png");
     }
 }
