@@ -47,4 +47,5 @@ public abstract class SingleInventoryBlock extends Block implements EntityBlock 
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
+    public abstract float getRotation(BlockState state);
 }

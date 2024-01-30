@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.outrightwings.truly_custom_horse_tack.Main;
+import com.outrightwings.truly_custom_horse_tack.block.SingleInventoryBlock;
 import com.outrightwings.truly_custom_horse_tack.block.entity.SingleInventoryBlockEntity;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.DisplayModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,6 +26,8 @@ public abstract class DisplayModelEntityRenderer implements BlockEntityRenderer<
         pose.pushPose();
         pose.mulPose(Vector3f.ZP.rotationDegrees(180));
         pose.translate(-0.5,-1.5,0.5);
+        float deg = ((SingleInventoryBlock)blockEntity.getBlockState().getBlock()).getRotation(blockEntity.getBlockState());
+        pose.mulPose(Vector3f.YP.rotationDegrees(deg));
         //Stand
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(standTexture));
         this.ground.stand.render(pose,vertexConsumer,light,overlay,1,1,1,1);
