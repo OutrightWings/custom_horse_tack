@@ -49,8 +49,8 @@ public class ModBlocks {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Main.MODID);
     public static final RegistryObject<BlockEntityType<SaddleRackBlockEntity>> SADDLE_RACK_BE = BLOCK_ENTITIES.register("saddle_rack_block_entity", () -> BlockEntityType.Builder.of(SaddleRackBlockEntity::new, SADDLE_RACK.get()).build(null));
     public static final RegistryObject<BlockEntityType<HeadStandBlockEntity>> HEAD_STAND_BE = BLOCK_ENTITIES.register("head_stand_block_entity", () -> BlockEntityType.Builder.of(HeadStandBlockEntity::new, HEAD_STAND.get()).build(null));
-    public static final RegistryObject<BlockEntityType<SaddleRackWallBlockEntity>> SADDLE_RACK_WALL_BE = BLOCK_ENTITIES.register("saddle_rack_block_entity", () -> BlockEntityType.Builder.of(SaddleRackWallBlockEntity::new, SADDLE_RACK.get()).build(null));
-    public static final RegistryObject<BlockEntityType<HeadStandWallBlockEntity>> HEAD_STAND_WALL_BE = BLOCK_ENTITIES.register("head_stand_block_entity", () -> BlockEntityType.Builder.of(HeadStandWallBlockEntity::new, HEAD_STAND.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SaddleRackWallBlockEntity>> SADDLE_RACK_WALL_BE = BLOCK_ENTITIES.register("saddle_rack_wall_block_entity", () -> BlockEntityType.Builder.of(SaddleRackWallBlockEntity::new, SADDLE_RACK_WALL.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HeadStandWallBlockEntity>> HEAD_STAND_WALL_BE = BLOCK_ENTITIES.register("head_stand_wall_block_entity", () -> BlockEntityType.Builder.of(HeadStandWallBlockEntity::new, HEAD_STAND_WALL.get()).build(null));
 
     @SubscribeEvent
     public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
