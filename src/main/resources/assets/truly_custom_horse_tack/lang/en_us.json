@@ -86,6 +86,9 @@
   "tack.truly_custom_horse_tack.pattern.wood0":"Dummy Horse Overlay",
   "tack.truly_custom_horse_tack.pattern.wood1":"Dummy Horse Overlay",
 
+  
+  "tooltip.truly_custom_horse_tack.no_pattern":"This tack has no customizations!",
+
   "tooltip.truly_custom_horse_tack.blue.boots_bell" : "Blue Bell Boots",
   "tooltip.truly_custom_horse_tack.purple.boots_bell" : "Purple Bell Boots",
   "tooltip.truly_custom_horse_tack.magenta.boots_bell" : "Magenta Bell Boots",
