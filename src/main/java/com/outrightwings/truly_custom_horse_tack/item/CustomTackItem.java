@@ -38,7 +38,7 @@ public class CustomTackItem extends HorseArmorItem {
             list.add(new TranslatableComponent(String.format("tooltip.%s.%s.%s", Main.MODID,colorName,patternName)).withStyle(ChatFormatting.GRAY));
         }
         if(TackPattern.getPatternListSize(tagData) <= 0){
-            list.add(Component.translatable(String.format("tooltip.%s.%s", Main.MODID,"no_pattern")).withStyle(ChatFormatting.GRAY));
+            list.add(new TranslatableComponent(String.format("tooltip.%s.%s", Main.MODID,"no_pattern")).withStyle(ChatFormatting.GRAY));
         }
     }
     @OnlyIn(Dist.CLIENT)
