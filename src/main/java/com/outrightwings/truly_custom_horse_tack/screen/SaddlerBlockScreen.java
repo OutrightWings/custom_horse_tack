@@ -6,6 +6,7 @@ import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.ModItems;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -76,7 +77,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         }
     }
 
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
         this.renderTooltip(poseStack, mouseX, mouseY);
     }
@@ -90,31 +91,31 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
             this.horsePreview.remove(Entity.RemovalReason.DISCARDED);
         }
     }
-    protected void renderBg(PoseStack poseStack, float tick, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics poseStack, float tick, int mouseX, int mouseY) {
         this.renderBackground(poseStack);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, BG_LOCATION);
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        //RenderSystem.setShaderTexture(0, BG_LOCATION);
         int i = this.leftPos;
         int j = this.topPos;
-        this.blit(poseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        poseStack.blit(BG_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
         Slot slot = this.menu.getSaddleSlot();
         Slot slot1 = this.menu.getDyeSlot();
         Slot slot2 = this.menu.getPatternSlot();
         Slot slot3 = this.menu.getResultSlot();
         if (!slot.hasItem()) {
-            this.blit(poseStack, i + slot.x, j + slot.y, this.imageWidth, 0, 16, 16);
+            poseStack.blit(BG_LOCATION, i + slot.x, j + slot.y, this.imageWidth, 0, 16, 16);
         }
 
         if (!slot1.hasItem()) {
-            this.blit(poseStack, i + slot1.x, j + slot1.y, this.imageWidth + 16, 0, 16, 16);
+            poseStack.blit(BG_LOCATION, i + slot1.x, j + slot1.y, this.imageWidth + 16, 0, 16, 16);
         }
 
         if (!slot2.hasItem()) {
-            this.blit(poseStack, i + slot2.x, j + slot2.y, this.imageWidth + 32, 0, 16, 16);
+            poseStack.blit(BG_LOCATION, i + slot2.x, j + slot2.y, this.imageWidth + 32, 0, 16, 16);
         }
 
         int k = (int)(41.0F * this.scrollOffs);
-        this.blit(poseStack, i + SCROLL_X, j + SCROLL_Y + k, 232 + (this.displayPatterns ? 0 : SCROLLER_WIDTH ), 0, SCROLLER_WIDTH, SCROLLER_HEIGHT);
+        poseStack.blit(BG_LOCATION, i + SCROLL_X, j + SCROLL_Y + k, 232 + (this.displayPatterns ? 0 : SCROLLER_WIDTH ), 0, SCROLLER_WIDTH, SCROLLER_HEIGHT);
 
         boolean isHoveredPrev = mouseX >= i+ PREVIEW_X && mouseY >= j+PREVIEW_Y && mouseX < i+PREVIEW_X + PREVIEW_WIDTH && mouseY < j+PREVIEW_Y + PREVIEW_HEIGHT;
         int cornerButton;
@@ -123,7 +124,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         }else{
             cornerButton = PREVIEW_BUTTON;
         }
-        blit(poseStack, i + PREVIEW_X, j+ PREVIEW_Y, 0, cornerButton, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+        poseStack.blit(BG_LOCATION, i + PREVIEW_X, j+ PREVIEW_Y, 0, cornerButton, PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
         if (this.displayPatterns) {
             int startingX = i + PATTERNS_X;
@@ -150,18 +151,19 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                     } else {
                         startingCorner = this.imageHeight;
                     }
-                    RenderSystem.setShaderTexture(0, BG_LOCATION);
-                    this.blit(poseStack, cornerX, cornerY, 0, startingCorner, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
-                    RenderSystem.setShaderTexture(0,list.get(currentSlot).getPatternIconLocation());
-                    blit(poseStack, cornerX, cornerY, 0, 0, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE);
+                    //RenderSystem.setShaderTexture(0, BG_LOCATION);
+                    poseStack.blit(BG_LOCATION, cornerX, cornerY, 0, startingCorner, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
+                    //RenderSystem.setShaderTexture(0,list.get(currentSlot).getPatternIconLocation());
+                    poseStack.blit(list.get(currentSlot).getPatternIconLocation(), cornerX, cornerY, 0, 0, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE);
                     if(isHovered){
-                        renderTooltip(poseStack, Component.translatable(list.get(currentSlot).getTranslationKey()),cornerX,cornerY);
+                        //todo
+                        //renderTooltip(poseStack, Component.translatable(list.get(currentSlot).getTranslationKey()),cornerX,cornerY);
                     }
                 }
             }
         }
-
-        InventoryScreen.renderEntityInInventory(i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY, horsePreview);
+        //todo
+        //InventoryScreen.renderEntityInInventory(poseStack,i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY, horsePreview);
 
     }
     private void baseHorseSetup(){

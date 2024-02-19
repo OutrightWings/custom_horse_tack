@@ -6,7 +6,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -41,13 +40,13 @@ public class ModBlocks {
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
             BLOCKS.getEntries().forEach( (blockRegistryObject) -> {
                 Block block = blockRegistryObject.get();
-                Item.Properties properties = new Item.Properties().tab(ModCreativeTab.instance);
+                Item.Properties properties = new Item.Properties();
                 Supplier<Item> blockItemFactory = () -> new BlockItem(block, properties);
                 event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
             });
         }
     }
     private static BlockBehaviour.Properties jumpProperties(){
-        return BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F);
+        return BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(2.0F, 6.0F);
     }
 }

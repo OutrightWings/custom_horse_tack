@@ -30,12 +30,12 @@ public class StatPotion extends Item {
         if (target instanceof AbstractHorse horse) {
             if(checkPossible(this.INCREASE, this.JUMP ? Config.max_jump : Config.max_speed, (float) (this.JUMP ? horse.getAttributeValue(Attributes.JUMP_STRENGTH): horse.getAttributeValue(Attributes.MOVEMENT_SPEED)))){
                 modifyEntity(horse);
-                target.level.playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (target.level.getRandom().nextFloat() * 0.4F + 0.8F));
+                target.level().playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (target.level().getRandom().nextFloat() * 0.4F + 0.8F));
                 if (player == null || !player.getAbilities().instabuild) {
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
                 }
                 PrintHorseStats.printHorseStatsToChat(player,target);
-                return InteractionResult.sidedSuccess(player.level.isClientSide);
+                return InteractionResult.sidedSuccess(player.level().isClientSide);
             }
         }
         return InteractionResult.PASS;

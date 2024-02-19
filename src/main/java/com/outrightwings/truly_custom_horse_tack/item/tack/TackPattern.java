@@ -130,6 +130,7 @@ public enum TackPattern implements StringRepresentable {
     }
     public static int getColorFromColorTag(int colID){
         DyeColor dye = DyeColor.byId(colID);
-        return dye.getMaterialColor().col;
+        //todo
+        return dye.getTextColor();
     }
 }
