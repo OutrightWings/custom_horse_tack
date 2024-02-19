@@ -93,8 +93,6 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
     }
     protected void renderBg(GuiGraphics poseStack, float tick, int mouseX, int mouseY) {
         this.renderBackground(poseStack);
-        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        //RenderSystem.setShaderTexture(0, BG_LOCATION);
         int i = this.leftPos;
         int j = this.topPos;
         poseStack.blit(BG_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
@@ -151,9 +149,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                     } else {
                         startingCorner = this.imageHeight;
                     }
-                    //RenderSystem.setShaderTexture(0, BG_LOCATION);
                     poseStack.blit(BG_LOCATION, cornerX, cornerY, 0, startingCorner, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
-                    //RenderSystem.setShaderTexture(0,list.get(currentSlot).getPatternIconLocation());
                     poseStack.blit(list.get(currentSlot).getPatternIconLocation(), cornerX, cornerY, 0, 0, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE);
                     if(isHovered){
                         //todo
@@ -162,9 +158,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                 }
             }
         }
-        //todo
-        //InventoryScreen.renderEntityInInventory(poseStack,i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY, horsePreview);
-
+        InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack,i+HORSE_X,j+HORSE_Y,25,i+HORSE_X-mouseX,j+HORSE_Y-mouseY, horsePreview);
     }
     private void baseHorseSetup(){
         ItemStack horsesTack = createBaseTack();
