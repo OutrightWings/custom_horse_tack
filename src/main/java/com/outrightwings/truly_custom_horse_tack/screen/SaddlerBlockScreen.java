@@ -152,8 +152,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
                     poseStack.blit(BG_LOCATION, cornerX, cornerY, 0, startingCorner, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
                     poseStack.blit(list.get(currentSlot).getPatternIconLocation(), cornerX, cornerY, 0, 0, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE,PATTERN_IMAGE_SIZE);
                     if(isHovered){
-                        //todo
-                        //renderTooltip(poseStack, Component.translatable(list.get(currentSlot).getTranslationKey()),cornerX,cornerY);
+                        poseStack.renderTooltip(this.font,Component.translatable(list.get(currentSlot).getTranslationKey()),cornerX,cornerY);
                     }
                 }
             }
