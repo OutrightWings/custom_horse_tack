@@ -41,14 +41,11 @@ public class HorseArmorRendererMixin {
         for(int i = 0; i < TackPattern.getPatternListSize(tagData);i++) {
             Tuple<Integer, String> colorPattern = TackPattern.getColorAndPatternByIndex(tagData, i);
 
-            int color = TackPattern.getColorFromColorTag(colorPattern.getA());
-            r = (float) (color >> 16 & 255) / 255.0F;
-            g = (float) (color >> 8 & 255) / 255.0F;
-            b = (float) (color & 255) / 255.0F;
+            float[] color = TackPattern.getColorFromColorTag(colorPattern.getA());
 
             TackPattern tackPattern = TackPattern.getTackPattern(colorPattern.getB());
             if (tackPattern != null) {
-                renderTextureOnHorse(renderTypeBuffer, matrixStack, light, r, g, b, tackPattern.getArmorTextureLocation(), false);
+                renderTextureOnHorse(renderTypeBuffer, matrixStack, light, color[0], color[1], color[2], tackPattern.getArmorTextureLocation(), false);
                 ResourceLocation overlayLocation = tackPattern.getOverlayTextureLocation();
                 if (overlayLocation != null) {
                     renderTextureOnHorse(renderTypeBuffer, matrixStack, light, 1, 1, 1, overlayLocation, false);

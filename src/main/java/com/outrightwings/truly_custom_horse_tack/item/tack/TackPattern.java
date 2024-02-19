@@ -128,9 +128,8 @@ public enum TackPattern implements StringRepresentable {
         }
         return listtag != null ? listtag.size() : -1;
     }
-    public static int getColorFromColorTag(int colID){
+    public static float[] getColorFromColorTag(int colID){
         DyeColor dye = DyeColor.byId(colID);
-        //todo
-        return dye.getTextColor();
+        return dye.getTextureDiffuseColors();
     }
 }
