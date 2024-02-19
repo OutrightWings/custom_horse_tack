@@ -2,14 +2,14 @@ package com.outrightwings.truly_custom_horse_tack.block;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.block.entity.HeadStandBlockEntity;
-import com.outrightwings.truly_custom_horse_tack.block.entity.SaddlerRackBlockEntity;
-import com.outrightwings.truly_custom_horse_tack.item.ModCreativeTab;
+import com.outrightwings.truly_custom_horse_tack.block.entity.HeadStandWallBlockEntity;
+import com.outrightwings.truly_custom_horse_tack.block.entity.SaddleRackBlockEntity;
+import com.outrightwings.truly_custom_horse_tack.block.entity.SaddleRackWallBlockEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -55,11 +55,8 @@ public class ModBlocks {
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
             BLOCKS.getEntries().forEach( (blockRegistryObject) -> {
                 Block block = blockRegistryObject.get();
-                Item.Properties properties = new Item.Properties();
-                Supplier<Item> blockItemFactory = () -> new BlockItem(block, properties);
-                event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
                 if(!(block instanceof SingleInventoryBlock)) {
-                    Item.Properties properties = new Item.Properties().tab(ModCreativeTab.instance);
+                    Item.Properties properties = new Item.Properties();
                     Supplier<Item> blockItemFactory = () -> new BlockItem(block, properties);
                     event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
                 }
