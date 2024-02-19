@@ -1,7 +1,6 @@
 package com.outrightwings.truly_custom_horse_tack.block;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
-import com.outrightwings.truly_custom_horse_tack.item.ModCreativeTab;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -37,6 +36,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> SADDLER = BLOCKS.register("saddler",()->new SaddlerBlock(BlockBehaviour.Properties.copy(Blocks.LOOM)));
  @SubscribeEvent
     public static void onRegisterItems(final RegisterEvent event) {
+     System.out.println("REGISTER ITEMS BITCH");
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
             BLOCKS.getEntries().forEach( (blockRegistryObject) -> {
                 Block block = blockRegistryObject.get();
@@ -47,6 +47,7 @@ public class ModBlocks {
         }
     }
     private static BlockBehaviour.Properties jumpProperties(){
-        return BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(2.0F, 6.0F);
+        return BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F);
     }
+
 }
