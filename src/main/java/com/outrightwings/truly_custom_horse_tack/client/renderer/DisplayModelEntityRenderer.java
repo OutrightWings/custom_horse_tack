@@ -34,7 +34,7 @@ public abstract class DisplayModelEntityRenderer implements BlockEntityRenderer<
         ItemStack tack = blockEntity.getItem(0);
         ResourceLocation texture = TextureCache.getTexture(tack);
         if(texture!=null){
-            VertexConsumer vertexConsumer1 = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
+            VertexConsumer vertexConsumer1 = bufferSource.getBuffer(RenderType.entityTranslucent(texture));
             this.displayModel.body.render(pose,vertexConsumer1,light,overlay,1,1,1,1);
         }
         pose.popPose();
