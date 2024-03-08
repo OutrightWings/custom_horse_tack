@@ -53,9 +53,9 @@ public class HorseArmorRendererMixin {
         VertexConsumer vertexconsumer;
         if(calculateOverlayPath){
             String path = texture.getPath();
-            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.entityCutout(new ResourceLocation(texture.getNamespace(),path.substring(0, path.lastIndexOf('.'))+"_overlay.png")));
+            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.entityTranslucent(new ResourceLocation(texture.getNamespace(),path.substring(0, path.lastIndexOf('.'))+"_overlay.png")));
         } else{
-            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.entityCutout(texture));
+            vertexconsumer = renderTypeBuffer.getBuffer(RenderType.entityTranslucent(texture));
         }
 
         horseModel.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);
