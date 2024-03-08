@@ -25,6 +25,12 @@ public class ModItems {
     public static final RegistryObject<Item> IMPOSSIBLE_TACK_PATTERN = ITEMS.register("impossible_tack_pattern",() -> new TackPatternItem("impossible",(new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> CUTE_TACK_PATTERN = ITEMS.register("cute_tack_pattern",() -> new TackPatternItem("cute",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
 
+    public static final RegistryObject<Item> HEAD_TACK_PATTERN = ITEMS.register("head_tack_pattern",() -> new TackPatternItem("head",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+    public static final RegistryObject<Item> REINS_TACK_PATTERN = ITEMS.register("reins_tack_pattern",() -> new TackPatternItem("reins",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+    public static final RegistryObject<Item> BODY_TACK_PATTERN = ITEMS.register("body_tack_pattern",() -> new TackPatternItem("body",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+    public static final RegistryObject<Item> FEET_TACK_PATTERN = ITEMS.register("feet_tack_pattern",() -> new TackPatternItem("feet",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+
+
     public static final RegistryObject<Item> SADDLE_RACK = ITEMS.register("saddle_rack",() -> new StandingAndWallBlockItem(ModBlocks.SADDLE_RACK.get(),ModBlocks.SADDLE_RACK_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
     public static final RegistryObject<Item> HEAD_STAND = ITEMS.register("head_stand",() -> new StandingAndWallBlockItem(ModBlocks.HEAD_STAND.get(),ModBlocks.HEAD_STAND_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
     private static RegistryObject<HorseArmorItem> registerHorseArmor(String name, int protection){

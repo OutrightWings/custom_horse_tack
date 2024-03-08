@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:paper"
+        },
+        {
+            "item": "minecraft:iron_helmet"
+        }
+    ],
+    "result": {
+        "item": "truly_custom_horse_tack:head_tack_pattern",
+        "count": 1
+    }
+}

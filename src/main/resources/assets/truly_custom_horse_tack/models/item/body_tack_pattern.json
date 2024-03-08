@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "truly_custom_horse_tack:item/body_tack_pattern"
+  }
+}
