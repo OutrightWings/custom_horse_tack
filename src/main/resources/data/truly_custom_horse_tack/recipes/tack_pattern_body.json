@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:paper"
+        },
+        {
+            "item": "minecraft:iron_chestplate"
+        }
+    ],
+    "result": {
+        "item": "truly_custom_horse_tack:body_tack_pattern",
+        "count": 1
+    }
+}
