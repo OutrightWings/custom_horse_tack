@@ -12,10 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum TackPattern implements StringRepresentable {
-    REINS("reins","none,reins",true),
+    REINS("reins","none,winter,cute,reins",true),
     REINS_LIGHTS("reins_lights","winter,reins",false),
     REINS_STRIPED("reins_striped","winter,reins",false),
-    REINS_LIGHTS_RAINBOW("reins_lights_rainbow","impossible,reins",true),
+    REINS_LIGHTS_RAINBOW("reins_lights_rainbow","winter,reins",true),
     REINS_FLOWERS("reins_flowers","cute,reins",true),
 
     BRIDLE("bridle","none,head",true),
@@ -32,6 +32,8 @@ public enum TackPattern implements StringRepresentable {
     STRIPES("stripes","cute,head",false),
 
     SADDLE("saddle","none,body",true),
+    SADDLE_RACE("saddle_race","race,body",true),
+    SADDLE_RACE_STRAP("saddle_race_strap","race,body",false),
     PAD_SHAPED("pad_shaped","none,body",false),
     PAD_SHAPED_BORDER("pad_shaped_border","none,body",false),
     PAD_SHAPED_QUILT("pad_shaped_quilt","none,body",false),
@@ -47,8 +49,6 @@ public enum TackPattern implements StringRepresentable {
     POOFY_BLANKET_FUZZ("poofy_blanket_fuzz","winter,body",false),
     POOFY_BUTT("poofy_butt","winter,body",true),
     POOFY_BUTT_FUZZ("poofy_butt_fuzz","winter,body",false),
-    SADDLE_RACE("saddle_race","race,body",true),
-    SADDLE_RACE_STRAP("saddle_race_strap","race,body",false),
     LARGE_PAD("large_pad","race,body",false),
     LARGE_PAD_BORDER("large_pad_border","race,body",false),
     LARGE_PAD_QUILT("large_pad_quilt","race,body",false),
