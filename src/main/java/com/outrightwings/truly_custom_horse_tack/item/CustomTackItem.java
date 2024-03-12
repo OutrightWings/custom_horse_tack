@@ -7,11 +7,18 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.HorseArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CauldronBlock;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import sekelsta.horse_colors.client.renderer.TextureLayer;
@@ -26,6 +33,20 @@ public class CustomTackItem extends HorseArmorItem {
     public CustomTackItem(int protection, ResourceLocation name, Properties properties) {
         super(protection, name, properties);
     }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        BlockState block = context.getLevel().getBlockState(context.getClickedPos());
+        if(block.is(Blocks.WATER_CAULDRON)){
+            boolean removed = TackPattern.removeLastPattern(context.getItemInHand().getTag());
+            if(removed){
+                LayeredCauldronBlock.lowerFillLevel(block,context.getLevel(),context.getClickedPos());
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
+    }
+
     public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag){
         CompoundTag tagData =  stack.getTag();
         for(int i = 0; i < TackPattern.getPatternListSize(tagData); i++) {

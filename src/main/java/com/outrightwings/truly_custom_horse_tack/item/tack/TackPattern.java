@@ -127,6 +127,17 @@ public enum TackPattern implements StringRepresentable {
         }
         return null;
     }
+    public static boolean removeLastPattern(CompoundTag patternList){
+        if(patternList != null){
+            ListTag listtag = patternList.getList("Patterns", 10);
+            int length = listtag.size()-1;
+            if(length >= 0){
+                listtag.remove(length);
+                return true;
+            }
+        }
+        return false;
+    }
     public static int getPatternListSize(CompoundTag patternList){
         ListTag listtag = null;
         if (patternList != null && patternList.contains("Patterns", 9)) {
