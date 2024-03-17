@@ -6,8 +6,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
@@ -16,6 +21,19 @@ public class MixedDye extends Item implements DyeableLeatherItem {
         super(properties);
     }
 
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        BlockState block = context.getLevel().getBlockState(context.getClickedPos());
+        if(block.is(Blocks.WATER_CAULDRON)){
+            CompoundTag compoundtag = context.getItemInHand().getTagElement("display");
+            if (compoundtag != null && compoundtag.contains("color")){
+                this.clearColor(context.getItemInHand());
+                LayeredCauldronBlock.lowerFillLevel(block,context.getLevel(),context.getClickedPos());
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
+    }
     public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag){
         CompoundTag compoundtag = stack.getTagElement("display");
         if (compoundtag != null && compoundtag.contains("color")) {
