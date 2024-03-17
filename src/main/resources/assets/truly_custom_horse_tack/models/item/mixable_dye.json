@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "truly_custom_horse_tack:item/mixable_dye_inner",
+    "layer1": "truly_custom_horse_tack:item/mixable_dye_tin"
+  }
+}
