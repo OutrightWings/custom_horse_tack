@@ -61,7 +61,7 @@ public class CustomTackItem extends HorseArmorItem {
                 color = Component.translatable(String.format("tooltip.%s.%s", Main.MODID,colorName));
             } else {
                 float[] rgb = TackPattern.getColorFromColorTag(colorPattern.getA());
-                color = Component.literal(String.format("%d %d %d",(int)(rgb[0]*255),(int)(rgb[1]*255),(int)(rgb[2]*255)));
+                color = Component.literal(String.format("R:%d G:%d B:%d",(int)(rgb[0]*255),(int)(rgb[1]*255),(int)(rgb[2]*255)));
             }
             list.add(color.append(" ").append(Component.translatable(patternName)).withStyle(ChatFormatting.GRAY));
         }
