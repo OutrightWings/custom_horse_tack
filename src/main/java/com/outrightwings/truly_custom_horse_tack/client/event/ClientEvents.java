@@ -10,6 +10,7 @@ import com.outrightwings.truly_custom_horse_tack.item.ModItems;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
         event.registerBlockEntityRenderer(ModBlocks.HEAD_STAND_BE.get(),HeadStandBlockEntityRenderer::new);
@@ -24,7 +26,7 @@ public class ClientEvents {
         event.registerBlockEntityRenderer(ModBlocks.HEAD_STAND_WALL_BE.get(), HeadStandWallBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.SADDLE_RACK_WALL_BE.get(), SaddleRackWallBlockEntityRenderer::new);
     }
-
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event){
         ItemColors itemColors = event.getItemColors();
