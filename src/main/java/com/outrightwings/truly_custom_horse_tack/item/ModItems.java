@@ -75,6 +75,7 @@ public class ModItems {
             event.accept(BODY_TACK_PATTERN);
             event.accept(FEET_TACK_PATTERN);
             event.accept(REINS_TACK_PATTERN);
+            event.accept(MIXABLE_DYE);
         } else if (event.getTabKey().equals(CreativeModeTabs.COLORED_BLOCKS)) {
             ForgeRegistries.ITEMS.getEntries().stream().filter(o -> o.getValue().getDescriptionId().contains("jump") && !o.getValue().getDescriptionId().contains("potion")).forEach((object ->
                     event.accept(object.getValue().asItem())
