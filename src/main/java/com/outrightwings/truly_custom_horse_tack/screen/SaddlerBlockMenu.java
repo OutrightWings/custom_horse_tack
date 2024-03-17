@@ -3,6 +3,7 @@ package com.outrightwings.truly_custom_horse_tack.screen;
 import com.outrightwings.truly_custom_horse_tack.Config;
 import com.outrightwings.truly_custom_horse_tack.block.ModBlocks;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
+import com.outrightwings.truly_custom_horse_tack.item.MixedDye;
 import com.outrightwings.truly_custom_horse_tack.item.TackPatternItem;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import net.minecraft.nbt.CompoundTag;
@@ -59,7 +60,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
         });
         this.dyeSlot = this.addSlot(new Slot(this.inputContainer, 1, 9, 33) {
             public boolean mayPlace(ItemStack item) {
-                return item.getItem() instanceof DyeItem;
+                return item.getItem() instanceof DyeItem || item.getItem() instanceof MixedDye;
             }
         });
         this.patternSlot = this.addSlot(new Slot(this.inputContainer, 2, 9, 51) {
@@ -211,7 +212,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(itemstack1, this.saddleSlot.index, this.saddleSlot.index + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (itemstack1.getItem() instanceof DyeItem) {
+                } else if (itemstack1.getItem() instanceof DyeItem || itemstack1.getItem() instanceof MixedDye) {
                     if (!this.moveItemStackTo(itemstack1, this.dyeSlot.index, this.dyeSlot.index + 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -261,7 +262,7 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
             //Copy input to output
             outputSlotItem = saddleSlotItem.copy();
             outputSlotItem.setCount(1);
-            DyeColor dyecolor = ((DyeItem)dyeSlotItem.getItem()).getDyeColor();
+
 
             CompoundTag tagData = outputSlotItem.getTag();
             ListTag listtag;
@@ -278,7 +279,14 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
 
             CompoundTag newData = new CompoundTag();
             newData.putString("Pattern", tackPattern.getSerializedName());
-            newData.putInt("Color", dyecolor.getId());
+
+            if(dyeSlotItem.getItem() instanceof DyeItem dyeItem){
+                DyeColor dyecolor = dyeItem.getDyeColor();
+                newData.putInt("Color", dyecolor.getId());
+            } else if( dyeSlotItem.getItem() instanceof MixedDye mixedDye){
+                newData.putInt("Color", mixedDye.getColor(dyeSlotItem));
+            }
+
             listtag.add(newData);
             outputSlotItem.setTag(tagData);
         }
