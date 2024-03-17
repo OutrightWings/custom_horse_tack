@@ -32,6 +32,7 @@ public enum TackPattern implements StringRepresentable {
     STRIPES("stripes","cute,head",false),
 
     SADDLE("saddle","none,body",true),
+    SADDLE_SIDE("saddle_side","cute,body",true),
     SADDLE_RACE("saddle_race","race,body",true),
     SADDLE_RACE_STRAP("saddle_race_strap","race,body",false),
     PAD_SHAPED("pad_shaped","none,body",false),
