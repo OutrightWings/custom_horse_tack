@@ -146,7 +146,16 @@ public enum TackPattern implements StringRepresentable {
         return listtag != null ? listtag.size() : -1;
     }
     public static float[] getColorFromColorTag(int colID){
-        DyeColor dye = DyeColor.byId(colID);
-        return dye.getTextureDiffuseColors();
+        if(colID < 16){
+            DyeColor dye = DyeColor.byId(colID);
+            return dye.getTextureDiffuseColors();
+        }
+        else{
+            float[] colors = new float[3];
+            colors[0] = (float)(colID >> 16 & 255) / 255.0F;
+            colors[1] = (float)(colID >> 8 & 255) / 255.0F;
+            colors[2] = (float)(colID & 255) / 255.0F;
+            return colors;
+        }
     }
 }
