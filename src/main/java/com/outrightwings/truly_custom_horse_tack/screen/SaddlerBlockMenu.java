@@ -75,8 +75,14 @@ public class SaddlerBlockMenu extends AbstractContainerMenu {
 
             public void onTake(Player player, ItemStack item) {
                 SaddlerBlockMenu.this.saddleSlot.remove(1);
+                var dyeItem = SaddlerBlockMenu.this.dyeSlot.getItem();
                 if(Config.consume_dye){
-                    SaddlerBlockMenu.this.dyeSlot.remove(1);
+                    if(dyeItem.getItem() instanceof DyeItem)
+                        dyeSlot.remove(1);
+                    else{
+                        dyeItem.setDamageValue(dyeItem.getDamageValue() + 1);
+                        if (dyeItem.getDamageValue() >= dyeItem.getMaxDamage()) dyeItem.setCount(0);
+                    }
                 }
                 if (!SaddlerBlockMenu.this.saddleSlot.hasItem() || !SaddlerBlockMenu.this.dyeSlot.hasItem()) {
                     SaddlerBlockMenu.this.selectedSlotIndex.set(-1);
