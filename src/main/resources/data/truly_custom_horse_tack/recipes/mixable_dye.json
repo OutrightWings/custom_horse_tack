@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X ",
+      "XDX",
+      " X "
+    ],
+    "key": {
+      "X": {
+        "item": "minecraft:brick"
+      },
+      "D": {
+        "tag": "forge:dyes"
+      }
+    },
+    "result": {
+      "item": "truly_custom_horse_tack:mixable_dye"
+    }
+  }
+  

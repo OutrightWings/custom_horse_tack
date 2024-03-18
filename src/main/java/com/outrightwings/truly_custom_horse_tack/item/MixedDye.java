@@ -1,5 +1,6 @@
 package com.outrightwings.truly_custom_horse_tack.item;
 
+import com.outrightwings.truly_custom_horse_tack.Config;
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import net.minecraft.ChatFormatting;
@@ -16,9 +17,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class MixedDye extends Item implements DyeableLeatherItem {
+public class MixedDye extends Item implements DyeableLeatherItem{
     public MixedDye(Properties properties) {
-        super(properties);
+        super(properties.durability(16));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class MixedDye extends Item implements DyeableLeatherItem {
             int g = (color >> 8 & 255);
             int b = (color & 255);
 
-            list.add(Component.literal(String.format("R:%d G:%d B:%d", r,g,b)).withStyle(ChatFormatting.GRAY));
+            list.add(Component.literal(String.format("#%s%s%s", Integer.toHexString(r),Integer.toHexString(g),Integer.toHexString(b))).withStyle(ChatFormatting.GRAY));
         }
         else {
             list.add(Component.translatable(String.format("tooltip.%s.%s", Main.MODID,"no_dye")).withStyle(ChatFormatting.GRAY));
