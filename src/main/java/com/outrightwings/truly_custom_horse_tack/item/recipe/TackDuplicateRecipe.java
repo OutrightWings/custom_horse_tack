@@ -2,10 +2,14 @@ package com.outrightwings.truly_custom_horse_tack.item.recipe;
 
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.Container;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -13,49 +17,63 @@ import net.minecraft.world.level.Level;
 public class TackDuplicateRecipe extends CustomRecipe {
     public TackDuplicateRecipe(ResourceLocation resourceLocation) {
         super(resourceLocation);
-        System.out.println("REGISTERED BITCH");
     }
 
-    @Override
-    public boolean matches(CraftingContainer container, Level level) {
-        ItemStack tackWithPatterns = null;
-        ItemStack tackWithoutPatterns = null;
-
-        for(int i = 0; i < container.getContainerSize(); ++i) {
+    Tuple<ItemStack,Integer> findDecorated(CraftingContainer container, boolean decorated){
+        ItemStack found = null;
+        int index = -1;
+        for(int i = 0; i < container.getContainerSize(); i++){
             ItemStack stack = container.getItem(i);
-            if (!stack.isEmpty() && stack.getItem() instanceof CustomTackItem) {
-                System.out.println("I SEE TACK BITCH");
-                CompoundTag tag = stack.getOrCreateTag();
-                if(TackPattern.getPatternListSize(tag) > 0){
-                    System.out.println("DECORATED BITCH");
-                    tackWithPatterns = stack;
-                } else{
-                    System.out.println("NON DECORATED");
-                    tackWithoutPatterns = stack;
+            if(stack.getItem() instanceof CustomTackItem){
+                int listSize = TackPattern.getPatternListSize(stack.getTag());
+                if(decorated && listSize > 0){
+                    found = stack;
+                    index = i;
+                    break;
                 }
-            } else{
-                System.out.println("FAILED BITCH");
-                return false;
+                else if(!decorated && listSize < 1){
+                    found = stack;
+                    index = i;
+                    break;
+                }
             }
         }
-        System.out.println("Matches? Bitch: " + (tackWithPatterns != null && tackWithoutPatterns != null));
-        return tackWithPatterns != null && tackWithoutPatterns != null;
+        return new Tuple<>(found,index);
+    }
+    int itemCount(Container container){
+        int count = 0;
+        for(int i = 0; i < container.getContainerSize(); i++){
+            ItemStack stack = container.getItem(i);
+            if(!stack.isEmpty()) count++;
+        }
+        return count;
+    }
+    @Override
+    public boolean matches(CraftingContainer container, Level level) {
+        ItemStack tackWithPatterns = findDecorated(container, true).getA();
+        ItemStack tackWithoutPatterns = findDecorated(container, false).getA();
+
+        return tackWithPatterns != null && tackWithoutPatterns != null && itemCount(container) == 2;
     }
 
     @Override
     public ItemStack assemble(CraftingContainer container) {
-        System.out.println("FAILED BITCH");
-        return ItemStack.EMPTY;
+        return findDecorated(container,true).getA().copy();
+    }
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingContainer container){
+        NonNullList<ItemStack> nonnulllist = NonNullList.withSize(container.getContainerSize(), ItemStack.EMPTY);
+        var tack = findDecorated(container,true);
+        nonnulllist.set(tack.getB(),tack.getA().copy());
+        return nonnulllist;
     }
     @Override
     public boolean canCraftInDimensions(int x, int y) {
-        System.out.println("FAILED BITCH");
         return x * y >= 2;
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        System.out.println("FAILED BITCH");
         return ModRecipes.DUPLICATE_TACK.get();
     }
 }
