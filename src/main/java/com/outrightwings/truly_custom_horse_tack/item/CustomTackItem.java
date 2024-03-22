@@ -2,9 +2,11 @@ package com.outrightwings.truly_custom_horse_tack.item;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
+import com.outrightwings.truly_custom_horse_tack.util.ColorConverter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionResult;
@@ -14,9 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CauldronBlock;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,7 +25,6 @@ import sekelsta.horse_colors.client.renderer.TextureLayer;
 import sekelsta.horse_colors.client.renderer.TextureLayerGroup;
 import sekelsta.horse_colors.util.Color;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomTackItem extends HorseArmorItem {
@@ -60,7 +59,7 @@ public class CustomTackItem extends HorseArmorItem {
                 var colorName = DyeColor.byId(colorPattern.getA()).getName();
                 color = Component.translatable(String.format("tooltip.%s.%s", Main.MODID,colorName));
             } else {
-                float[] rgb = TackPattern.getColorFromColorTag(colorPattern.getA());
+                float[] rgb = ColorConverter.decToRGB(TackPattern.getColorFromColorTag(colorPattern.getA()));
                 color = Component.literal(String.format("#%s%s%s", Integer.toHexString((int)(rgb[0]*255)),Integer.toHexString((int)(rgb[1]*255)),Integer.toHexString((int)(rgb[2]*255))));
             }
             list.add(color.append(" ").append(Component.translatable(patternName)).withStyle(ChatFormatting.GRAY));
