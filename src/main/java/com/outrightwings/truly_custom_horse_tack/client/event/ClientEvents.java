@@ -11,8 +11,8 @@ import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -28,10 +28,10 @@ public class ClientEvents {
     }
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public static void registerItemColors(RegisterColorHandlersEvent.Item event){
+    public static void registerItemColors(ColorHandlerEvent.Item event){
         ItemColors itemColors = event.getItemColors();
 
-        event.register((stack, tintIndex) -> {
+        itemColors.register((stack, tintIndex) -> {
                     return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
                 },
                 ModItems.MIXABLE_DYE.get());

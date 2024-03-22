@@ -6,6 +6,8 @@ import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.*;
@@ -43,10 +45,10 @@ public class MixedDye extends Item implements DyeableLeatherItem{
             int g = (color >> 8 & 255);
             int b = (color & 255);
 
-            list.add(Component.literal(String.format("#%s%s%s", Integer.toHexString(r),Integer.toHexString(g),Integer.toHexString(b))).withStyle(ChatFormatting.GRAY));
+            list.add(new TextComponent(String.format("#%s%s%s", Integer.toHexString(r),Integer.toHexString(g),Integer.toHexString(b))).withStyle(ChatFormatting.GRAY));
         }
         else {
-            list.add(Component.translatable(String.format("tooltip.%s.%s", Main.MODID,"no_dye")).withStyle(ChatFormatting.GRAY));
+            list.add(new TranslatableComponent(String.format("tooltip.%s.%s", Main.MODID,"no_dye")).withStyle(ChatFormatting.GRAY));
         }
     }
    @Override
