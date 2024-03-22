@@ -3,6 +3,7 @@ package com.outrightwings.truly_custom_horse_tack.item.recipe;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -10,13 +11,15 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class TackDuplicateRecipe extends CustomRecipe {
-    public TackDuplicateRecipe(ResourceLocation resourceLocation) {
-        super(resourceLocation);
+    public TackDuplicateRecipe(ResourceLocation resourceLocation, CraftingBookCategory bookCategory) {
+        super(resourceLocation,bookCategory);
     }
 
     Tuple<ItemStack,Integer> findDecorated(CraftingContainer container, boolean decorated){
@@ -57,7 +60,7 @@ public class TackDuplicateRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public ItemStack assemble(CraftingContainer container, RegistryAccess access) {
         return findDecorated(container,true).getA().copy();
     }
     @Override
