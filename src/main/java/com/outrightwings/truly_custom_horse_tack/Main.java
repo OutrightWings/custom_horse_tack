@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.outrightwings.truly_custom_horse_tack.block.ModBlocks;
 import com.outrightwings.truly_custom_horse_tack.client.event.ClientEvents;
 import com.outrightwings.truly_custom_horse_tack.item.ModItems;
+import com.outrightwings.truly_custom_horse_tack.item.recipe.ModRecipes;
 import com.outrightwings.truly_custom_horse_tack.screen.ModMenus;
 import com.outrightwings.truly_custom_horse_tack.screen.SaddlerBlockScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -33,6 +34,7 @@ public class Main
         ModBlocks.BLOCKS.register(modEventBus);
         ModBlocks.BLOCK_ENTITIES.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
+        ModRecipes.RECIPES.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(ModBlocks.class);
         MinecraftForge.EVENT_BUS.register(ModItems.class);
         MinecraftForge.EVENT_BUS.register(ClientEvents.class);
@@ -49,6 +51,10 @@ public class Main
     }
     /*
         Todo:
-
+        * Bells
+            * Make noise?
+        * Cauldren removes last option
+        * Crafting to copy onto blank
+        * Better Item texture for custom Tack
      */
 }
