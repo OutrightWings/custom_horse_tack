@@ -2,6 +2,7 @@ package com.outrightwings.truly_custom_horse_tack.item;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
+import com.outrightwings.truly_custom_horse_tack.util.ColorConverter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -61,7 +62,7 @@ public class CustomTackItem extends HorseArmorItem {
                 var colorName = DyeColor.byId(colorPattern.getA()).getName();
                 color = Component.translatable(String.format("tooltip.%s.%s", Main.MODID,colorName));
             } else {
-                float[] rgb = TackPattern.getColorFromColorTag(colorPattern.getA());
+                float[] rgb = ColorConverter.decToRGB(TackPattern.getColorFromColorTag(colorPattern.getA()));
                 color = Component.literal(String.format("#%s%s%s", Integer.toHexString((int)(rgb[0]*255)),Integer.toHexString((int)(rgb[1]*255)),Integer.toHexString((int)(rgb[2]*255))));
             }
             list.add(color.append(" ").append(Component.translatable(patternName)).withStyle(ChatFormatting.GRAY));
@@ -104,5 +105,4 @@ public class CustomTackItem extends HorseArmorItem {
         layer.color = color;
         return layer;
     }
-
 }
