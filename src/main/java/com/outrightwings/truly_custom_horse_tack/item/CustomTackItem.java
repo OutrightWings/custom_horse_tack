@@ -56,9 +56,9 @@ public class CustomTackItem extends HorseArmorItem {
             var patternName = pattern != null ? pattern.getTranslationKey() : "tack.truly_custom_horse_tack.pattern.unknown";
 
             MutableComponent color;
-            if(colorPattern.getA() < 16){
-                var colorName = DyeColor.byId(colorPattern.getA()).getName();
-                color = Component.translatable(String.format("tooltip.%s.%s", Main.MODID,colorName));
+            if(colorPattern.getA() < DyeColor.values().length){
+                var colorName = DyeColor.byId(colorPattern.getA());
+                color = Component.translatable(String.format("color.minecraft.%s",colorName));
             } else {
                 float[] rgb = TackPattern.getColorFromColorTag(colorPattern.getA());
                 color = Component.literal(String.format("#%s%s%s", Integer.toHexString((int)(rgb[0]*255)),Integer.toHexString((int)(rgb[1]*255)),Integer.toHexString((int)(rgb[2]*255))));
