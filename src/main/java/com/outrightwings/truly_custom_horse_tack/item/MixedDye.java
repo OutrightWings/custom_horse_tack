@@ -51,9 +51,9 @@ public class MixedDye extends Item implements DyeableLeatherItem{
             list.add(new TranslatableComponent(String.format("tooltip.%s.%s", Main.MODID,"no_dye")).withStyle(ChatFormatting.GRAY));
         }
     }
-   @Override
-    public int getColor(ItemStack stack) {
-        CompoundTag compoundtag = stack.getTagElement("display");
-        return compoundtag != null && compoundtag.contains("color", 99) ? compoundtag.getInt("color") : 16383998;
-    }
+//   @Override
+//    public int getColor(ItemStack stack) {
+//        CompoundTag compoundtag = stack.getTagElement("display");
+//        return compoundtag != null && compoundtag.contains("color", 99) ? compoundtag.getInt("color") : 16383998;
+//    }
 }
