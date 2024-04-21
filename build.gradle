@@ -54,7 +54,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf("curse.maven:horseGenes-339184:${horse_colors_version}")
     runtimeOnly fg.deobf("curse.maven:jei-238222:5101366")
-    //runtimeOnly fg.deobf("curse.maven:ride-along-517147:4943436")
+    runtimeOnly fg.deobf("curse.maven:better-third-person-435044:4596768")
 }
 
 tasks.withType(ProcessResources).configureEach {
