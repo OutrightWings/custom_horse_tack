@@ -4,15 +4,15 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.TextureCache;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.FlagModel;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.HornModel;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
-import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.item.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,9 +34,25 @@ public class HorseArmorRendererMixin {
     @Final
     @Shadow(remap = false)
     private HorseGeneticModel<AbstractHorseGenetic> horseModel;
-
+    private static final FlagModel flagModel = new FlagModel(FlagModel.createBodyLayer().bakeRoot());
+    private static final HornModel hornModel = new HornModel(HornModel.createBodyLayer().bakeRoot());
     private static final Map<CompoundTag, ResourceLocation> LAYER_CACHE = Maps.newHashMap();
 
+    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "HEAD"),remap = false)
+    public void renderHeadItem(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float f1, float f2, float f3, float f4, float f5, float f6, CallbackInfo ci){
+
+        entityIn.getArmorSlots().forEach(item  -> {
+            if(item.getItem()  instanceof BannerItem){
+                flagModel.renderOnHorse(item,entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,f3);
+            }
+            else if(item.getDescriptionId().contains("end_rod")){
+                hornModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,f3,f1,f2);
+            }
+
+        });
+
+
+    }
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "INVOKE",target = "Lsekelsta/horse_colors/client/renderer/HorseGeneticModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V"),locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     public void render(PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, AbstractHorseGenetic entityIn, float f1, float f2, float f3, float f4, float f5, float f6, CallbackInfo ci, ItemStack itemstack, Item armor, ResourceLocation textureLocation, float r, float g, float b){
         if(armor instanceof DyeableHorseArmorItem){
