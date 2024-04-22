@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "truly_custom_horse_tack.refmap.json",
   "mixins": [
+    "AbstractHorseGeneticMixin"
   ],
   "client": [
     "HorseArmorRendererMixin",
