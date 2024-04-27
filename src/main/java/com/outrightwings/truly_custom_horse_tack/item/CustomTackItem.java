@@ -2,7 +2,7 @@ package com.outrightwings.truly_custom_horse_tack.item;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
-import com.outrightwings.truly_custom_horse_tack.util.ColorConverter;
+import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,7 +16,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CauldronBlock;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,7 +39,7 @@ public class CustomTackItem extends HorseArmorItem {
     public InteractionResult useOn(UseOnContext context) {
         BlockState block = context.getLevel().getBlockState(context.getClickedPos());
         if(block.is(Blocks.WATER_CAULDRON)){
-            boolean removed = TackPattern.removeLastPattern(context.getItemInHand().getTag());
+            boolean removed = TackTagUtility.removeLastPattern(context.getItemInHand().getTag());
             if(removed){
                 LayeredCauldronBlock.lowerFillLevel(block,context.getLevel(),context.getClickedPos());
                 return InteractionResult.SUCCESS;
@@ -48,8 +50,8 @@ public class CustomTackItem extends HorseArmorItem {
 
     public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag){
         CompoundTag tagData =  stack.getTag();
-        for(int i = 0; i < TackPattern.getPatternListSize(tagData); i++) {
-            Tuple<Integer, String> colorPattern = TackPattern.getColorAndPatternByIndex(tagData, i);
+        for(int i = 0; i < TackTagUtility.getPatternListSize(tagData); i++) {
+            Tuple<Integer, String> colorPattern = TackTagUtility.getColorAndPatternByIndex(tagData, i);
 
             var pattern = TackPattern.getTackPattern(colorPattern.getB());
             var patternName = pattern != null ? pattern.getTranslationKey() : "tack.truly_custom_horse_tack.pattern.unknown";
@@ -64,7 +66,7 @@ public class CustomTackItem extends HorseArmorItem {
             }
             list.add(color.append(" ").append(Component.translatable(patternName)).withStyle(ChatFormatting.GRAY));
         }
-        if(TackPattern.getPatternListSize(tagData) <= 0){
+        if(TackTagUtility.getPatternListSize(tagData) <= 0){
             list.add(Component.translatable(String.format("tooltip.%s.%s", Main.MODID,"no_pattern")).withStyle(ChatFormatting.GRAY));
         }
     }
