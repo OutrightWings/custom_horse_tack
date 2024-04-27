@@ -29,9 +29,6 @@ public class AbstractHorseGeneticMixin extends Mob {
         } else if (itemstack.is(Items.END_ROD)) {
             this.setItemSlot(EquipmentSlot.HEAD,itemstack.split(1));
             cir.setReturnValue(true);
-        } else if (itemstack.is(Items.BELL)) {
-            this.setItemSlot(EquipmentSlot.FEET,itemstack.split(1));
-            cir.setReturnValue(true);
         }
     }
 }

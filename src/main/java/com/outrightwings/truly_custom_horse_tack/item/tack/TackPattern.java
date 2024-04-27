@@ -1,6 +1,7 @@
 package com.outrightwings.truly_custom_horse_tack.item.tack;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.BellsNeckModel;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -57,6 +58,7 @@ public enum TackPattern implements StringRepresentable {
     FLOWER_CIRCLE("flower_circle","cute,body",true,null),
     CIRCLE("circle","cute,body",false,null),
     SIMPLE_SHOULDER("shoulder_simple","cute,body",false,null),
+    BELLS_NECK("bells_neck","cute,body",false, new BellsNeckModel(BellsNeckModel.createBodyLayer().bakeRoot())),
 
     BOOTS_BELL("boots_bell","none,feet",false,null),
     BOOTS_FETLOCK("boots_fetlock","none,feet",false,null),
