@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,10 +24,13 @@ public class AbstractHorseGeneticMixin extends Mob {
     @Inject(method = "itemInteract(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/InteractionHand;)Z", at = @At(value = "HEAD"),remap = false,cancellable = true)
     public void interact(Player player, ItemStack itemstack, InteractionHand hand, CallbackInfoReturnable<Boolean> cir){
         if(itemstack.getItem() instanceof BannerItem){
+            this.setItemSlot(EquipmentSlot.LEGS,itemstack.split(1));
+            cir.setReturnValue(true);
+        } else if (itemstack.is(Items.END_ROD)) {
             this.setItemSlot(EquipmentSlot.HEAD,itemstack.split(1));
             cir.setReturnValue(true);
-        } else if (itemstack.getDescriptionId().contains("end_rod")) {
-            this.setItemSlot(EquipmentSlot.HEAD,itemstack.split(1));
+        } else if (itemstack.is(Items.BELL)) {
+            this.setItemSlot(EquipmentSlot.FEET,itemstack.split(1));
             cir.setReturnValue(true);
         }
     }
