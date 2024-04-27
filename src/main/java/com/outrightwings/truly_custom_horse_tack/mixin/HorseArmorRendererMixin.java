@@ -7,7 +7,9 @@ import com.outrightwings.truly_custom_horse_tack.client.renderer.TextureCache;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.BellsNeckModel;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.FlagModel;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.HornModel;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
+import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -28,6 +30,7 @@ import sekelsta.horse_colors.client.renderer.HorseGeneticModel;
 import sekelsta.horse_colors.client.renderer.TextureLayer;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @Mixin(HorseArmorLayer.class)
@@ -37,35 +40,36 @@ public class HorseArmorRendererMixin {
     private HorseGeneticModel<AbstractHorseGenetic> horseModel;
     private static final FlagModel flagModel = new FlagModel(FlagModel.createBodyLayer().bakeRoot());
     private static final HornModel hornModel = new HornModel(HornModel.createBodyLayer().bakeRoot());
-    private static final BellsNeckModel bellsModel = new BellsNeckModel(BellsNeckModel.createBodyLayer().bakeRoot());
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "HEAD"),remap = false)
-    public void renderExtraModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float f1, float f2, float f3, float f4, float f5, float f6, CallbackInfo ci){
+    public void renderExtraModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float limb_swing, float limb_swing_amount, float ticks, float f4, float f5, float f6, CallbackInfo ci){
         entityIn.getArmorSlots().forEach(item  -> {
             if(item.getItem()  instanceof BannerItem){
-                flagModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,f3,f1,f2);
+                flagModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount);
             }
             else if(item.is(Items.END_ROD)){
-                hornModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,f3,f1,f2);
-            } else if (item.is(Items.BELL)) {
-                bellsModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,f3,f1,f2);
+                hornModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount);
             }
         });
     }
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "INVOKE",target = "Lsekelsta/horse_colors/client/renderer/HorseGeneticModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V"),locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    public void render(PoseStack matrixStack, MultiBufferSource renderTypeBuffer, int light, AbstractHorseGenetic entityIn, float f1, float f2, float f3, float f4, float f5, float f6, CallbackInfo ci, ItemStack itemstack, Item armor, ResourceLocation textureLocation, float r, float g, float b){
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float limb_swing, float limb_swing_amount, float ticks, float f4, float f5, float f6, CallbackInfo ci, ItemStack itemstack, Item armor, ResourceLocation textureLocation, float r, float g, float b){
         if(armor instanceof DyeableHorseArmorItem){
-            renderTextureOnHorse(renderTypeBuffer,matrixStack,light,r,g,b,textureLocation,false);
-            renderTextureOnHorse(renderTypeBuffer,matrixStack,light,1,1,1,textureLocation,true);
+            renderTextureOnHorse(bufferSource,poseStack,packedLight,r,g,b,textureLocation,false);
+            renderTextureOnHorse(bufferSource,poseStack,packedLight,1,1,1,textureLocation,true);
         }else if(armor instanceof BlockItem){
-            renderTextureOnHorse(renderTypeBuffer,matrixStack,light,r,g,b,textureLocation,false);
+            renderTextureOnHorse(bufferSource,poseStack,packedLight,r,g,b,textureLocation,false);
         }else if(armor instanceof CustomTackItem){
             ResourceLocation customTackCached = TextureCache.getTexture(entityIn.getArmor());
             if(customTackCached != null){
-                renderTextureOnHorse(renderTypeBuffer, matrixStack, light, 1, 1, 1, customTackCached, false);
+                renderTextureOnHorse(bufferSource, poseStack, packedLight, 1, 1, 1, customTackCached, false);
             }
+            ArrayList<SpecialTackModel> modelsToRender = TackTagUtility.getModels(entityIn.getArmor().getTag());
+            modelsToRender.forEach(model -> {
+                model.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount);
+            });
         }else{
-            renderTextureOnHorse(renderTypeBuffer,matrixStack,light,1,1,1,textureLocation,false);
+            renderTextureOnHorse(bufferSource,poseStack,packedLight,1,1,1,textureLocation,false);
         }
         ci.cancel();
     }
