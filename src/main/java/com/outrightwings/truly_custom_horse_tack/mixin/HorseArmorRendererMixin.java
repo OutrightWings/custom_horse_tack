@@ -38,7 +38,6 @@ public class HorseArmorRendererMixin {
     private static final FlagModel flagModel = new FlagModel(FlagModel.createBodyLayer().bakeRoot());
     private static final HornModel hornModel = new HornModel(HornModel.createBodyLayer().bakeRoot());
     private static final BellsNeckModel bellsModel = new BellsNeckModel(BellsNeckModel.createBodyLayer().bakeRoot());
-    private static final Map<CompoundTag, ResourceLocation> LAYER_CACHE = Maps.newHashMap();
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "HEAD"),remap = false)
     public void renderExtraModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float f1, float f2, float f3, float f4, float f5, float f6, CallbackInfo ci){
@@ -80,19 +79,5 @@ public class HorseArmorRendererMixin {
         }
 
         horseModel.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);
-    }
-    public ResourceLocation getTexture(AbstractHorseGenetic entity) {
-            ItemStack armor = entity.getArmor();
-            if(armor.getItem() instanceof CustomTackItem custom){
-                ResourceLocation resourcelocation = LAYER_CACHE.get(armor.getTag());
-                if (resourcelocation == null) {
-                    TextureLayer l = custom.getTextureLayers(armor);
-                    resourcelocation = new ResourceLocation(l.getUniqueName());
-                    Minecraft.getInstance().getTextureManager().register(resourcelocation, new CustomLayeredTexture(custom.getTextureLayers(armor)));
-                    LAYER_CACHE.put(armor.getTag(), resourcelocation);
-                }
-                return resourcelocation;
-            }
-            return null;
     }
 }
