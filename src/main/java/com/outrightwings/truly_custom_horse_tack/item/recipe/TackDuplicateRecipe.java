@@ -2,6 +2,7 @@ package com.outrightwings.truly_custom_horse_tack.item.recipe;
 
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
+import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +26,7 @@ public class TackDuplicateRecipe extends CustomRecipe {
         for(int i = 0; i < container.getContainerSize(); i++){
             ItemStack stack = container.getItem(i);
             if(stack.getItem() instanceof CustomTackItem){
-                int listSize = TackPattern.getPatternListSize(stack.getTag());
+                int listSize = TackTagUtility.getPatternListSize(stack.getTag());
                 if(decorated && listSize > 0){
                     found = stack;
                     index = i;

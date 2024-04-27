@@ -2,13 +2,11 @@ package com.outrightwings.truly_custom_horse_tack.item;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
-import com.outrightwings.truly_custom_horse_tack.util.ColorConverter;
+import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionResult;
@@ -29,7 +27,6 @@ import sekelsta.horse_colors.client.renderer.TextureLayer;
 import sekelsta.horse_colors.client.renderer.TextureLayerGroup;
 import sekelsta.horse_colors.util.Color;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomTackItem extends HorseArmorItem {
@@ -42,7 +39,7 @@ public class CustomTackItem extends HorseArmorItem {
     public InteractionResult useOn(UseOnContext context) {
         BlockState block = context.getLevel().getBlockState(context.getClickedPos());
         if(block.is(Blocks.WATER_CAULDRON)){
-            boolean removed = TackPattern.removeLastPattern(context.getItemInHand().getTag());
+            boolean removed = TackTagUtility.removeLastPattern(context.getItemInHand().getTag());
             if(removed){
                 LayeredCauldronBlock.lowerFillLevel(block,context.getLevel(),context.getClickedPos());
                 return InteractionResult.SUCCESS;
@@ -53,8 +50,8 @@ public class CustomTackItem extends HorseArmorItem {
 
     public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag){
         CompoundTag tagData =  stack.getTag();
-        for(int i = 0; i < TackPattern.getPatternListSize(tagData); i++) {
-            Tuple<Integer, String> colorPattern = TackPattern.getColorAndPatternByIndex(tagData, i);
+        for(int i = 0; i < TackTagUtility.getPatternListSize(tagData); i++) {
+            Tuple<Integer, String> colorPattern = TackTagUtility.getColorAndPatternByIndex(tagData, i);
 
             var pattern = TackPattern.getTackPattern(colorPattern.getB());
             var patternName = pattern != null ? pattern.getTranslationKey() : "tack.truly_custom_horse_tack.pattern.unknown";
@@ -62,15 +59,15 @@ public class CustomTackItem extends HorseArmorItem {
             MutableComponent color;
             if(colorPattern.getA() < 16){
                 var colorName = DyeColor.byId(colorPattern.getA()).getName();
-                color = new TranslatableComponent(String.format("tooltip.%s.%s", Main.MODID,colorName));
+                color = Component.translatable(String.format("tooltip.%s.%s", Main.MODID,colorName));
             } else {
                 float[] rgb = ColorConverter.decToRGB(TackPattern.getColorFromColorTag(colorPattern.getA()));
-                color = new TextComponent(String.format("#%s%s%s", Integer.toHexString((int)(rgb[0]*255)),Integer.toHexString((int)(rgb[1]*255)),Integer.toHexString((int)(rgb[2]*255))));
+                color = Component.literal(String.format("#%s%s%s", Integer.toHexString((int)(rgb[0]*255)),Integer.toHexString((int)(rgb[1]*255)),Integer.toHexString((int)(rgb[2]*255))));
             }
-            list.add(color.append(" ").append(new TranslatableComponent(patternName)).withStyle(ChatFormatting.GRAY));
+            list.add(color.append(" ").append(Component.translatable(patternName)).withStyle(ChatFormatting.GRAY));
         }
-        if(TackPattern.getPatternListSize(tagData) <= 0){
-            list.add(new TranslatableComponent(String.format("tooltip.%s.%s", Main.MODID,"no_pattern")).withStyle(ChatFormatting.GRAY));
+        if(TackTagUtility.getPatternListSize(tagData) <= 0){
+            list.add(Component.translatable(String.format("tooltip.%s.%s", Main.MODID,"no_pattern")).withStyle(ChatFormatting.GRAY));
         }
     }
     @OnlyIn(Dist.CLIENT)
