@@ -3,7 +3,6 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialT
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -12,17 +11,21 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.BannerItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.commons.lang3.ObjectUtils;
 import org.joml.Quaternionf;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @OnlyIn(Dist.CLIENT)
-public class FlagModel extends Model {
+public class FlagModel extends SpecialTackModel {
     final ModelPart flag;
     final ModelPart pole;
     final ModelPart bar;
@@ -40,8 +43,13 @@ public class FlagModel extends Model {
         partdefinition.addOrReplaceChild("bar", CubeListBuilder.create().texOffs(0, 42).addBox(-19.0F, -32.0F, 7.0F, 20.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-32.0F, -23.0F, -8.0F, 0.0F, 0.0F, 1.5708F));
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
-
-    public void renderOnHorse(ItemStack bannerItem, AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, float ticks) {
+    public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount) {
+        final ItemStack[] bannerItem = new ItemStack[1];
+        entityIn.getArmorSlots().forEach(item -> {
+            if(item.getItem() instanceof BannerItem){
+                bannerItem[0] = item;
+            }
+        });
         poseStack.pushPose();
         poseStack.mulPose(new Quaternionf(-0.03f,0.70f,-0.03,0.70f));
 
@@ -59,14 +67,9 @@ public class FlagModel extends Model {
         this.flag.xRot = (-0.0125F + 0.01F * Mth.cos(((float)Math.PI * 2F) * f2)) * (float)Math.PI;
         this.flag.x = 0;
         this.flag.y = -42.0F;
-        var patterns = BannerBlockEntity.createPatterns(((BannerItem)bannerItem.getItem()).getColor() ,BannerBlockEntity.getItemPatterns(bannerItem));
+        var patterns = BannerBlockEntity.createPatterns(((BannerItem) bannerItem[0].getItem()).getColor() ,BannerBlockEntity.getItemPatterns(bannerItem[0]));
         BannerRenderer.renderPatterns(poseStack, bufferSource, light, overlay, this.flag, ModelBakery.BANNER_BASE, true,patterns);
         poseStack.popPose();
         poseStack.popPose();
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int overlay, float red, float green, float blue, float alpha) {
-
     }
 }

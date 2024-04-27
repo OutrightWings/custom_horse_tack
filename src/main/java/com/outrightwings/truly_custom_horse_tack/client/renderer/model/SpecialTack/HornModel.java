@@ -3,6 +3,7 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialT
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.Main;
+import com.outrightwings.truly_custom_horse_tack.util.HorseModelRotationFix;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -20,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 @OnlyIn(Dist.CLIENT)
-public class HornModel extends Model {
+public class HornModel extends SpecialTackModel {
     final ModelPart horn;
     private static final ResourceLocation texture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn.png");
 
@@ -39,8 +40,8 @@ public class HornModel extends Model {
     }
     public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount) {
 
-        float bodyRotation = this.updateHorseRotation(entityIn.yBodyRotO, entityIn.yBodyRot, ticks);
-        float headRotation = this.updateHorseRotation(entityIn.yHeadRotO, entityIn.yHeadRot, ticks);
+        float bodyRotation = HorseModelRotationFix.updateHorseRotation(entityIn.yBodyRotO, entityIn.yBodyRot, ticks);
+        float headRotation = HorseModelRotationFix.updateHorseRotation(entityIn.yHeadRotO, entityIn.yHeadRot, ticks);
         float interpolatedPitch = entityIn.xRotO + (entityIn.getXRot() - entityIn.xRotO) * ticks;
         float f4 = interpolatedPitch * 0.017453292F;
         if (limbSwingAmount > 0.2F)
@@ -61,25 +62,8 @@ public class HornModel extends Model {
         this.horn.yRot = neckBend * headRelativeRotation * 0.017453292F;
         this.horn.y = rearingAmount * -6.0F + grassEatingAmount * 11.0F + (1.0F - Math.max(rearingAmount, grassEatingAmount)) * 4.0F;
         this.horn.z = rearingAmount * -1.0F + grassEatingAmount * -10.0F + (1.0F - Math.max(rearingAmount, grassEatingAmount)) * -10.0F;
-        System.out.println(String.format("y:%f z:%f",this.horn.y,this.horn.z));
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
         horn.render(poseStack,vertexConsumer,light,overlay);
 
-    }
-    @Override
-    public void renderToBuffer(PoseStack p_103111_, VertexConsumer p_103112_, int p_103113_, int p_103114_, float p_103115_, float p_103116_, float p_103117_, float p_103118_) {
-
-    }
-
-    private float updateHorseRotation(float prevRotation, float currentRotation, float partialTickTime) {
-        float bodyRotation;
-        for(bodyRotation = currentRotation - prevRotation; bodyRotation < -180.0F; bodyRotation += 360.0F) {
-        }
-
-        while(bodyRotation >= 180.0F) {
-            bodyRotation -= 360.0F;
-        }
-
-        return prevRotation + partialTickTime * bodyRotation;
     }
 }
