@@ -1,6 +1,7 @@
 package com.outrightwings.truly_custom_horse_tack.mixin;
 
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -46,7 +47,7 @@ public class AbstractHorseGeneticMixin extends AbstractHorse {
 
     public void updateFallFlying() {
         boolean flag = false;
-        if (!this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION)) {
+        if (!this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION) && this.hasControllingPassenger()) {
             ItemStack itemstack = this.getItemBySlot(EquipmentSlot.LEGS);
             flag = itemstack.canElytraFly(this);// && itemstack.elytraFlightTick(this, this.fallFlyTicks);
             if (!this.level().isClientSide) {
@@ -61,7 +62,10 @@ public class AbstractHorseGeneticMixin extends AbstractHorse {
             this.setSharedFlag(7, flag);
         }
     }
-    /*protected Vec3 getRiddenInput(Player player, Vec3 vec) {
+    public boolean causeFallDamage(float distance, float amount, DamageSource source) {
+        if(this.getItemBySlot(EquipmentSlot.LEGS).is(Items.ELYTRA))
+            return false;
+        return super.causeFallDamage(distance,amount,source);
+    }
 
-    }*/
 }
