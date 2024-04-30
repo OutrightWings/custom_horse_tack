@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.item.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -45,10 +46,10 @@ public class HorseArmorRendererMixin {
     public void renderExtraModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float limb_swing, float limb_swing_amount, float ticks, float f4, float f5, float f6, CallbackInfo ci){
         entityIn.getArmorSlots().forEach(item  -> {
             if(item.getItem()  instanceof BannerItem){
-                flagModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount);
+                flagModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
             }
             else if(item.is(Items.END_ROD)){
-                hornModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount);
+                hornModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
             }
         });
     }
@@ -64,9 +65,9 @@ public class HorseArmorRendererMixin {
             if(customTackCached != null){
                 renderTextureOnHorse(bufferSource, poseStack, packedLight, 1, 1, 1, customTackCached, false);
             }
-            ArrayList<SpecialTackModel> modelsToRender = TackTagUtility.getModels(entityIn.getArmor().getTag());
-            modelsToRender.forEach(model -> {
-                model.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount);
+            ArrayList<Tuple<SpecialTackModel, float[]>> modelsToRender = TackTagUtility.getModels(entityIn.getArmor().getTag());
+            modelsToRender.forEach(pair -> {
+                pair.getA().renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,pair.getB());
             });
         }else{
             renderTextureOnHorse(bufferSource,poseStack,packedLight,1,1,1,textureLocation,false);
