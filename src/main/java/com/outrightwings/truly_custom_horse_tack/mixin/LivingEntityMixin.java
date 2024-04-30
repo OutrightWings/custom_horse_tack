@@ -26,6 +26,7 @@ public class LivingEntityMixin extends Entity {
             this.setSpeed(this.getRiddenSpeed(player));
             this.setDeltaMovement(this.getDeltaMovement().multiply(1.02f,1.02f,1.02f));
             this.travel(inputPlayer);
+            this.tryCheckInsideBlocks();
             ci.cancel();
         }
     }
