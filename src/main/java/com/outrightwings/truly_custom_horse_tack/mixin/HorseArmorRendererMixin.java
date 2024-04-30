@@ -4,11 +4,9 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.TextureCache;
-import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.BellsNeckModel;
-import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.FlagModel;
-import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.HornModel;
-import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.*;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
+import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -40,7 +38,8 @@ public class HorseArmorRendererMixin {
     @Shadow(remap = false)
     private HorseGeneticModel<AbstractHorseGenetic> horseModel;
     private static final FlagModel flagModel = new FlagModel(FlagModel.createBodyLayer().bakeRoot());
-    private static final HornModel hornModel = new HornModel(HornModel.createBodyLayer().bakeRoot());
+    private static final HornModel hornModel = (HornModel) TackPattern.getTackPattern("horn").getModel();
+    private static final WingsModel wingsModel = new WingsModel(WingsModel.createBodyLayer().bakeRoot());
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "HEAD"),remap = false)
     public void renderExtraModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float limb_swing, float limb_swing_amount, float ticks, float f4, float f5, float f6, CallbackInfo ci){
@@ -50,6 +49,8 @@ public class HorseArmorRendererMixin {
             }
             else if(item.is(Items.END_ROD)){
                 hornModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
+            } else if(item.is(Items.ELYTRA)){
+                wingsModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
             }
         });
     }
