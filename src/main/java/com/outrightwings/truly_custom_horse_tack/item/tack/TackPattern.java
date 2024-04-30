@@ -2,6 +2,7 @@ package com.outrightwings.truly_custom_horse_tack.item.tack;
 
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.BellsNeckModel;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.HornModel;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -32,6 +33,8 @@ public enum TackPattern implements StringRepresentable {
     HEAD_RACE_MASK_CHECKER("head_race_mask_checker","race,head",false,null),
     BOWS("bows","cute,head",false,null),
     STRIPES("stripes","cute,head",false,null),
+    HORN("horn","cute,head",false,new HornModel(HornModel.createBodyLayer().bakeRoot())),
+    HORN_COLOR("horn_color","cute,head",false,new HornModel(HornModel.createBodyLayer().bakeRoot())),
 
     SADDLE("saddle","none,body",true,null),
     SADDLE_SIDE("saddle_side","cute,body",true,null),
@@ -79,7 +82,7 @@ public enum TackPattern implements StringRepresentable {
     WOODEN("wood0","impossible",true,null),
     WOODEN_DARK("wood1","impossible",true,null),
     ;
-    private final String name;
+    public final String name;
     private final boolean overlay;
     private final ResourceLocation armorTextureLocation;
     private final ResourceLocation patternTextureLocation;

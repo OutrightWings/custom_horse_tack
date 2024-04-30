@@ -61,5 +61,6 @@ public class Main
         * Bigger Chests
         * Ribbons
         * add banner pattern to creative menu
+        * add way to get banner pattern
      */
 }

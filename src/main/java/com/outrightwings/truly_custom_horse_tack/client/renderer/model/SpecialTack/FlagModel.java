@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.ObjectUtils;
@@ -43,7 +44,7 @@ public class FlagModel extends SpecialTackModel {
         partdefinition.addOrReplaceChild("bar", CubeListBuilder.create().texOffs(0, 42).addBox(-19.0F, -32.0F, 7.0F, 20.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-32.0F, -23.0F, -8.0F, 0.0F, 0.0F, 1.5708F));
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
-    public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount) {
+    public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount,float[] color) {
         final ItemStack[] bannerItem = new ItemStack[1];
         entityIn.getArmorSlots().forEach(item -> {
             if(item.getItem() instanceof BannerItem){
@@ -71,5 +72,15 @@ public class FlagModel extends SpecialTackModel {
         BannerRenderer.renderPatterns(poseStack, bufferSource, light, overlay, this.flag, ModelBakery.BANNER_BASE, true,patterns);
         poseStack.popPose();
         poseStack.popPose();
+    }
+
+    @Override
+    public void renderOnRack(BlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean wall,float[] color) {
+
+    }
+
+    @Override
+    public void renderOnStand(BlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean wall,float[] color) {
+
     }
 }
