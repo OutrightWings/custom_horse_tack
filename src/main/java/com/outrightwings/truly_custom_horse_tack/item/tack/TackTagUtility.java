@@ -50,17 +50,25 @@ public class TackTagUtility {
             return colors;
         }
     }
-    public static ArrayList<SpecialTackModel> getModels(CompoundTag patternList){
-        ArrayList<SpecialTackModel> list = new ArrayList<>();
+    public static ArrayList<Tuple<SpecialTackModel,float[]>> getModels(CompoundTag patternList){
+        ArrayList<Tuple<SpecialTackModel,float[]>> list = new ArrayList<>();
         ListTag listtag = null;
         if (patternList != null && patternList.contains("Patterns", 9)) {
             listtag = patternList.getList("Patterns", 10);
         }
         if(listtag != null){
             listtag.forEach(tag -> {
-                SpecialTackModel m = TackPattern.getTackPattern(((CompoundTag)tag).getString("Pattern")).getModel();
-                if(m != null)
-                    list.add(m);
+                SpecialTackModel model;
+                float[] color;
+                TackPattern pattern = TackPattern.getTackPattern(((CompoundTag)tag).getString("Pattern"));
+                model = pattern != null ? pattern.getModel(): null;
+                color = getColorFromColorTag(((CompoundTag)tag).getInt("Color"));
+                if(model != null){
+                    if(pattern.name.equals("horn"))
+                        list.add(new Tuple<>(model,null));
+                    else
+                        list.add(new Tuple<>(model,color));
+                }
             });
         }
         return list;

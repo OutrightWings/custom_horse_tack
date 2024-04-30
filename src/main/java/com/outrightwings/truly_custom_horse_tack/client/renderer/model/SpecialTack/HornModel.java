@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import sekelsta.horse_colors.client.renderer.HorseGeneticModel;
@@ -23,7 +24,8 @@ import java.lang.reflect.Method;
 @OnlyIn(Dist.CLIENT)
 public class HornModel extends SpecialTackModel {
     final ModelPart horn;
-    private static final ResourceLocation texture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn.png");
+    private static final ResourceLocation baseTexture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn.png");
+    private static final ResourceLocation colorTexture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn.png");
 
     public HornModel(ModelPart root) {
         super(RenderType::entityCutoutNoCull);
@@ -38,7 +40,7 @@ public class HornModel extends SpecialTackModel {
 
         return LayerDefinition.create(meshdefinition, 16, 16);
     }
-    public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount) {
+    public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount,float[] color) {
 
         float bodyRotation = HorseModelRotationFix.updateHorseRotation(entityIn.yBodyRotO, entityIn.yBodyRot, ticks);
         float headRotation = HorseModelRotationFix.updateHorseRotation(entityIn.yHeadRotO, entityIn.yHeadRot, ticks);
@@ -62,8 +64,35 @@ public class HornModel extends SpecialTackModel {
         this.horn.yRot = neckBend * headRelativeRotation * 0.017453292F;
         this.horn.y = rearingAmount * -6.0F + grassEatingAmount * 11.0F + (1.0F - Math.max(rearingAmount, grassEatingAmount)) * 4.0F;
         this.horn.z = rearingAmount * -1.0F + grassEatingAmount * -10.0F + (1.0F - Math.max(rearingAmount, grassEatingAmount)) * -10.0F;
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
-        horn.render(poseStack,vertexConsumer,light,overlay);
 
+        VertexConsumer vertexConsumer;
+        if(color != null){
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(colorTexture));
+            horn.render(poseStack,vertexConsumer,light,overlay,color[0],color[1],color[2],1f);
+        } else {
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(baseTexture));
+            horn.render(poseStack,vertexConsumer,light,overlay);
+        }
+
+    }
+
+    @Override
+    public void renderOnRack(BlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean wall,float[] color) {
+
+    }
+
+    @Override
+    public void renderOnStand(BlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean wall,float[] color) {
+        this.horn.setPos(0.0F, 18.0F, -5.0F);
+
+        this.horn.xRot = 0.261799f;
+        VertexConsumer vertexConsumer;
+        if(color != null){
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(colorTexture));
+            horn.render(poseStack,vertexConsumer,light,overlay,color[0],color[1],color[2],1f);
+        } else {
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(baseTexture));
+            horn.render(poseStack,vertexConsumer,light,overlay);
+        }
     }
 }
