@@ -40,6 +40,9 @@
   "item.truly_custom_horse_tack.body_tack_pattern":"Body Tack Pattern",
   "item.truly_custom_horse_tack.feet_tack_pattern":"Feet Tack Pattern",
 
+  "item.truly_custom_horse_tack.horse_banner_pattern":"Banner Pattern",
+  "item.truly_custom_horse_tack.horse_banner_pattern.desc":"Various Horse Patterns",
+
   "item.truly_custom_horse_tack.custom_tack":"Custom Tack",
 
   "tack.truly_custom_horse_tack.pattern.boots_bell":"Bell Boots",
