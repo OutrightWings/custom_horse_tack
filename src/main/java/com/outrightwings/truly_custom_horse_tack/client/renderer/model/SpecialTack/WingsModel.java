@@ -3,20 +3,17 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialT
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.Main;
+import com.outrightwings.truly_custom_horse_tack.util.HorseModelRotations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.Vec3;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
-
-import java.util.function.Function;
 
 public class WingsModel extends SpecialTackModel{
     private final ModelPart wings;
@@ -31,6 +28,7 @@ public class WingsModel extends SpecialTackModel{
     float inYRot = 332.5F;
     float inZRot = 270;
     float ticksToOpen = 10;
+    float delayToOpen = 2;
 
     public WingsModel(ModelPart root) {
         super(RenderType::entityCutoutNoCull);
@@ -56,13 +54,10 @@ public class WingsModel extends SpecialTackModel{
     public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, float ticks, float limbSwing, float limbSwingAmount,float[] color) {
         float rearingAmount = entityIn.getStandAnim(ticks);
 
-        float fallTicks = entityIn.getFallFlyingTicks();
-        if(fallTicks <= 2)
-            fallTicks = 0;
+        float fallTicks = entityIn.getFallFlyingTicks()-delayToOpen;
         fallTicks = Mth.clamp(fallTicks,0,ticksToOpen)/ticksToOpen;
 
-        this.wings.setPos(-1,11,9);
-        this.wings.xRot = rearingAmount * -0.7853982F;
+        HorseModelRotations.rotateModelWithBody(wings,entityIn,ticks,limbSwing,limbSwingAmount);
         float xRot, yRot, zRot;
 
         xRot = Mth.lerp(fallTicks,inXRot,outXRot);
