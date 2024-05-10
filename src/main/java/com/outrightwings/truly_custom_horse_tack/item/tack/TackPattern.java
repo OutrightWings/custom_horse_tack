@@ -15,14 +15,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum TackPattern implements StringRepresentable {
-    REINS("reins","none,winter,cute,reins",true,null),
+    REINS("reins","none,winter,cute,reins",false,null),
     REINS_LIGHTS("reins_lights","winter,reins",false,null),
     REINS_STRIPED("reins_striped","winter,reins",false,null),
     REINS_LIGHTS_RAINBOW("reins_lights_rainbow","winter,reins",true,null),
     REINS_FLOWERS("reins_flowers","cute,reins",true,null),
 
     BRIDLE("bridle","none,head",true,null),
+    BRIDLE_HACKAMORE("bridle_hackamore","none,head",true,null),
+    BRIDLE_NOSEBAND("bridle_noseband","none,head",true,null),
+    BRIDLE_SIDEPULL("bridle_sidepull","none,head",true,null),
     HALTER("halter","none,head",true,null),
+    HALTER_WOOL("halter_wool","none,head",true,null),
+    HALTER_WOOL_PADDING("halter_wool_padding","none,head",true,null),
+    HALTER_WOOL_PADDING_WOOL("halter_wool_padding_wool","none,head",false,null),
     HEAD_HAT("head_hat","none,head",false,null),
     FLY_MASK("fly_mask","none,head",true,null),
     BRONC_HALTER("bronc_halter","none,head",true,null),
