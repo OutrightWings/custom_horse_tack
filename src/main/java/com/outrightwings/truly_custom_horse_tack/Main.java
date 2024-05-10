@@ -53,8 +53,6 @@ public class Main
     }
     /*
         Todo:
-        * Horn
-            * rotation bug on stand/rack
         * Bells
             * Make noise?
             * Back bells
@@ -62,7 +60,5 @@ public class Main
         * Wings
         * Bigger Chests
         * Ribbons
-        * add banner pattern to creative menu
-        * add way to get banner pattern
      */
 }
