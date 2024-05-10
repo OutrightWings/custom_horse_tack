@@ -3,23 +3,17 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialT
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.Main;
-import com.outrightwings.truly_custom_horse_tack.util.HorseModelRotationFix;
-import net.minecraft.client.model.Model;
+import com.outrightwings.truly_custom_horse_tack.util.HorseModelRotations;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import sekelsta.horse_colors.client.renderer.HorseGeneticModel;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 @OnlyIn(Dist.CLIENT)
 public class HornModel extends SpecialTackModel {
@@ -41,29 +35,7 @@ public class HornModel extends SpecialTackModel {
         return LayerDefinition.create(meshdefinition, 16, 16);
     }
     public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount,float[] color) {
-
-        float bodyRotation = HorseModelRotationFix.updateHorseRotation(entityIn.yBodyRotO, entityIn.yBodyRot, ticks);
-        float headRotation = HorseModelRotationFix.updateHorseRotation(entityIn.yHeadRotO, entityIn.yHeadRot, ticks);
-        float interpolatedPitch = entityIn.xRotO + (entityIn.getXRot() - entityIn.xRotO) * ticks;
-        float f4 = interpolatedPitch * 0.017453292F;
-        if (limbSwingAmount > 0.2F)
-        {
-            f4 += Mth.cos(limbSwing * 0.4F) * 0.15F * limbSwingAmount;
-        }
-
-        float headRelativeRotation = headRotation - bodyRotation;
-        headRelativeRotation = headRelativeRotation > 20.0F ? 20 : headRelativeRotation;
-        headRelativeRotation = headRelativeRotation < -20.0F ? -20 : headRelativeRotation;
-
-        float grassEatingAmount = entityIn.getEatAnim(ticks);
-        float rearingAmount = entityIn.getStandAnim(ticks);
-        float neckBend = rearingAmount + 1.0F - Math.max(rearingAmount, grassEatingAmount);
-
-        this.horn.setPos(0.0F, 4.0F, -10.0F);
-        this.horn.xRot = rearingAmount * (0.2617994F + f4) + grassEatingAmount * 2.1816616F + (1.0F - Math.max(rearingAmount, grassEatingAmount)) * 0.5235988F + f4;
-        this.horn.yRot = neckBend * headRelativeRotation * 0.017453292F;
-        this.horn.y = rearingAmount * -6.0F + grassEatingAmount * 11.0F + (1.0F - Math.max(rearingAmount, grassEatingAmount)) * 4.0F;
-        this.horn.z = rearingAmount * -1.0F + grassEatingAmount * -10.0F + (1.0F - Math.max(rearingAmount, grassEatingAmount)) * -10.0F;
+        HorseModelRotations.rotateModelWithHead(horn,entityIn,ticks,limbSwing,limbSwingAmount);
 
         VertexConsumer vertexConsumer;
         if(color != null){
@@ -83,9 +55,8 @@ public class HornModel extends SpecialTackModel {
 
     @Override
     public void renderOnStand(BlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean wall,float[] color) {
-        this.horn.setPos(0.0F, 18.0F, -5.0F);
+        HorseModelRotations.rotateModelToHeadStand(this.horn);
 
-        this.horn.xRot = 0.261799f;
         VertexConsumer vertexConsumer;
         if(color != null){
             vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(colorTexture));

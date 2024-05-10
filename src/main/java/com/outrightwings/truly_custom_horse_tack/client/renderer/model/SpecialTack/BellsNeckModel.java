@@ -3,8 +3,7 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialT
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.Main;
-import com.outrightwings.truly_custom_horse_tack.util.HorseModelRotationFix;
-import net.minecraft.client.model.Model;
+import com.outrightwings.truly_custom_horse_tack.util.HorseModelRotations;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -57,9 +56,8 @@ public class BellsNeckModel extends SpecialTackModel {
         return LayerDefinition.create(meshdefinition, 16, 16);
     }
     public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, float ticks, float limbSwing, float limbSwingAmount,float[] color) {
-        this.bells.setPos(-1,11,9);
+        HorseModelRotations.rotateModelWithBody(bells,entityIn,ticks,limbSwing,limbSwingAmount);
         float rearingAmount = entityIn.getStandAnim(ticks) * -0.7853982F;
-        this.bells.xRot = rearingAmount;
         for(ModelPart sideBell : sideBells) {
             sideBell.xRot = -rearingAmount;
         }
