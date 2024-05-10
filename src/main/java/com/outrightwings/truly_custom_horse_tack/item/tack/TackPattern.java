@@ -3,6 +3,7 @@ package com.outrightwings.truly_custom_horse_tack.item.tack;
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.BellsNeckModel;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.HornModel;
+import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.RibbonModel;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -39,8 +40,10 @@ public enum TackPattern implements StringRepresentable {
     HEAD_RACE_MASK_CHECKER("head_race_mask_checker","race,head",false,null),
     BOWS("bows","cute,head",false,null),
     STRIPES("stripes","cute,head",false,null),
-    HORN("horn","cute,head",false,new HornModel(HornModel.createBodyLayer().bakeRoot())),
+    HORN("horn","impossible",false,new HornModel(HornModel.createBodyLayer().bakeRoot())),
     HORN_COLOR("horn_color","cute,head",false,new HornModel(HornModel.createBodyLayer().bakeRoot())),
+    RIBBON_EAR_RIGHT("ribbon_ear","cute,head",false,new RibbonModel(RibbonModel.createBodyLayerRight().bakeRoot())),
+    RIBBON_EAR_LEFT("ribbon_ear_left","cute,head",false,new RibbonModel(RibbonModel.createBodyLayerLeft().bakeRoot())),
 
     SADDLE("saddle","none,body",true,null),
     SADDLE_SIDE("saddle_side","cute,body",true,null),
