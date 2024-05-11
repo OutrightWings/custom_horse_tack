@@ -57,8 +57,8 @@ public class Main
             * Make noise?
             * Back bells
         * Shield banner textures
-        * Wings
-        * Bigger Chests
-        * Ribbons
+        * Wings in table
+        * Add Horse Girls textures
+        * Bigger Chests?
      */
 }
