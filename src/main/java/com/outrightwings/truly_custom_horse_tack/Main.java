@@ -57,8 +57,10 @@ public class Main
             * Make noise?
             * Back bells
         * Shield banner textures
-        * Wings
-        * Bigger Chests
-        * Ribbons
+        * Wings in table
+        * Saddle on rack
+        * Custom Tack on Donkeys/Mules
+        * Add Horse Girls textures
+        * Bigger Chests?
      */
 }

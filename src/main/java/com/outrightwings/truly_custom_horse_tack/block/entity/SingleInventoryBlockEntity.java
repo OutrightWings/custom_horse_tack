@@ -1,5 +1,6 @@
 package com.outrightwings.truly_custom_horse_tack.block.entity;
 
+import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -10,6 +11,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -81,7 +83,9 @@ public abstract class SingleInventoryBlockEntity extends BlockEntity implements 
     public boolean stillValid(Player p_18946_) {
         return false;
     }
-    public abstract boolean validItem(ItemStack item);
+    public boolean validItem(ItemStack item) {
+        return item.getItem() instanceof CustomTackItem || item.is(Items.SADDLE);
+    }
     @Override
     public void clearContent() {
         this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
