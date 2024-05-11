@@ -58,8 +58,6 @@ public class Main
             * Back bells
         * Shield banner textures
         * Wings in table
-        * Saddle on rack
-        * Custom Tack on Donkeys/Mules
         * Add Horse Girls textures
         * Bigger Chests?
      */
