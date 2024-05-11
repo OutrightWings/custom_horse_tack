@@ -2,11 +2,13 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.block.HeadStandWallBlock;
 import com.outrightwings.truly_custom_horse_tack.block.SingleInventoryBlock;
 import com.outrightwings.truly_custom_horse_tack.block.entity.*;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.DisplayModel;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
+import com.outrightwings.truly_custom_horse_tack.item.ModItems;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -15,6 +17,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Quaternionf;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 public abstract class DisplayModelEntityRenderer implements BlockEntityRenderer<SingleInventoryBlockEntity> {
     protected DisplayModel displayModel;
     protected ResourceLocation standTexture;
+    protected ResourceLocation saddleTexture = new ResourceLocation(Main.MODID,"textures/entity/horse/armor/saddle.png");
     @Override
     public void render(SingleInventoryBlockEntity blockEntity, float ticks, PoseStack pose, MultiBufferSource bufferSource, int light, int overlay) {
         //rotate
@@ -39,10 +43,16 @@ public abstract class DisplayModelEntityRenderer implements BlockEntityRenderer<
         this.displayModel.stand.render(pose,vertexConsumer,light,overlay,1,1,1,1);
         //Tack
         ItemStack tack = blockEntity.getItem(0);
-        ResourceLocation texture = TextureCache.getTexture(tack);
+        ResourceLocation texture = null;
+        if(tack.is(ModItems.CUSTOM_TACK_ITEM.get())){
+            texture = TextureCache.getTexture(tack);
+        } else if(tack.is(Items.SADDLE)){
+            texture = saddleTexture;
+        }
+
         if(texture!=null){
-            VertexConsumer vertexConsumer1 = bufferSource.getBuffer(RenderType.entityTranslucent(texture));
-            this.displayModel.body.render(pose,vertexConsumer1,light,overlay,1,1,1,1);
+            VertexConsumer vertexConsumer2 = bufferSource.getBuffer(RenderType.entityTranslucent(texture));
+            this.displayModel.body.render(pose,vertexConsumer2,light,overlay,1,1,1,1);
         }
         ArrayList<Tuple<SpecialTackModel, float[]>> modelsToRender = TackTagUtility.getModels(tack.getTag());
         modelsToRender.forEach(pair -> {

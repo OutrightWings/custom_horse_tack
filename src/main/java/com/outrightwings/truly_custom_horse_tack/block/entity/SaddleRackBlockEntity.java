@@ -10,9 +10,4 @@ public class SaddleRackBlockEntity extends SingleInventoryBlockEntity {
     public SaddleRackBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.SADDLE_RACK_BE.get(), pos, state);
     }
-
-    @Override
-    public boolean validItem(ItemStack item) {
-        return item.getItem() instanceof CustomTackItem;
-    }
 }
