@@ -9,8 +9,10 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -45,12 +47,18 @@ public class FlagModel extends SpecialTackModel {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
     public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay,float ticks,float limbSwing,float limbSwingAmount,float[] color) {
-        final ItemStack[] bannerItem = new ItemStack[1];
-        entityIn.getArmorSlots().forEach(item -> {
-            if(item.getItem() instanceof BannerItem){
-                bannerItem[0] = item;
+        ItemStack bannerItem = null;
+        var slots = EquipmentSlot.values();
+        for (var slot : slots) {
+            if (slot == EquipmentSlot.CHEST) continue;
+            ItemStack item = entityIn.getItemBySlot(slot);
+            if(item.getItem()  instanceof BannerItem){
+                bannerItem = item;
             }
-        });
+        }
+
+        if(bannerItem == null) return;
+
         poseStack.pushPose();
         poseStack.mulPose(new Quaternionf(-0.03f,0.70f,-0.03,0.70f));
 
@@ -68,7 +76,7 @@ public class FlagModel extends SpecialTackModel {
         this.flag.xRot = (-0.0125F + 0.01F * Mth.cos(((float)Math.PI * 2F) * f2)) * (float)Math.PI;
         this.flag.x = 0;
         this.flag.y = -42.0F;
-        var patterns = BannerBlockEntity.createPatterns(((BannerItem) bannerItem[0].getItem()).getColor() ,BannerBlockEntity.getItemPatterns(bannerItem[0]));
+        var patterns = BannerBlockEntity.createPatterns(((BannerItem) bannerItem.getItem()).getColor() ,BannerBlockEntity.getItemPatterns(bannerItem));
         BannerRenderer.renderPatterns(poseStack, bufferSource, light, overlay, this.flag, ModelBakery.BANNER_BASE, true,patterns);
         poseStack.popPose();
         poseStack.popPose();

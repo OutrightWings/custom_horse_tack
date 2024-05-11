@@ -46,6 +46,8 @@ public class ModItems {
     public static final RegistryObject<Item> HEAD_STAND = ITEMS.register("head_stand",() -> new StandingAndWallBlockItem(ModBlocks.HEAD_STAND.get(),ModBlocks.HEAD_STAND_WALL.get(),new Item.Properties(), Direction.DOWN));
 
     public static final RegistryObject<Item> MIXABLE_DYE = ITEMS.register("mixable_dye",() -> new MixedDye((new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> RIBBON = ITEMS.register("ribbon",() -> new Ribbon((new Item.Properties()).stacksTo(1)));
+
     private static RegistryObject<HorseArmorItem> registerHorseArmor(String name, int protection){
         return ITEMS.register(name, () -> new CustomTackItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1)));
     }
@@ -66,7 +68,7 @@ public class ModItems {
             event.accept(INCREASE_SPEED_POTION);
             event.accept(DECREASE_SPEED_POTION);
             event.accept(HORSE_STICK);
-
+            event.accept(RIBBON);
         } else if (event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)) {
             event.accept(WINTER_TACK_PATTERN);
             event.accept(CUTE_TACK_PATTERN);

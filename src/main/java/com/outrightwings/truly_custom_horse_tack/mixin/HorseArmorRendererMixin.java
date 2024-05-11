@@ -6,6 +6,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.TextureCache;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.*;
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
+import com.outrightwings.truly_custom_horse_tack.item.ModItems;
+import com.outrightwings.truly_custom_horse_tack.item.Ribbon;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.client.Minecraft;
@@ -15,6 +17,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,10 +43,14 @@ public class HorseArmorRendererMixin {
     private static final FlagModel flagModel = new FlagModel(FlagModel.createBodyLayer().bakeRoot());
     private static final HornModel hornModel = (HornModel) TackPattern.getTackPattern("horn").getModel();
     private static final WingsModel wingsModel = new WingsModel(WingsModel.createBodyLayer().bakeRoot());
+    private static final RibbonModel ribbonModel = new RibbonModel(RibbonModel.createBodyLayerRight().bakeRoot());
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "HEAD"),remap = false)
     public void renderExtraModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float limb_swing, float limb_swing_amount, float ticks, float f4, float f5, float f6, CallbackInfo ci){
-        entityIn.getArmorSlots().forEach(item  -> {
+        var slots = EquipmentSlot.values();
+        for (var slot : slots) {
+            if(slot == EquipmentSlot.CHEST) continue;
+            ItemStack item = entityIn.getItemBySlot(slot);
             if(item.getItem()  instanceof BannerItem){
                 flagModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
             }
@@ -51,8 +58,10 @@ public class HorseArmorRendererMixin {
                 hornModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
             } else if(item.is(Items.ELYTRA)){
                 wingsModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
+            } else if(item.is(ModItems.RIBBON.get())){
+                ribbonModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,TackTagUtility.getColorFromColorTag(((Ribbon)item.getItem()).getColor(item)));
             }
-        });
+        }
     }
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "INVOKE",target = "Lsekelsta/horse_colors/client/renderer/HorseGeneticModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V"),locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractHorseGenetic entityIn, float limb_swing, float limb_swing_amount, float ticks, float f4, float f5, float f6, CallbackInfo ci, ItemStack itemstack, Item armor, ResourceLocation textureLocation, float r, float g, float b){
