@@ -31,10 +31,9 @@ public class ClientEvents {
     public static void registerItemColors(RegisterColorHandlersEvent.Item event){
         ItemColors itemColors = event.getItemColors();
 
-        event.register((stack, tintIndex) -> {
-                    return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
-                },
-                ModItems.MIXABLE_DYE.get());
-
+        event.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack),
+                ModItems.MIXABLE_DYE.get(),
+                ModItems.RIBBON.get()
+        );
     }
 }

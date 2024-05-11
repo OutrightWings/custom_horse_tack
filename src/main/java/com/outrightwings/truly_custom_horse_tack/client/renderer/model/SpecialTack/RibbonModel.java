@@ -75,8 +75,8 @@ public class RibbonModel extends SpecialTackModel{
     @Override
     public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, float ticks, float limbSwing, float limbSwingAmount, float[] color) {
         HorseModelRotations.rotateModelWithHead(this.ribbon,entityIn,ticks,limbSwing,limbSwingAmount);
-        //longs.xRot = -ribbon.xRot;
-        this.longs.xRot = Mth.DEG_TO_RAD*-30;
+        longs.xRot = -ribbon.xRot;
+        //this.longs.xRot = Mth.DEG_TO_RAD*-30;
         this.flower.xRot= longs.xRot;
         VertexConsumer vertexConsumer;
         vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
