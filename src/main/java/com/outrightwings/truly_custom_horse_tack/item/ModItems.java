@@ -41,6 +41,7 @@ public class ModItems {
     public static final RegistryObject<Item> REINS_TACK_PATTERN = ITEMS.register("reins_tack_pattern",() -> new TackPatternItem("reins",(new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> BODY_TACK_PATTERN = ITEMS.register("body_tack_pattern",() -> new TackPatternItem("body",(new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> FEET_TACK_PATTERN = ITEMS.register("feet_tack_pattern",() -> new TackPatternItem("feet",(new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> WINGS_TACK_PATTERN = ITEMS.register("wings_tack_pattern",() -> new TackPatternItem("wings",(new Item.Properties()).stacksTo(1)));
 
     public static final RegistryObject<Item> SADDLE_RACK = ITEMS.register("saddle_rack",() -> new StandingAndWallBlockItem(ModBlocks.SADDLE_RACK.get(),ModBlocks.SADDLE_RACK_WALL.get(),new Item.Properties(), Direction.DOWN));
     public static final RegistryObject<Item> HEAD_STAND = ITEMS.register("head_stand",() -> new StandingAndWallBlockItem(ModBlocks.HEAD_STAND.get(),ModBlocks.HEAD_STAND_WALL.get(),new Item.Properties(), Direction.DOWN));
@@ -77,6 +78,7 @@ public class ModItems {
             event.accept(BODY_TACK_PATTERN);
             event.accept(FEET_TACK_PATTERN);
             event.accept(REINS_TACK_PATTERN);
+            event.accept(WINGS_TACK_PATTERN);
             event.accept(MIXABLE_DYE);
             event.accept(ModBannerPatterns.HORSE_BANNER_PATTERN);
         } else if (event.getTabKey().equals(CreativeModeTabs.COLORED_BLOCKS)) {

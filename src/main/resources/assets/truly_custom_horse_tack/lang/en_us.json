@@ -40,6 +40,7 @@
   "item.truly_custom_horse_tack.reins_tack_pattern":"Reins Tack Pattern",
   "item.truly_custom_horse_tack.body_tack_pattern":"Body Tack Pattern",
   "item.truly_custom_horse_tack.feet_tack_pattern":"Feet Tack Pattern",
+  "item.truly_custom_horse_tack.wings_tack_pattern":"Wings Tack Pattern",
 
   "item.truly_custom_horse_tack.horse_banner_pattern":"Banner Pattern",
   "item.truly_custom_horse_tack.horse_banner_pattern.desc":"Various Horse Patterns",
@@ -116,6 +117,9 @@
   "tack.truly_custom_horse_tack.pattern.halter_wool":"Wool Halter",
   "tack.truly_custom_horse_tack.pattern.halter_wool_padding":"Halter with Wool Padding",
   "tack.truly_custom_horse_tack.pattern.halter_wool_padding_wool":"Wool Padding Overlay",
+  "tack.truly_custom_horse_tack.pattern.wings":"Wings",
+  "tack.truly_custom_horse_tack.pattern.wings_dyed":"Wings",
+  "tack.truly_custom_horse_tack.pattern.wings_butterfly":"Butterfly Wings",
   "tack.truly_custom_horse_tack.pattern.unknown":"Unknown",
 
   "tooltip.truly_custom_horse_tack.no_pattern":"This tack has no customizations!",

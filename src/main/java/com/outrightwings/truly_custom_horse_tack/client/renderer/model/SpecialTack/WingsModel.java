@@ -19,8 +19,14 @@ public class WingsModel extends SpecialTackModel{
     private final ModelPart wings;
     private final ModelPart rightWing;
     private final ModelPart leftWing;
-    private static final ResourceLocation texture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/wings.png");
-
+    private ResourceLocation texture;
+    private ResourceLocation texture_overlay;
+    public enum WING_TYPE{
+        ITEM,
+        DYED,
+        BUTTERFLY,
+        VEX
+    }
     float outXRot = 126;
     float outYRot = 292;
     float outZRot = 125;
@@ -28,13 +34,31 @@ public class WingsModel extends SpecialTackModel{
     float inYRot = 332.5F;
     float inZRot = 270;
     float ticksToOpen = 10;
-    float delayToOpen = 2;
+    float delayToOpen = 5;
 
-    public WingsModel(ModelPart root) {
+    public WingsModel(ModelPart root,WING_TYPE type) {
         super(RenderType::entityCutoutNoCull);
         wings = root.getChild("wings");
         rightWing = wings.getChild("right_wing");
         leftWing = wings.getChild("left_wing");
+        switch (type) {
+            case VEX -> {
+                texture = new ResourceLocation(Main.MODID, "textures/entity/horse/special_tack/wings_vex.png");
+                texture_overlay = null;
+            }
+            case DYED -> {
+                texture = new ResourceLocation(Main.MODID, "textures/entity/horse/special_tack/wings_dyed.png");
+                texture_overlay = null;
+            }
+            case BUTTERFLY -> {
+                texture = new ResourceLocation(Main.MODID, "textures/entity/horse/special_tack/wings_butterfly.png");
+                texture_overlay = new ResourceLocation(Main.MODID, "textures/entity/horse/special_tack/wings_butterfly_overlay.png");
+            }
+            default -> {
+                texture = null;
+                texture_overlay = new ResourceLocation(Main.MODID, "textures/entity/horse/special_tack/wings.png");
+            }
+        }
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -52,8 +76,6 @@ public class WingsModel extends SpecialTackModel{
 
     @Override
     public void renderOnHorse(AbstractHorseGenetic entityIn, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, float ticks, float limbSwing, float limbSwingAmount,float[] color) {
-        float rearingAmount = entityIn.getStandAnim(ticks);
-
         float fallTicks = entityIn.getFallFlyingTicks()-delayToOpen;
         fallTicks = Mth.clamp(fallTicks,0,ticksToOpen)/ticksToOpen;
 
@@ -63,8 +85,7 @@ public class WingsModel extends SpecialTackModel{
         xRot = Mth.lerp(fallTicks,inXRot,outXRot);
         yRot = Mth.lerp(fallTicks,inYRot,outYRot);
         zRot = Mth.lerp(fallTicks,inZRot,outZRot);
-
-        if(entityIn.isFallFlying()){
+        if(entityIn.isFallFlying() && fallTicks == 1){
             long time = Minecraft.getInstance().level.getGameTime();
             float wobbleTime = ((float)Math.floorMod(time, 100L) + ticks) / 100.0F;
             float wobble = (4 * Mth.cos(((float)Math.PI * 2F) * wobbleTime)) * (float)Math.PI;
@@ -75,13 +96,37 @@ public class WingsModel extends SpecialTackModel{
         this.leftWing.setRotation(Mth.DEG_TO_RAD * xRot, Mth.DEG_TO_RAD * yRot, Mth.DEG_TO_RAD * zRot);
         this.rightWing.setRotation(Mth.DEG_TO_RAD * xRot, Mth.DEG_TO_RAD * -yRot, Mth.DEG_TO_RAD * -zRot);
 
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
-        wings.render(poseStack,vertexConsumer,light,overlay);
+        VertexConsumer vertexConsumer;
+        if(texture != null){
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
+            wings.render(poseStack,vertexConsumer,light,overlay,color[0],color[1],color[2],1f);
+        }
+        if(texture_overlay != null) {
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture_overlay));
+            wings.render(poseStack,vertexConsumer,light,overlay);
+        }
     }
 
     @Override
     public void renderOnRack(BlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean wall,float[] color) {
+        if(wall){
+            this.wings.setPos(-1,23,5);
+        }else{
+            this.wings.setPos(-1,17,6);
+        }
+        this.leftWing.setRotation(Mth.DEG_TO_RAD * inXRot, Mth.DEG_TO_RAD * inYRot, Mth.DEG_TO_RAD * inZRot);
+        this.rightWing.setRotation(Mth.DEG_TO_RAD * inXRot, Mth.DEG_TO_RAD * -inYRot, Mth.DEG_TO_RAD * -inZRot);
+        this.wings.setRotation(0,0,0);
 
+        VertexConsumer vertexConsumer;
+        if(texture != null){
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
+            wings.render(poseStack,vertexConsumer,light,overlay,color[0],color[1],color[2],1f);
+        }
+        if(texture_overlay != null) {
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture_overlay));
+            wings.render(poseStack,vertexConsumer,light,overlay);
+        }
     }
 
     @Override

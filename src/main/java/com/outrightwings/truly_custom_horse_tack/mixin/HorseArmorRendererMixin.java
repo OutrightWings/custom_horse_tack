@@ -41,8 +41,8 @@ public class HorseArmorRendererMixin {
     @Shadow(remap = false)
     private HorseGeneticModel<AbstractHorseGenetic> horseModel;
     private static final FlagModel flagModel = new FlagModel(FlagModel.createBodyLayer().bakeRoot());
-    private static final HornModel hornModel = (HornModel) TackPattern.getTackPattern("horn").getModel();
-    private static final WingsModel wingsModel = new WingsModel(WingsModel.createBodyLayer().bakeRoot());
+    private static final SpecialTackModel hornModel = TackPattern.getTackPattern("horn").getModel();
+    private static final SpecialTackModel wingsModel = TackPattern.getTackPattern("wings").getModel();
     private static final RibbonModel ribbonModel = new RibbonModel(RibbonModel.createBodyLayerRight().bakeRoot());
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "HEAD"),remap = false)

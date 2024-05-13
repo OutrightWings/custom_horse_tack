@@ -1,6 +1,7 @@
 package com.outrightwings.truly_custom_horse_tack.mixin;
 
 import com.outrightwings.truly_custom_horse_tack.item.ModItems;
+import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -24,8 +25,10 @@ import sekelsta.horse_colors.entity.AbstractHorseGenetic;
 import java.util.Arrays;
 
 @Mixin(AbstractHorseGenetic.class)
-public class AbstractHorseGeneticMixin extends AbstractHorse {
+public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
 
+
+    @Shadow public abstract ItemStack getArmor();
 
     protected AbstractHorseGeneticMixin(EntityType<? extends AbstractHorse> p_30531_, Level p_30532_) {
         super(p_30531_, p_30532_);
@@ -71,7 +74,10 @@ public class AbstractHorseGeneticMixin extends AbstractHorse {
         boolean flag = false;
         if (!this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION) && this.hasControllingPassenger()) {
             ItemStack itemstack = this.getItemBySlot(EquipmentSlot.LEGS);
-            flag = itemstack.canElytraFly(this);// && itemstack.elytraFlightTick(this, this.fallFlyTicks);
+            flag = itemstack.canElytraFly(this);
+            if(!flag){
+                flag = TackTagUtility.hasWings(getArmor().getTag());
+            }
             if (!this.level().isClientSide) {
                 int nextFlightTick = this.fallFlyTicks + 1;
                 if (nextFlightTick % 10 == 0) {
@@ -86,6 +92,8 @@ public class AbstractHorseGeneticMixin extends AbstractHorse {
     }
     public boolean causeFallDamage(float distance, float amount, DamageSource source) {
         if(this.getItemBySlot(EquipmentSlot.LEGS).is(Items.ELYTRA))
+            return false;
+        if(TackTagUtility.hasWings(getArmor().getTag()))
             return false;
         return super.causeFallDamage(distance,amount,source);
     }

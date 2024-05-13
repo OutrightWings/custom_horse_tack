@@ -37,8 +37,8 @@ public enum TackPattern implements StringRepresentable {
     HEAD_RACE_MASK_CHECKER("head_race_mask_checker","race,head",false,null),
     BOWS("bows","cute,head",false,null),
     STRIPES("stripes","cute,head",false,null),
-    HORN("horn","impossible",false,new HornModel(HornModel.createBodyLayer().bakeRoot())),
-    HORN_COLOR("horn_color","cute,head",false,new HornModel(HornModel.createBodyLayer().bakeRoot())),
+    HORN("horn","impossible",false,new HornModel(HornModel.createBodyLayer().bakeRoot(), HornModel.HORN_TYPE.ITEM)),
+    HORN_COLOR("horn_color","cute,head",false,new HornModel(HornModel.createBodyLayer().bakeRoot(), HornModel.HORN_TYPE.DYED)),
     RIBBON_EAR_RIGHT("ribbon_ear","cute,head",false,new RibbonModel(RibbonModel.createBodyLayerRight().bakeRoot())),
     RIBBON_EAR_LEFT("ribbon_ear_left","cute,head",false,new RibbonModel(RibbonModel.createBodyLayerLeft().bakeRoot())),
 
@@ -70,6 +70,9 @@ public enum TackPattern implements StringRepresentable {
     SIMPLE_SHOULDER("shoulder_simple","cute,body",false,null),
     BELLS_NECK("bells_neck","cute,body",false, new BellsNeckModel(BellsNeckModel.createBodyLayer().bakeRoot())),
     BELLS_REAR("bells_rear","cute,body",false, new BellsRearModel(BellsRearModel.createBodyLayer().bakeRoot())),
+    WINGS("wings","impossible",false,new WingsModel(WingsModel.createBodyLayer().bakeRoot(), WingsModel.WING_TYPE.ITEM)),
+    WINGS_DYED("wings_dyed","wings",false,new WingsModel(WingsModel.createBodyLayer().bakeRoot(), WingsModel.WING_TYPE.DYED)),
+    WINGS_BUTTERFLY("wings_butterfly","wings",false,new WingsModel(WingsModel.createBodyLayer().bakeRoot(), WingsModel.WING_TYPE.BUTTERFLY)),
 
     BOOTS_BELL("boots_bell","none,feet",false,null),
     BOOTS_FETLOCK("boots_fetlock","none,feet",false,null),
