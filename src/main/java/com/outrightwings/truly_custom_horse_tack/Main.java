@@ -55,7 +55,6 @@ public class Main
         Todo:
         * Bells
             * Make noise?
-        * Wings in table
         * Add Horse Girls textures
         * Bigger Chests?
      */

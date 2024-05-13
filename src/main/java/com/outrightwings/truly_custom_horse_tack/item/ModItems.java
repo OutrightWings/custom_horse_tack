@@ -23,24 +23,56 @@ public class ModItems {
     public static final RegistryObject<Item> WINTER_TACK_PATTERN = ITEMS.register("winter_tack_pattern",() -> new TackPatternItem("winter",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     public static final RegistryObject<Item> RACE_TACK_PATTERN = ITEMS.register("race_tack_pattern",() -> new TackPatternItem("race",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     public static final RegistryObject<Item> IMPOSSIBLE_TACK_PATTERN = ITEMS.register("impossible_tack_pattern",() -> new TackPatternItem("impossible",(new Item.Properties()).stacksTo(1)));
-    public static final RegistryObject<Item> CUTE_TACK_PATTERN = ITEMS.register("cute_tack_pattern",() -> new TackPatternItem("cute",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+    public static final RegistryObject<Item> CUTE_TACK_PATTERN = ITEMS.register("cute_tack_pattern",() -> new TackPatternItem("cute",(new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> HEAD_TACK_PATTERN = ITEMS.register("head_tack_pattern",() -> new TackPatternItem("head",(new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> REINS_TACK_PATTERN = ITEMS.register("reins_tack_pattern",() -> new TackPatternItem("reins",(new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> BODY_TACK_PATTERN = ITEMS.register("body_tack_pattern",() -> new TackPatternItem("body",(new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> FEET_TACK_PATTERN = ITEMS.register("feet_tack_pattern",() -> new TackPatternItem("feet",(new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> WINGS_TACK_PATTERN = ITEMS.register("wings_tack_pattern",() -> new TackPatternItem("wings",(new Item.Properties()).stacksTo(1)));
 
-    public static final RegistryObject<Item> HEAD_TACK_PATTERN = ITEMS.register("head_tack_pattern",() -> new TackPatternItem("head",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
-    public static final RegistryObject<Item> REINS_TACK_PATTERN = ITEMS.register("reins_tack_pattern",() -> new TackPatternItem("reins",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
-    public static final RegistryObject<Item> BODY_TACK_PATTERN = ITEMS.register("body_tack_pattern",() -> new TackPatternItem("body",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
-    public static final RegistryObject<Item> FEET_TACK_PATTERN = ITEMS.register("feet_tack_pattern",() -> new TackPatternItem("feet",(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+    public static final RegistryObject<Item> SADDLE_RACK = ITEMS.register("saddle_rack",() -> new StandingAndWallBlockItem(ModBlocks.SADDLE_RACK.get(),ModBlocks.SADDLE_RACK_WALL.get(),new Item.Properties(), Direction.DOWN));
+    public static final RegistryObject<Item> HEAD_STAND = ITEMS.register("head_stand",() -> new StandingAndWallBlockItem(ModBlocks.HEAD_STAND.get(),ModBlocks.HEAD_STAND_WALL.get(),new Item.Properties(), Direction.DOWN));
 
     public static final RegistryObject<Item> MIXABLE_DYE = ITEMS.register("mixable_dye",() -> new MixedDye((new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> RIBBON = ITEMS.register("ribbon",() -> new Ribbon((new Item.Properties()).stacksTo(1)));
 
-
-    public static final RegistryObject<Item> SADDLE_RACK = ITEMS.register("saddle_rack",() -> new StandingAndWallBlockItem(ModBlocks.SADDLE_RACK.get(),ModBlocks.SADDLE_RACK_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
-    public static final RegistryObject<Item> HEAD_STAND = ITEMS.register("head_stand",() -> new StandingAndWallBlockItem(ModBlocks.HEAD_STAND.get(),ModBlocks.HEAD_STAND_WALL.get(),new Item.Properties().tab(ModCreativeTab.instance)));
-    public static final RegistryObject<Item> MIXABLE_DYE = ITEMS.register("mixable_dye",() -> new MixedDye((new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     private static RegistryObject<HorseArmorItem> registerHorseArmor(String name, int protection){
-        return ITEMS.register(name, () -> new CustomTackItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+        return ITEMS.register(name, () -> new CustomTackItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1)));
     }
     private static RegistryObject<DyeableHorseArmorItem> registerDyeableHorseArmor(String name, int protection){
-        return ITEMS.register(name, () -> new DyeableHorseArmorItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
+        return ITEMS.register(name, () -> new DyeableHorseArmorItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1)));
+    }
+
+    @SubscribeEvent
+    public static void addToCreativeTab(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey().equals(CreativeModeTabs.FUNCTIONAL_BLOCKS)) {
+            event.accept(ForgeRegistries.ITEMS.getValue(ModBlocks.SADDLER.getId()));
+            event.accept(SADDLE_RACK);
+            event.accept(HEAD_STAND);
+        } else if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {
+            event.accept(CUSTOM_TACK_ITEM);
+            event.accept(INCREASE_JUMP_POTION);
+            event.accept(DECREASE_JUMP_POTION);
+            event.accept(INCREASE_SPEED_POTION);
+            event.accept(DECREASE_SPEED_POTION);
+            event.accept(HORSE_STICK);
+            event.accept(RIBBON);
+        } else if (event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)) {
+            event.accept(WINTER_TACK_PATTERN);
+            event.accept(CUTE_TACK_PATTERN);
+            event.accept(RACE_TACK_PATTERN);
+            event.accept(HEAD_TACK_PATTERN);
+            event.accept(BODY_TACK_PATTERN);
+            event.accept(FEET_TACK_PATTERN);
+            event.accept(REINS_TACK_PATTERN);
+            event.accept(MIXABLE_DYE);
+            event.accept(ModBannerPatterns.HORSE_BANNER_PATTERN);
+        } else if (event.getTabKey().equals(CreativeModeTabs.COLORED_BLOCKS)) {
+            ForgeRegistries.ITEMS.getEntries().stream().filter(o -> o.getValue().getDescriptionId().contains("jump") && !o.getValue().getDescriptionId().contains("potion")).forEach((object ->
+                    event.accept(object.getValue().asItem())
+            ));
+        }
+
+        ModEntities.addToCreativeTab(event);
     }
 }

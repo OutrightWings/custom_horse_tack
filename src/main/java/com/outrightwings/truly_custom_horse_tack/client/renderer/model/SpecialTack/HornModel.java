@@ -18,12 +18,25 @@ import sekelsta.horse_colors.entity.AbstractHorseGenetic;
 @OnlyIn(Dist.CLIENT)
 public class HornModel extends SpecialTackModel {
     final ModelPart horn;
-    private static final ResourceLocation baseTexture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn.png");
-    private static final ResourceLocation colorTexture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn.png");
-
-    public HornModel(ModelPart root) {
+    private final ResourceLocation texture;
+    private final ResourceLocation texture_overlay;
+    public enum HORN_TYPE{
+        ITEM,
+        DYED
+    }
+    public HornModel(ModelPart root,HORN_TYPE type) {
         super(RenderType::entityCutoutNoCull);
         horn = root.getChild("horn");
+        switch(type){
+            default ->{
+                texture = null;
+                texture_overlay = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn.png");
+            }
+            case DYED -> {
+                texture = new ResourceLocation(Main.MODID,"textures/entity/horse/special_tack/horn_color.png");
+                texture_overlay = null;
+            }
+        }
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -38,11 +51,12 @@ public class HornModel extends SpecialTackModel {
         HorseModelRotations.rotateModelWithHead(horn,entityIn,ticks,limbSwing,limbSwingAmount);
 
         VertexConsumer vertexConsumer;
-        if(color != null){
-            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(colorTexture));
+        if(texture != null){
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
             horn.render(poseStack,vertexConsumer,light,overlay,color[0],color[1],color[2],1f);
-        } else {
-            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(baseTexture));
+        }
+        if(texture_overlay != null) {
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture_overlay));
             horn.render(poseStack,vertexConsumer,light,overlay);
         }
 
@@ -58,11 +72,12 @@ public class HornModel extends SpecialTackModel {
         HorseModelRotations.rotateModelToHeadStand(this.horn);
 
         VertexConsumer vertexConsumer;
-        if(color != null){
-            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(colorTexture));
+        if(texture != null){
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
             horn.render(poseStack,vertexConsumer,light,overlay,color[0],color[1],color[2],1f);
-        } else {
-            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(baseTexture));
+        }
+        if(texture_overlay != null) {
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture_overlay));
             horn.render(poseStack,vertexConsumer,light,overlay);
         }
     }

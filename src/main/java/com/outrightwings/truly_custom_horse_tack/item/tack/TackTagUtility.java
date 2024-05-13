@@ -3,6 +3,7 @@ package com.outrightwings.truly_custom_horse_tack.item.tack;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.DyeColor;
 
@@ -64,13 +65,26 @@ public class TackTagUtility {
                 model = pattern != null ? pattern.getModel(): null;
                 color = getColorFromColorTag(((CompoundTag)tag).getInt("Color"));
                 if(model != null){
-                    if(pattern.name.equals("horn"))
-                        list.add(new Tuple<>(model,null));
-                    else
-                        list.add(new Tuple<>(model,color));
+                    list.add(new Tuple<>(model,color));
                 }
             });
         }
         return list;
+    }
+    public static boolean hasWings(CompoundTag patternList){
+        boolean hasWings = false;
+        ListTag listtag = null;
+        if (patternList != null && patternList.contains("Patterns", 9)) {
+            listtag = patternList.getList("Patterns", 10);
+        }
+        if(listtag != null){
+            for (Tag tag : listtag) {
+                if (((CompoundTag)tag).getString("Pattern").contains("wings")) {
+                    hasWings = true;
+                    break;
+                }
+            }
+        }
+        return hasWings;
     }
 }
