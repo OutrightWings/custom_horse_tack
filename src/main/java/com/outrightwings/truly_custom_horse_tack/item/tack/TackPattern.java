@@ -66,6 +66,7 @@ public enum TackPattern implements StringRepresentable {
     LARGE_PAD_QUILT("large_pad_quilt","race,body",false,null),
     FLOWER_CIRCLE("flower_circle","cute,body",true,null),
     CIRCLE("circle","cute,body",false,null),
+    REAR_CIRCLE("circle_rear","cute,body",false,null),
     SIMPLE_SHOULDER("shoulder_simple","cute,body",false,null),
     BELLS_NECK("bells_neck","cute,body",false, new BellsNeckModel(BellsNeckModel.createBodyLayer().bakeRoot())),
     BELLS_REAR("bells_rear","cute,body",false, new BellsRearModel(BellsRearModel.createBodyLayer().bakeRoot())),
