@@ -3,17 +3,18 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialT
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.Main;
-import com.outrightwings.truly_custom_horse_tack.util.HorseModelRotations;
+import com.outrightwings.truly_custom_horse_tack.client.util.HorseModelRotations;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
-
+@OnlyIn(Dist.CLIENT)
 public class RibbonModel extends SpecialTackModel{
     private final ModelPart ribbon;
     private final ModelPart longs;
