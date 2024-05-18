@@ -1,6 +1,5 @@
 package com.outrightwings.truly_custom_horse_tack.mixin;
 
-import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.TextureCache;
@@ -8,13 +7,11 @@ import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTa
 import com.outrightwings.truly_custom_horse_tack.item.CustomTackItem;
 import com.outrightwings.truly_custom_horse_tack.item.ModItems;
 import com.outrightwings.truly_custom_horse_tack.item.Ribbon;
-import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
+import com.outrightwings.truly_custom_horse_tack.client.item.tack.TackModels;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,14 +23,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import sekelsta.horse_colors.client.renderer.CustomLayeredTexture;
 import sekelsta.horse_colors.client.renderer.HorseArmorLayer;
 import sekelsta.horse_colors.client.renderer.HorseGeneticModel;
-import sekelsta.horse_colors.client.renderer.TextureLayer;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 @Mixin(HorseArmorLayer.class)
 public class HorseArmorRendererMixin {
@@ -41,8 +35,8 @@ public class HorseArmorRendererMixin {
     @Shadow(remap = false)
     private HorseGeneticModel<AbstractHorseGenetic> horseModel;
     private static final FlagModel flagModel = new FlagModel(FlagModel.createBodyLayer().bakeRoot());
-    private static final SpecialTackModel hornModel = TackPattern.getTackPattern("horn").getModel();
-    private static final SpecialTackModel wingsModel = TackPattern.getTackPattern("wings").getModel();
+    private static final SpecialTackModel hornModel = TackModels.getModel("horn");
+    private static final SpecialTackModel wingsModel = TackModels.getModel("wings");
     private static final RibbonModel ribbonModel = new RibbonModel(RibbonModel.createBodyLayerRight().bakeRoot());
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILsekelsta/horse_colors/entity/AbstractHorseGenetic;FFFFFF)V", at = @At(value = "HEAD"),remap = false)

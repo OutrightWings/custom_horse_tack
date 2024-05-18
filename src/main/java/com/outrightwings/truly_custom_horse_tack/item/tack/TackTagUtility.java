@@ -1,11 +1,14 @@
 package com.outrightwings.truly_custom_horse_tack.item.tack;
 
+import com.outrightwings.truly_custom_horse_tack.client.item.tack.TackModels;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.DyeColor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 
@@ -51,6 +54,7 @@ public class TackTagUtility {
             return colors;
         }
     }
+    @OnlyIn(Dist.CLIENT)
     public static ArrayList<Tuple<SpecialTackModel,float[]>> getModels(CompoundTag patternList){
         ArrayList<Tuple<SpecialTackModel,float[]>> list = new ArrayList<>();
         ListTag listtag = null;
@@ -62,7 +66,7 @@ public class TackTagUtility {
                 SpecialTackModel model;
                 float[] color;
                 TackPattern pattern = TackPattern.getTackPattern(((CompoundTag)tag).getString("Pattern"));
-                model = pattern != null ? pattern.getModel(): null;
+                model = pattern != null ? TackModels.getModel(pattern.name): null;
                 color = getColorFromColorTag(((CompoundTag)tag).getInt("Color"));
                 if(model != null){
                     list.add(new Tuple<>(model,color));
