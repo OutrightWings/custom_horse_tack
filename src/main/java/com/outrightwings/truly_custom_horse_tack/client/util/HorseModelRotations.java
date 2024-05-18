@@ -1,9 +1,11 @@
-package com.outrightwings.truly_custom_horse_tack.util;
+package com.outrightwings.truly_custom_horse_tack.client.util;
 
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
-
+@OnlyIn(Dist.CLIENT)
 public class HorseModelRotations {
     public static float updateHorseRotation(float prevRotation, float currentRotation, float partialTickTime) {
         float bodyRotation;
