@@ -28,7 +28,7 @@ import java.util.Arrays;
 public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
 
 
-    @Shadow public abstract ItemStack getArmor();
+    @Shadow(remap = false) public abstract ItemStack getArmor();
 
     protected AbstractHorseGeneticMixin(EntityType<? extends AbstractHorse> p_30531_, Level p_30532_) {
         super(p_30531_, p_30532_);
