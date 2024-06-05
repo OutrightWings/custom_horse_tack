@@ -17,6 +17,7 @@ public class ModBannerPatterns {
     public static final RegistryObject<BannerPattern> UNICORN = BANNERS.register("unicorn",() -> new BannerPattern("unicorn"));
     public static final RegistryObject<BannerPattern> HORSE_REARING = BANNERS.register("horse_rearing",() -> new BannerPattern("horse_rearing"));
     public static final RegistryObject<BannerPattern> HORSE_RUNNING = BANNERS.register("horse_running",() -> new BannerPattern("horse_running"));
+    public static final RegistryObject<BannerPattern> HORSE_RUNNING_FLIPPED = BANNERS.register("horse_running_flipped",() -> new BannerPattern("horse_running_flipped"));
 
     public static final RegistryObject<Item> HORSE_BANNER_PATTERN = ModItems.ITEMS.register("horse_banner_pattern",() -> new BannerPatternItem(createTagKey("horse"),new Item.Properties().stacksTo(1)));
 
