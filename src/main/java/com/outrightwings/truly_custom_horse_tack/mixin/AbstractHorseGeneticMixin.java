@@ -41,7 +41,6 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
             for (var slot : slots) {
                 if(slot == EquipmentSlot.CHEST || slot == EquipmentSlot.LEGS) continue;
                 ItemStack itemInSlot = this.getItemBySlot(slot);
-                System.out.println(itemInSlot.getItem()+" "+itemstack.getItem()+ " "+itemInSlot.is(itemstack.getItem()));
                 if(itemInSlot.is(itemstack.getItem())){
                     break;
                 }
