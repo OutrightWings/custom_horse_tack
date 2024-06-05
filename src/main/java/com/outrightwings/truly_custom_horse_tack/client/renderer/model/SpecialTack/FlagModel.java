@@ -2,6 +2,7 @@ package com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialT
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Quaternion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -9,23 +10,16 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BannerItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.ObjectUtils;
-import org.joml.Quaternionf;
 import sekelsta.horse_colors.entity.AbstractHorseGenetic;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 @OnlyIn(Dist.CLIENT)
 public class FlagModel extends SpecialTackModel {
@@ -60,7 +54,7 @@ public class FlagModel extends SpecialTackModel {
         if(bannerItem == null) return;
 
         poseStack.pushPose();
-        poseStack.mulPose(new Quaternionf(-0.03f,0.70f,-0.03,0.70f));
+        poseStack.mulPose(new Quaternion(-0.03f,0.70f,-0.03f,0.70f));
 
         float between = entityIn.getStandAnim(ticks);
         poseStack.translate(Mth.lerp(between,0.3f,0.3f-0.43f),Mth.lerp(between,-0.2f,-0.2f-0.56f),-0.35f);

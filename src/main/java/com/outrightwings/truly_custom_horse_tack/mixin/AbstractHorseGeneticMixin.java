@@ -41,7 +41,6 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
             for (var slot : slots) {
                 if(slot == EquipmentSlot.CHEST || slot == EquipmentSlot.LEGS) continue;
                 ItemStack itemInSlot = this.getItemBySlot(slot);
-                System.out.println(itemInSlot.getItem()+" "+itemstack.getItem()+ " "+itemInSlot.is(itemstack.getItem()));
                 if(itemInSlot.is(itemstack.getItem())){
                     break;
                 }
@@ -72,13 +71,13 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
 
     public void updateFallFlying() {
         boolean flag = false;
-        if (!this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION) && this.hasControllingPassenger()) {
+        if (!this.onGround && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION) && this.hasControllingPassenger()) {
             ItemStack itemstack = this.getItemBySlot(EquipmentSlot.LEGS);
             flag = itemstack.canElytraFly(this);
             if(!flag){
                 flag = TackTagUtility.hasWings(getArmor().getTag());
             }
-            if (!this.level().isClientSide) {
+            if (!this.level.isClientSide) {
                 int nextFlightTick = this.fallFlyTicks + 1;
                 if (nextFlightTick % 10 == 0) {
                     this.gameEvent(net.minecraft.world.level.gameevent.GameEvent.ELYTRA_GLIDE);
@@ -86,7 +85,7 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
             }
         }
 
-        if (!this.level().isClientSide) {
+        if (!this.level.isClientSide) {
             this.setSharedFlag(7, flag);
         }
     }

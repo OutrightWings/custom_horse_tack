@@ -1,6 +1,7 @@
 package com.outrightwings.truly_custom_horse_tack.mixin;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,32 +21,16 @@ public class LivingEntityMixin extends Entity {
         super(p_19870_, p_19871_);
     }
 
-    @Inject(method = "travelRidden",at=@At(value= "INVOKE",shift=At.Shift.AFTER,target = "Lnet/minecraft/world/entity/LivingEntity;tickRidden(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;)V"),cancellable = true,locals = LocalCapture.CAPTURE_FAILHARD)
-    public void travelRidden(Player player, Vec3 inputVec, CallbackInfo ci, Vec3 inputPlayer){
+    @Inject(method = "travel",at=@At(value= "HEAD"))
+    public void travelRidden(Vec3 vec, CallbackInfo ci){
         if(isFallFlying() && isControlledByLocalInstance()){
-            this.setSpeed(this.getRiddenSpeed(player));
             this.setDeltaMovement(this.getDeltaMovement().multiply(1.02f,1.02f,1.02f));
-            this.travel(inputPlayer);
             this.tryCheckInsideBlocks();
-            ci.cancel();
         }
     }
     @Shadow
     public boolean isFallFlying() {
         return true;
-    }
-
-    @Shadow
-    public void setSpeed(float riddenSpeed) {
-    }
-
-    @Shadow
-    protected float getRiddenSpeed(Player player) {
-        return 0;
-    }
-
-    @Shadow
-    public void travel(Vec3 inputPlayer) {
     }
 
     @Shadow
@@ -61,5 +46,10 @@ public class LivingEntityMixin extends Entity {
     @Shadow
     public void addAdditionalSaveData(CompoundTag p_20139_) {
 
+    }
+
+    @Shadow
+    public Packet<?> getAddEntityPacket() {
+        return null;
     }
 }
