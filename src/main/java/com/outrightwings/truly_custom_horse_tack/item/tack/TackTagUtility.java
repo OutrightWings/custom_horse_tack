@@ -2,6 +2,7 @@ package com.outrightwings.truly_custom_horse_tack.item.tack;
 
 import com.outrightwings.truly_custom_horse_tack.client.item.tack.TackModels;
 import com.outrightwings.truly_custom_horse_tack.client.renderer.model.SpecialTack.SpecialTackModel;
+import com.outrightwings.truly_custom_horse_tack.util.ColorConverter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -41,17 +42,13 @@ public class TackTagUtility {
         }
         return listtag != null ? listtag.size() : -1;
     }
-    public static float[] getColorFromColorTag(int colID){
-        if(colID < DyeColor.values().length){
+    public static int getColorFromColorTag(int colID){
+        if(colID < 16){
             DyeColor dye = DyeColor.byId(colID);
-            return dye.getTextureDiffuseColors();
+            return dye.getMaterialColor().col;
         }
         else{
-            float[] colors = new float[3];
-            colors[0] = (float)(colID >> 16 & 255) / 255.0F;
-            colors[1] = (float)(colID >> 8 & 255) / 255.0F;
-            colors[2] = (float)(colID & 255) / 255.0F;
-            return colors;
+            return colID;
         }
     }
     @OnlyIn(Dist.CLIENT)
@@ -67,7 +64,7 @@ public class TackTagUtility {
                 float[] color;
                 TackPattern pattern = TackPattern.getTackPattern(((CompoundTag)tag).getString("Pattern"));
                 model = pattern != null ? TackModels.getModel(pattern.name): null;
-                color = getColorFromColorTag(((CompoundTag)tag).getInt("Color"));
+                color = ColorConverter.decToRGB(getColorFromColorTag(((CompoundTag)tag).getInt("Color")));
                 if(model != null){
                     list.add(new Tuple<>(model,color));
                 }

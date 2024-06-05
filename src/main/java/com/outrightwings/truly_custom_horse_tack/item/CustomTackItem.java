@@ -3,6 +3,7 @@ package com.outrightwings.truly_custom_horse_tack.item;
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
+import com.outrightwings.truly_custom_horse_tack.util.ColorConverter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -59,9 +60,9 @@ public class CustomTackItem extends HorseArmorItem {
             MutableComponent color;
             if(colorPattern.getA() < 16){
                 var colorName = DyeColor.byId(colorPattern.getA()).getName();
-                color = Component.translatable(String.format("tooltip.%s.%s", Main.MODID,colorName));
+                color = Component.translatable(String.format("color.minecraft.%s",colorName));
             } else {
-                float[] rgb = ColorConverter.decToRGB(TackPattern.getColorFromColorTag(colorPattern.getA()));
+                float[] rgb = ColorConverter.decToRGB(TackTagUtility.getColorFromColorTag(colorPattern.getA()));
                 color = Component.literal(String.format("#%s%s%s", Integer.toHexString((int)(rgb[0]*255)),Integer.toHexString((int)(rgb[1]*255)),Integer.toHexString((int)(rgb[2]*255))));
             }
             list.add(color.append(" ").append(Component.translatable(patternName)).withStyle(ChatFormatting.GRAY));
@@ -77,10 +78,10 @@ public class CustomTackItem extends HorseArmorItem {
         CompoundTag tagData = stack.getTag();
         //This is to prevent crashing by  always having a blank base layer
         layerGroup.add(buildLayer(EMPTY_LAYER.toString(),Color.WHITE));
-        for(int i = 0; i < TackPattern.getPatternListSize(tagData);i++) {
-            Tuple<Integer, String> colorPattern = TackPattern.getColorAndPatternByIndex(tagData, i);
+        for(int i = 0; i < TackTagUtility.getPatternListSize(tagData);i++) {
+            Tuple<Integer, String> colorPattern = TackTagUtility.getColorAndPatternByIndex(tagData, i);
 
-            int rawColor = TackPattern.getColorFromColorTag(colorPattern.getA());
+            int rawColor = TackTagUtility.getColorFromColorTag(colorPattern.getA());
             float r = (float) (rawColor >> 16 & 255) / 255.0F;
             float g = (float) (rawColor >> 8 & 255) / 255.0F;
             float b = (float) (rawColor & 255) / 255.0F;

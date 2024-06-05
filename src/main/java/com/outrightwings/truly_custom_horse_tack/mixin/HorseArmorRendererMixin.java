@@ -9,6 +9,7 @@ import com.outrightwings.truly_custom_horse_tack.item.ModItems;
 import com.outrightwings.truly_custom_horse_tack.item.Ribbon;
 import com.outrightwings.truly_custom_horse_tack.client.item.tack.TackModels;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
+import com.outrightwings.truly_custom_horse_tack.util.ColorConverter;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -53,7 +54,7 @@ public class HorseArmorRendererMixin {
             } else if(item.is(Items.ELYTRA)){
                 wingsModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,null);
             } else if(item.is(ModItems.RIBBON.get())){
-                ribbonModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount,TackTagUtility.getColorFromColorTag(((Ribbon)item.getItem()).getColor(item)));
+                ribbonModel.renderOnHorse(entityIn,poseStack,bufferSource,packedLight,OverlayTexture.NO_OVERLAY,ticks,limb_swing,limb_swing_amount, ColorConverter.decToRGB(TackTagUtility.getColorFromColorTag(((Ribbon)item.getItem()).getColor(item))));
             }
         }
     }
