@@ -10,8 +10,4 @@ public class HeadStandWallBlockEntity extends SingleInventoryBlockEntity {
     public HeadStandWallBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.HEAD_STAND_WALL_BE.get(), pos, state);
     }
-    @Override
-    public boolean validItem(ItemStack item) {
-        return item.getItem() instanceof CustomTackItem;
-    }
 }

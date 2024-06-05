@@ -71,7 +71,7 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
 
     public void updateFallFlying() {
         boolean flag = false;
-        if (!this.onGround && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION) && this.hasControllingPassenger()) {
+        if (!this.onGround && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION) && this.getControllingPassenger() != null) {
             ItemStack itemstack = this.getItemBySlot(EquipmentSlot.LEGS);
             flag = itemstack.canElytraFly(this);
             if(!flag){
@@ -80,7 +80,7 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
             if (!this.level.isClientSide) {
                 int nextFlightTick = this.fallFlyTicks + 1;
                 if (nextFlightTick % 10 == 0) {
-                    this.gameEvent(net.minecraft.world.level.gameevent.GameEvent.ELYTRA_GLIDE);
+                    this.gameEvent(GameEvent.ELYTRA_FREE_FALL);
                 }
             }
         }

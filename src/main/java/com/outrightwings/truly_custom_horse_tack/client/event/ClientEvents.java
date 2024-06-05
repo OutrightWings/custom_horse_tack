@@ -34,7 +34,7 @@ public class ClientEvents {
         itemColors.register((stack, tintIndex) -> {
                     return tintIndex > 0 ? -1 : ((DyeableLeatherItem) stack.getItem()).getColor(stack);
                 },
-                ModItems.MIXABLE_DYE.get());
-
+                ModItems.MIXABLE_DYE.get(),
+                ModItems.RIBBON.get());
     }
 }

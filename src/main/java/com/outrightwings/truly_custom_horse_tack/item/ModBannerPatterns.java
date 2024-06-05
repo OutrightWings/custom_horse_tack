@@ -11,19 +11,37 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 public class ModBannerPatterns {
-    public static final DeferredRegister<BannerPattern> BANNERS = DeferredRegister.create(Registry.BANNER_PATTERN_REGISTRY, Main.MODID);
+    public static final Map<String, PatternData> PATTERNS = new HashMap<>();
 
-    public static final RegistryObject<BannerPattern> HORSE_HEAD = BANNERS.register("horse_head",() -> new BannerPattern("horse_head"));
-    public static final RegistryObject<BannerPattern> UNICORN = BANNERS.register("unicorn",() -> new BannerPattern("unicorn"));
-    public static final RegistryObject<BannerPattern> HORSE_REARING = BANNERS.register("horse_rearing",() -> new BannerPattern("horse_rearing"));
-    public static final RegistryObject<BannerPattern> HORSE_RUNNING = BANNERS.register("horse_running",() -> new BannerPattern("horse_running"));
-    public static final RegistryObject<BannerPattern> HORSE_RUNNING_FLIPPED = BANNERS.register("horse_running_flipped",() -> new BannerPattern("horse_running_flipped"));
+    public static final PatternData ANCHOR = createPattern("horse_head");
+    public static final PatternData BALANCE = createPattern("unicorn");
+    public static final PatternData GRASS = createPattern("horse_rearing");
+    public static final PatternData KELP = createPattern("horse_running");
+    public static final PatternData MUSHROOM = createPattern("horse_running_flipped");
 
-    public static final RegistryObject<Item> HORSE_BANNER_PATTERN = ModItems.ITEMS.register("horse_banner_pattern",() -> new BannerPatternItem(createTagKey("horse"),new Item.Properties().stacksTo(1).tab(ModCreativeTab.instance)));
+    private static PatternData createPattern(String name) {
 
-    private static TagKey<BannerPattern> createTagKey(String name){
-        return TagKey.create(Registry.BANNER_PATTERN_REGISTRY,new ResourceLocation(Main.MODID,"pattern_item/"+name));
+        final PatternData pattern = new PatternData(name);
+        PATTERNS.put(name, pattern);
+        return pattern;
+    }
+
+    public static class PatternData {
+
+        public final String name;
+        public final String enumName;
+        public final String texture;
+
+        public PatternData(String name) {
+            this.name = name;
+            this.texture = Main.MODID + "_" + this.name;
+            this.enumName = this.texture.toUpperCase(Locale.ROOT);
+        }
     }
 
 }

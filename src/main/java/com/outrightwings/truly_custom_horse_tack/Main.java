@@ -9,6 +9,7 @@ import com.outrightwings.truly_custom_horse_tack.item.recipe.ModRecipes;
 import com.outrightwings.truly_custom_horse_tack.screen.ModMenus;
 import com.outrightwings.truly_custom_horse_tack.screen.SaddlerBlockScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -36,11 +37,14 @@ public class Main
         ModBlocks.BLOCK_ENTITIES.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
         ModRecipes.RECIPES.register(modEventBus);
-        ModBannerPatterns.BANNERS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(ModBlocks.class);
         MinecraftForge.EVENT_BUS.register(ModItems.class);
         MinecraftForge.EVENT_BUS.register(ClientEvents.class);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        for (ModBannerPatterns.PatternData pattern : ModBannerPatterns.PATTERNS.values()) {
+            BannerPattern.create(pattern.enumName, pattern.texture, pattern.texture, false);
+        }
     }
     private void commonSetup(final FMLCommonSetupEvent event){
         event.enqueueWork(() -> {
