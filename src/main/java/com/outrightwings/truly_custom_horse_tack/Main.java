@@ -55,8 +55,6 @@ public class Main
         Todo:
         * Bells
             * Make noise?
-        * Add Horse Girls textures
         * Bigger Chests?
-        * Elytras Messed up on player and straight equiped to horse
      */
 }
