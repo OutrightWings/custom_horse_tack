@@ -36,10 +36,10 @@ public class ModItems {
     public static final RegistryObject<Item> MIXABLE_DYE = ITEMS.register("mixable_dye",() -> new MixedDye((new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     public static final RegistryObject<Item> RIBBON = ITEMS.register("ribbon",() -> new Ribbon((new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     private static RegistryObject<HorseArmorItem> registerHorseArmor(String name, int protection){
-        return ITEMS.register(name, () -> new CustomTackItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1)));
+        return ITEMS.register(name, () -> new CustomTackItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     }
     private static RegistryObject<DyeableHorseArmorItem> registerDyeableHorseArmor(String name, int protection){
-        return ITEMS.register(name, () -> new DyeableHorseArmorItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1)));
+        return ITEMS.register(name, () -> new DyeableHorseArmorItem(protection,new ResourceLocation(Main.MODID,"textures/entity/horse/armor/"+name+".png"),(new Item.Properties()).stacksTo(1).tab(ModCreativeTab.instance)));
     }
 
 }
