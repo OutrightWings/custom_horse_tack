@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.outrightwings.truly_custom_horse_tack.Main;
 import com.outrightwings.truly_custom_horse_tack.item.ModItems;
 import com.outrightwings.truly_custom_horse_tack.item.tack.TackPattern;
+import com.outrightwings.truly_custom_horse_tack.item.tack.TackTagUtility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -208,6 +209,7 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
     private void updateHorsePreview(ItemStack outputSlotItem){
         var woodToTack = addWoodToTack(outputSlotItem);
         horsePreview.setItemSlot(EquipmentSlot.CHEST,woodToTack);
+        horsePreview.setChest(TackTagUtility.has(outputSlotItem.getTag(), "chest"));
     }
     private void containerChanged() {
         ItemStack saddleItem = this.menu.getSaddleSlot().getItem();

@@ -107,6 +107,13 @@ public enum TackPattern implements StringRepresentable {
     RACE_NUM_9("race_9","race",false),
     RACE_NUM_0("race_0","race",false),
 
+    CHEST_CHEST("chest_chest","body,cute",true),
+    CHEST_POUCH("chest_pouch","body,cute",true),
+    CHEST_POUCH_TOP("chest_pouch_top","body,cute",false),
+    CHEST_ENDER("chest_ender","body,cute",true),
+    CHEST_PRESENT_BASE("chest_present_base","body,cute",false),
+    CHEST_PRESENT_ACCENT("chest_present_accent","body,cute",false),
+
     //"Impossible"
     WOODEN("wood0","impossible",true),
     WOODEN_DARK("wood1","impossible",true),
