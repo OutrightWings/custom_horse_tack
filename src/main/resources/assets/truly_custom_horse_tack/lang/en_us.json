@@ -140,6 +140,12 @@
   "tack.truly_custom_horse_tack.pattern.wings":"Feathered Wings",
   "tack.truly_custom_horse_tack.pattern.wings_dyed":"Feathered Wings",
   "tack.truly_custom_horse_tack.pattern.wings_butterfly":"Butterfly Wings",
+  "tack.truly_custom_horse_tack.pattern.chest_chest":"Chest",
+  "tack.truly_custom_horse_tack.pattern.chest_ender":"Ender Chest",
+  "tack.truly_custom_horse_tack.pattern.chest_pouch":"Pouch",
+  "tack.truly_custom_horse_tack.pattern.chest_pouch_top":"Pouch Top Overlay",
+  "tack.truly_custom_horse_tack.pattern.chest_present_base":"Present Base",
+  "tack.truly_custom_horse_tack.pattern.chest_present_accent":"Present Accent",
   "tack.truly_custom_horse_tack.pattern.unknown":"Unknown",
 
   "tooltip.truly_custom_horse_tack.no_pattern":"This tack has no customizations!",
