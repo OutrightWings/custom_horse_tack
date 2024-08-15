@@ -75,7 +75,7 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
             ItemStack itemstack = this.getItemBySlot(EquipmentSlot.LEGS);
             flag = itemstack.canElytraFly(this);
             if(!flag){
-                flag = TackTagUtility.hasWings(getArmor().getTag());
+                flag = TackTagUtility.has(getArmor().getTag(),"wings");
             }
             if (!this.level().isClientSide) {
                 int nextFlightTick = this.fallFlyTicks + 1;
@@ -92,7 +92,7 @@ public abstract class AbstractHorseGeneticMixin extends AbstractHorse {
     public boolean causeFallDamage(float distance, float amount, DamageSource source) {
         if(this.getItemBySlot(EquipmentSlot.LEGS).is(Items.ELYTRA))
             return false;
-        if(TackTagUtility.hasWings(getArmor().getTag()))
+        if(TackTagUtility.has(getArmor().getTag(),"wings"))
             return false;
         return super.causeFallDamage(distance,amount,source);
     }

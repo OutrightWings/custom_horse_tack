@@ -75,20 +75,20 @@ public class TackTagUtility {
         }
         return list;
     }
-    public static boolean hasWings(CompoundTag patternList){
-        boolean hasWings = false;
+    public static boolean has(CompoundTag patternList, String check){
+        boolean has = false;
         ListTag listtag = null;
         if (patternList != null && patternList.contains("Patterns", 9)) {
             listtag = patternList.getList("Patterns", 10);
         }
         if(listtag != null){
             for (Tag tag : listtag) {
-                if (((CompoundTag)tag).getString("Pattern").contains("wings")) {
-                    hasWings = true;
+                if (((CompoundTag)tag).getString("Pattern").contains(check)) {
+                    has = true;
                     break;
                 }
             }
         }
-        return hasWings;
+        return has;
     }
 }
