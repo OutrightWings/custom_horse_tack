@@ -192,22 +192,9 @@ public class SaddlerBlockScreen extends AbstractContainerScreen<SaddlerBlockMenu
         horsesTack.setTag(armorTag);
         return horsesTack;
     }
-    private ItemStack addWoodToTack(ItemStack outputSlotItem){
-        ItemStack baseTack = createBaseTack();
-        CompoundTag baseTackTag = baseTack.getTag();
-        CompoundTag outputSlotItemTag = outputSlotItem.getTag();
-        if(outputSlotItemTag != null){
-            ListTag listtag;
-            listtag = outputSlotItemTag.getList("Patterns", 10);
-            ListTag existing = baseTackTag.getList("Patterns",10);
-            existing.addAll(listtag);
-            baseTackTag.put("Patterns",existing);
-            baseTack.setTag(baseTackTag);
-        }
-        return baseTack;
-    }
+
     private void updateHorsePreview(ItemStack outputSlotItem){
-        var woodToTack = addWoodToTack(outputSlotItem);
+        var woodToTack = TackTagUtility.mergeTack(createBaseTack(),outputSlotItem);
         horsePreview.setItemSlot(EquipmentSlot.CHEST,woodToTack);
         horsePreview.setChest(TackTagUtility.has(outputSlotItem.getTag(), "chest"));
     }
