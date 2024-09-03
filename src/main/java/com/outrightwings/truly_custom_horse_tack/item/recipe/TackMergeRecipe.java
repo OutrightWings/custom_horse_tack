@@ -13,16 +13,13 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class TackMergeRecipe extends CustomRecipe {
-    public TackMergeRecipe(ResourceLocation resourceLocation, CraftingBookCategory bookCategory) {
-        super(resourceLocation,bookCategory);
+    public TackMergeRecipe(ResourceLocation resourceLocation) {
+        super(resourceLocation);
     }
 
     Tuple<ItemStack,Integer> findDecorated(CraftingContainer container, int prev, boolean decorated){
@@ -58,7 +55,7 @@ public class TackMergeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess access) {
+    public ItemStack assemble(CraftingContainer container) {
         var tackA = findDecorated(container, -100,true);
         var tackB = findDecorated(container, tackA.getB(),true);
         ItemStack tackWithPatterns = tackA.getA();
