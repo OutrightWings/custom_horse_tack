@@ -11,5 +11,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Main.MODID);
     public static final RegistryObject<RecipeSerializer<?>> DUPLICATE_TACK = RECIPES.register("duplicate_tack",()-> new SimpleCraftingRecipeSerializer<>(TackDuplicateRecipe::new));
+    public static final RegistryObject<RecipeSerializer<?>> MERGE_TACK = RECIPES.register("merge_tack",()-> new SimpleCraftingRecipeSerializer<>(TackMergeRecipe::new));
 
 }

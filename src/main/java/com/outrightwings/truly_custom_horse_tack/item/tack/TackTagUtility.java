@@ -7,6 +7,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -90,5 +91,18 @@ public class TackTagUtility {
             }
         }
         return has;
+    }
+    public static ItemStack mergeTack(ItemStack baseTack, ItemStack mergeTack){
+        CompoundTag baseTackTag = baseTack.getTag();
+        CompoundTag outputSlotItemTag = mergeTack.getTag();
+        if(outputSlotItemTag != null){
+            ListTag listtag;
+            listtag = outputSlotItemTag.getList("Patterns", 10);
+            ListTag existing = baseTackTag.getList("Patterns",10);
+            existing.addAll(listtag);
+            baseTackTag.put("Patterns",existing);
+            baseTack.setTag(baseTackTag);
+        }
+        return baseTack;
     }
 }
